@@ -7,7 +7,7 @@ class EventUserModel(AbstractUser):
     profile_image = models.ImageField(upload_to='Media/profile', null=True)
 
     def __str__(self):
-        return self.full_name
+        return self.username
 
     
 class EventBookingModel(models.Model):
