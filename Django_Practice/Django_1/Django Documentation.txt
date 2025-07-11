@@ -1,0 +1,93 @@
+﻿1st Class
+
+
+How to setup Django Environment
+
+
+1st Step -> Create Folder
+2nd Step -> python -m venv myEnv0
+3rd Step -> cd myEnv
+4th Step -> cd Scripts
+5th Step -> activate
+
+
+(myEnv) C:\Users\TEACHERS PC\Desktop\Django\myEnv\Scripts>
+
+
+6th Step -> pip install django
+pip freeze - to see which module or what kind of libraries have installed.
+
+
+How to create Django Project
+  
+
+
+
+
+
+myProject
+    manage.py
+    myProject/
+*         __init__.py
+*         asgi.py
+*         settings.py
+*         urls.py
+*         wsgi.py
+How to go vscode Editor from Command Mode - > code .
+
+
+How to Run the Django Project- > python manage.py runserver
+
+
+2nd Class
+
+
+How to create Django App and Superuser
+
+
+Step 1 = Create superuser - > Python manage.py createsuperuser
+
+
+Error : django.db.utils.OperationalError: no such table: auth_user
+
+
+Step 2 =  python manage.py makemigrations
+
+
+Admin Site : http://127.0.0.1:8000/admin/
+DB_SQL Lite Download Link : https://sqlitebrowser.org/dl/
+
+
+
+
+Makemigrations
+1. What it does: It creates migration files
+2. Purpose : It detect changes (e.g., add new field, delete field, edit field)
+3. It doesn’t affect the database system.
+
+
+Step 3 =  python manage.py migrate
+
+
+Migrate 
+
+
+1. It affects the database system.
+2. Apply migration files
+
+
+Step 4 = Create superuser - > Python manage.py createsuperuser
+
+
+How to render a HTML File
+
+
+Step 1 : Create a Template Folder  in Inner Project
+Step 2: settings.py -> TEMPLATES > 'DIRS': [BASE_DIR,"Template"]
+
+
+Step 3 : Create a views.py file in Project Folder
+
+
+Step 4 : from django.shortcuts import render
+Step 5 : create a function

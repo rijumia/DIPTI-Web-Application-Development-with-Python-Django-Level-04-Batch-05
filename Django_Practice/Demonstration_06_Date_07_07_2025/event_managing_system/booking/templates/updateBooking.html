@@ -1,0 +1,123 @@
+{% extends "master.html" %}
+  {% block title %}
+    <title>Booking Update</title>
+  {% endblock title %}
+{% block body %}
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    .body {
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .signup-card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: #4facfe;
+      box-shadow: none;
+    }
+
+    .btn-primary {
+      background-color: #4facfe;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #00c6ff;
+    }
+  </style>
+</head>
+<div class="body">
+
+  <div class="signup-card">
+    <h3 class="text-center mb-4">Update Booking</h3>
+    <form method="POST">
+        {% csrf_token %}
+
+    <div class="mb-3">
+     
+      <div class="mb-3">
+        <label for="name" class="form-label">event_title</label>
+        <input type="text" class="form-control" id="name" name="event_title" value="{{upbooking.event_title}}" placeholder="Enter your event_title" required />
+      </div>
+
+    <div class="mb-3">
+        <label for="department" class="form-label">event_type</label>
+        <select class="form-select" id="department" name="event_type" required>
+          <option value="">Select your event_type</option>
+          <option value="Conference" 
+          {% if upbooking.event_type == 'Conference' %}
+            selected
+          {% endif %}
+            >Conference</option>
+          <option value="Concert" {% if upbooking.event_type == 'Concert' %}
+            selected
+          {% endif %}>Concert</option>
+          <option value="Wedding" {% if upbooking.event_type == 'Wedding' %}
+            selected
+          {% endif %}>Wedding</option>
+        </select>
+      </div>
+
+
+      <div class="mb-3">
+        <label for="name" class="form-label">event_description</label>
+        <input type="text" class="form-control" id="name"  name="event_description" value="{{upbooking.event_description}}" placeholder="Enter your event_description" required />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">event_date</label>
+        <input type="text" class="form-control" id="email" name="event_date" value="{{upbooking.event_date|date:'Y-m-d'}}" placeholder="Enter email" required />
+      </div>
+
+<!-- Dropdown Field -->
+      <div class="mb-3">
+        <label for="department" class="form-label">event_status</label>
+        <select class="form-select" id="department" name="event_status" required>
+          <option value="">Select your status</option>
+          <option value="NotStarted" {% if upbooking.event_status == 'NotStarted' %}
+            selected
+          {% endif %}>NotStarted</option>
+          <option value="InProgress" {% if upbooking.event_status == 'InProgress' %}
+            selected
+          {% endif %}>InProgress</option>
+          <option value="Complated" {% if upbooking.event_status == 'Complated' %}
+            selected
+          {% endif %}>Complated</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="name" class="form-label">event_location</label>
+        <input type="text" class="form-control" id="name"  name="event_location" value="{{upbooking.event_location}}" placeholder="Enter event_location" required />
+      </div>
+      {% comment %} <div class="mb-3">
+        <label for="name" class="form-label">create_by</label>
+        <input type="text" class="form-control" id="name"  name="create_by" placeholder="Enter event_location" required />
+      </div> {% endcomment %}
+
+    
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Update Booking</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</div>
+
+    
+{% endblock body %}
+    

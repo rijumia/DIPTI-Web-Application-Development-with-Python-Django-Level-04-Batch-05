@@ -1,0 +1,67 @@
+{% extends 'master.html' %}
+
+{% block body %}
+<style>
+  .view-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+  }
+  .view-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  .view-container img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .view-section {
+    margin-bottom: 20px;
+  }
+  .view-section h3 {
+    margin-bottom: 8px;
+    color: #555;
+  }
+  .view-section p, .view-section ul, .view-section ol {
+    margin: 0;
+    color: #444;
+  }
+</style>
+
+<div class="view-container">
+  <h1>{{ recipe.RecipeTitle }}</h1>
+
+  {% if recipe.RecipeImage %}
+    <img src="{{ recipe.RecipeImage.url }}" alt="{{ recipe.RecipeTitle }}">
+  {% endif %}
+
+  <div class="view-section">
+    <h3>Description</h3>
+    <p>{{ recipe.RecipeDesciption }}</p>
+  </div>
+
+  <div class="view-section">
+    <h3>Ingredients</h3>
+    <ul>
+      {% for item in recipe.RecipeIngredients.splitlines %}
+        <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="view-section">
+    <h3>Instructions</h3>
+    <ol>
+      {% for step in recipe.RecipeInstrauction.splitlines %}
+        <li>{{ step }}</li>
+      {% endfor %}
+    </ol>
+  </div>
+</div>
+{% endblock %}
+
+    

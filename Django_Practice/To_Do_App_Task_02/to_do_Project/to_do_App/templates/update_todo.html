@@ -1,0 +1,56 @@
+{% extends 'master.html' %}
+{% block title %}Edit Task{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow border-0">
+        <div class="card-header bg-warning text-white text-center">
+          <h4 class="mb-0">Update Task</h4>
+        </div>
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
+
+            <!-- Title -->
+            <div class="mb-3">
+              <label for="id_title" class="form-label">Title</label>
+              <input type="text" name="title" id="id_title" class="form-control" value="{{ todo.title }}" required>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+              <label for="id_description" class="form-label">Description</label>
+              <textarea name="description" id="id_description" class="form-control" rows="4" required>{{ todo.description }}</textarea>
+            </div>
+
+            <!-- Status -->
+            <div class="mb-3">
+              <label for="id_status" class="form-label">Status</label>
+              <select name="status" id="id_status" class="form-select" required>
+                <option value="pending" {% if todo.status == 'pending' %}selected{% endif %}>Pending</option>
+                <option value="in_progress" {% if todo.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+                <option value="completed" {% if todo.status == 'completed' %}selected{% endif %}>Completed</option>
+              </select>
+            </div>
+
+            <!-- Due Date -->
+            <div class="mb-4">
+              <label for="id_due_date" class="form-label">Due Date</label>
+              <input type="date" name="due_date" id="id_due_date" class="form-control" value="{{ todo.due_date|date:'Y-m-d' }}" required>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-warning">Update Task</button>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer text-center">
+          <small><a href="{% url 'listToDo' %}">← Back to List</a></small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

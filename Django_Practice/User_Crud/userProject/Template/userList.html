@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Show All User List</title>
+{% endblock title %}
+
+{% block body %}
+<section>
+  <style>
+    section {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      padding: 2rem;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    .table-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+
+    thead {
+      background-color: #0077ff;
+      color: #fff;
+    }
+
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    tbody tr:hover {
+      background-color: #f1f5ff;
+    }
+
+    .action-buttons a {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      color: #fff;
+      margin-right: 5px;
+    }
+
+    .view-btn {
+      background-color: #17a2b8;
+    }
+
+    .edit-btn {
+      background-color: #ffc107;
+      color: #000;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+    }
+
+    @media (max-width: 768px) {
+      th, td {
+        padding: 0.5rem 0.75rem;
+      }
+    }
+  </style>
+
+  <h2>User List</h2>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>User Name</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Full Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{ user.User_Name }}</td>
+          <td>{{ user.First_Name }}</td>
+          <td>{{ user.Last_Name }}</td>
+          <td>{{ user.Full_Name }}</td>
+          <td class="action-buttons">
+            <a href="{% url 'viewPage' user.id %}" class="view-btn">View</a>
+            <a href="{% url 'editPage' user.id %}" class="edit-btn">Edit</a>
+            <a href="{% url 'deletePage' user.id %}" class="delete-btn" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" style="text-align:center;">No users found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock body %}

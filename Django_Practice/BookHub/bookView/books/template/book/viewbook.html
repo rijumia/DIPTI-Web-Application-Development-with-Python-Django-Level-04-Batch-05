@@ -1,0 +1,42 @@
+{% extends 'home.html' %}
+
+{% block title %}
+<title>View Book</title>
+{% endblock title %}
+
+{% block body %}
+<section style="padding: 2rem; font-family: 'Segoe UI', sans-serif; background-color: #f4f6fa;">
+  <h2 style="text-align: center; margin-bottom: 2rem;">Book Details</h2>
+
+  <div style="max-width: 700px; margin: 0 auto; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <img src="{{ book.book_image.url }}" alt="Book Image" style="max-width: 200px; height: auto; border-radius: 8px;" />
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+      <strong>Book Name:</strong>
+      <p style="margin: 0.5rem 0;">{{ book.book_name }}</p>
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+      <strong>Author:</strong>
+      <p style="margin: 0.5rem 0;">{{ book.author_name }}</p>
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+      <strong>Price:</strong>
+      <p style="margin: 0.5rem 0;">${{ book.book_price }}</p>
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+      <strong>Description:</strong>
+      <p style="margin: 0.5rem 0;">{{ book.book_description }}</p>
+    </div>
+
+    <div style="text-align: center;">
+      <a href="{% url 'all_books' %}" style="text-decoration: none; background-color: #0077ff; color: white; padding: 0.7rem 1.5rem; border-radius: 6px;">Back to List</a>
+    </div>
+  </div>
+</section>
+{% endblock body %}

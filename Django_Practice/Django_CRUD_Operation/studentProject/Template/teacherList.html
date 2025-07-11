@@ -1,0 +1,39 @@
+{% extends 'master.html' %}
+
+{% block body %}
+
+<div class="container">
+  <h2>Teacher List</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Department</th>
+        <th>Experience (Years)</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for teacher in teachers %}
+        <tr>
+          <td>{{ teacher.Teacher_Name }}</td>
+          <td>{{ teacher.Teacher_Email }}</td>
+          <td>{{ teacher.Teacher_Department }}</td>
+          <td>{{ teacher.Teacher_Experience }}</td>
+          <td>
+            <button><a href="{% url 'updateTeacher' teacher.id %}">Edit</a></button>
+            <button><a href="{% url 'deleteTeacher' teacher.id %}" onclick="return confirm('Are you sure?')">Delete</a></button>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5">No teachers found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock body %}
