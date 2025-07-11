@@ -14,4 +14,7 @@ urlpatterns = [
 
     path('teacher/register/', registerTeacherPage, name='registerTeacherPage'),
     path('teacher/teacherList/', teacherListPage, name='teacherListPage'),
+
+    path('student/registerStudentPage/', registerStudentPage, name='registerStudentPage'),
+    path('student/studentListPage/', studentListPage, name='studentListPage'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
