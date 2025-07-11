@@ -30,4 +30,4 @@ class EventBookingModel(models.Model):
      updated_at = models.DateTimeField(auto_now_add=True, null=True)
 
      def __str__(self):
-        return self.create_by
+        return self.event_status

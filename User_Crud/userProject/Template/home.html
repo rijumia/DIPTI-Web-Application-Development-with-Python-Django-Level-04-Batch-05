@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Home - User Cards</title>
+{% endblock title %}
+
+{% block body %}
+<section style="padding: 2rem; font-family: 'Segoe UI', sans-serif; background-color: #f4f6fa;">
+
+  <h2 style="text-align: center; margin-bottom: 2rem;">All Users</h2>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; max-width: 1000px; margin: 0 auto;">
+
+    {% for user in users %}
+    <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center;">
+      <h3 style="color: #333;">{{ user.User_Name }}</h3>
+      <p style="color: #777;">{{ user.Full_Name }}</p>
+    </div>
+    {% empty %}
+    <p style="text-align: center;">No users found.</p>
+    {% endfor %}
+
+  </div>
+</section>
+{% endblock body %}
