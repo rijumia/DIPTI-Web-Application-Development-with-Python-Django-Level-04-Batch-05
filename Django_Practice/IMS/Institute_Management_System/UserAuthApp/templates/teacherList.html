@@ -6,11 +6,14 @@
 
 {% block content %}
 <div class="card mt-4 shadow-sm">
-  <div class="card-header bg-primary text-white">
+  <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
     <h4 class="mb-0">All Teachers</h4>
+    <a href="{% url 'registerTeacherPage' %}" class="btn btn-light btn-sm text-primary fw-semibold">
+      + Add New Teacher
+    </a>
   </div>
-  <div class="card-body">
 
+  <div class="card-body">
     {% if messages %}
       {% for message in messages %}
         <div class="alert alert-{{ message.tags }}">{{ message }}</div>
