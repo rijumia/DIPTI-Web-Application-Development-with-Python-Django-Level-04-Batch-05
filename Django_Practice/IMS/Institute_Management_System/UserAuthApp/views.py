@@ -135,5 +135,6 @@ def registerTeacherPage(request):
     return render(request, 'teacher.html')
 
 def teacherListPage(request):
-    return render(request, 'teacherList.html')
+    teacherInfo = TeacherModel.objects.all()
+    return render(request, 'teacherList.html',{'teacherInfo':teacherInfo})
 
