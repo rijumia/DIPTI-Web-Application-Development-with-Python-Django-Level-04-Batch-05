@@ -1,3 +1,6 @@
 from django.contrib import admin
+from UserAuthApp.models import*
 
-# Register your models here.
+admin.site.register(CustomUserModel)
+admin.site.register(TeacherModel)
+admin.site.register(StudentModel)

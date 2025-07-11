@@ -1,0 +1,17 @@
+{% extends 'master/master.html' %}
+
+
+<title>{% block title %}Home | Institute Management{% endblock %}</title>
+
+
+{% block content %}
+<div class="container mt-5 text-center" style="font-family: 'Segoe UI', sans-serif;">
+  {% if user.is_authenticated %}
+    <h1>Welcome, {{ user.username }}!</h1>
+    <p class="lead">You have successfully logged in to the Institute Management System.</p>
+  {% else %}
+    <h1>Welcome to the Institute Management System</h1>
+    <p class="lead">Please <a href="{% url 'loginPage' %}">login</a> to continue.</p>
+  {% endif %}
+</div>
+{% endblock %}

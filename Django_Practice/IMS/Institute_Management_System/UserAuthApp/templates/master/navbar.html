@@ -1,7 +1,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
     <div class="container">
-      <a class="navbar-brand" href="{% url 'home' %}">InstituteMS</a>
+      <a class="navbar-brand" href="{% url 'homePage' %}">InstituteMS</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -42,10 +42,10 @@
               My Account
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
-              <li><a class="dropdown-item" href="">Profile Info</a></li>
-              <li><a class="dropdown-item" href="">Change Password</a></li>
+              <li><a class="dropdown-item" href="{% url 'profileInfoPage' %}">Profile Info</a></li>
+              <li><a class="dropdown-item" href="{% url 'changePasswordPage' %}">Change Password</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-danger" href="">Logout</a></li>
+              <li><a class="dropdown-item text-danger" href="{% url 'logoutPage' %}">Logout</a></li>
             </ul>
           </li>
 
