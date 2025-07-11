@@ -1,0 +1,55 @@
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">InstituteMS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNavbar">
+        <ul class="navbar-nav ms-auto">
+
+          <!-- Home -->
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'homePage' %}">Home</a>
+          </li>
+
+          <!-- Teacher Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="teacherDropdown" role="button" data-bs-toggle="dropdown">
+              Teacher
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="teacherDropdown">
+              <li><a class="dropdown-item" href="">Register Teacher</a></li>
+              <li><a class="dropdown-item" href="">Teacher List</a></li>
+            </ul>
+          </li>
+
+          <!-- Student Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="studentDropdown" role="button" data-bs-toggle="dropdown">
+              Student
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="studentDropdown">
+              <li><a class="dropdown-item" href="">Register Student</a></li>
+              <li><a class="dropdown-item" href="">Student List</a></li>
+            </ul>
+          </li>
+
+          <!-- My Account Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown">
+              My Account
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+              <li><a class="dropdown-item" href="">Profile Info</a></li>
+              <li><a class="dropdown-item" href="">Change Password</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="">Logout</a></li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
