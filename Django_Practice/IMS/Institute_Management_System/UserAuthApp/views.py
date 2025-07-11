@@ -106,7 +106,7 @@ def registerTeacherPage(request):
         email = request.POST.get('email')
         profile_picture = request.FILES.get('profile_picture')
 
-        # Prevent duplicate usernames or emails
+
         if CustomUserModel.objects.filter(username=username).exists():
             messages.error(request, "Username already exists.")
             return redirect('registerTeacherPage')
@@ -114,7 +114,7 @@ def registerTeacherPage(request):
             messages.error(request, "Email already exists.")
             return redirect('registerTeacherPage')
 
-        # Create user and teacher
+ 
         teacherData = CustomUserModel.objects.create_user(
             username=username,
             password=phone, 
@@ -135,6 +135,47 @@ def registerTeacherPage(request):
     return render(request, 'teacher.html')
 
 def teacherListPage(request):
+    teacherInfo = TeacherModel.objects.all()
+    return render(request, 'teacherList.html',{'teacherInfo':teacherInfo})
+
+
+def registerStudentPage(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        teacher_name = request.POST.get('teacher_name')
+        phone = request.POST.get('phone')
+        email = request.POST.get('email')
+        profile_picture = request.FILES.get('profile_picture')
+
+
+        if CustomUserModel.objects.filter(username=username).exists():
+            messages.error(request, "Username already exists.")
+            return redirect('registerTeacherPage')
+        if CustomUserModel.objects.filter(email=email).exists():
+            messages.error(request, "Email already exists.")
+            return redirect('registerTeacherPage')
+
+ 
+        teacherData = CustomUserModel.objects.create_user(
+            username=username,
+            password=phone, 
+            email=email,
+            user_type = 'Teacher',
+            )
+        if teacherData:
+            TeacherModel.objects.create(
+                teacher_user = teacherData,
+                teacher_name = teacher_name,
+                teacher_profile =profile_picture,
+                teacher_phone = phone,
+            )
+        
+        messages.success(request, "Teacher registered successfully.")
+        return redirect('teacherListPage')
+
+    return render(request, 'teacher.html')
+
+def studentListPage(request):
     teacherInfo = TeacherModel.objects.all()
     return render(request, 'teacherList.html',{'teacherInfo':teacherInfo})
 
