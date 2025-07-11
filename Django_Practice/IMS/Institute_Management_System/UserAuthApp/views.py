@@ -177,5 +177,5 @@ def registerStudentPage(request):
 
 def studentListPage(request):
     studentInfo = StudentModel.objects.all()
-    return render(request, 'studentList.html',{'teacherInfo':studentInfo})
+    return render(request, 'studentList.html',{'studentInfo':studentInfo})
 
