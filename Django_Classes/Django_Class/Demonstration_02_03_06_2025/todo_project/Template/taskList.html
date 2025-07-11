@@ -1,0 +1,105 @@
+{% extends 'master.html' %}
+
+{% block title %}Task List{% endblock title %}
+
+{% block body %}
+
+  <style>
+    
+    .task-table-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #28a745;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .action-buttons a {
+      margin-right: 8px;
+      padding: 6px 10px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .view-btn {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .edit-btn {
+      background-color: #ffc107;
+      color: black;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+  </style>
+
+  <div class="task-table-container">
+    <h2>Task List</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Due Date</th>
+          <th>Created At</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for list in lists %}
+        <tr>
+          <td>{{ list.Title }}</td>
+          <td>{{ list.Description }}</td>
+          <td>{{ list.Status }}</td>
+          <td>{{ list.DueDate }}</td>
+          <td>{{ list.CreatedAt }}</td>
+          <td class="action-buttons">
+            <a href="{% url 'viewPage' list.id %}" class="view-btn">View</a>
+            <a href="{% url 'updateTaskPage' list.id %}" class="edit-btn">Edit</a>
+            <a href="{% url 'deleteTaskPage' list.id %}" class="delete-btn" onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+{% endblock body %}
+
+

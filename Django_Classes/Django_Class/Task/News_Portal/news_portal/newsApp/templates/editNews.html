@@ -1,0 +1,75 @@
+{% extends 'master.html' %}
+
+{% block body %}
+<style>
+    .body {
+      background: linear-gradient(120deg, #1e3c72, #2a5298);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .form-title {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 25px;
+      text-align: center;
+      color: #333;
+    }
+
+    .form-control, .form-label {
+      border-radius: 10px;
+    }
+
+    .btn-submit {
+      background-color: #1e3c72;
+      color: #fff;
+      border-radius: 10px;
+      font-weight: 500;
+    }
+
+    .btn-submit:hover {
+      background-color: #163061;
+    }
+  </style>
+    
+  <div class="body">
+    <div class="form-container">
+        <h2 class="form-title">Add News</h2>
+        <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+          <div class="mb-3">
+            <label for="thumbnail" class="form-label">Thumbnail Image</label>
+            <img src="{{news.thumbnail.url}}" alt="Thumbnail" class="thumbnail-img" width="100px">
+            <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/*">
+          </div>
+          <div class="mb-3">
+            <label for="title" class="form-label">News Title</label>
+            <input type="text" class="form-control" id="title" value="{{news.title}}" name="title" placeholder="Enter news title" required>
+          </div>
+          <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea class="form-control" id="content" name="content" rows="6" placeholder="Write the news content here..." required>{{news.content}}</textarea>
+          </div>
+          <div class="mb-3">
+            <label for="title" class="form-label">Publish Date</label>
+            <input type="date" class="form-control" value="{{news.published_date|date:'Y-m-d'}}" id="published_date" name="published_date" >
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-submit">Submit News</button>
+          </div>
+        </form>
+      </div>
+  </div>
+{% endblock body %}

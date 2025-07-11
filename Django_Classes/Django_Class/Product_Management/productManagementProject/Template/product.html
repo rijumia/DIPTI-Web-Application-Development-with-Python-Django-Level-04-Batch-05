@@ -1,0 +1,132 @@
+{% extends 'master.html' %}
+
+{% block body %}
+<style>
+  .title {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1abc9c;
+    margin-bottom: 24px;
+    text-align: center;
+    letter-spacing: 1.5px;
+  }
+
+  table {
+    border-collapse: separate;
+    border-spacing: 0 12px;
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+
+  thead tr {
+    background-color: #1abc9c;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+  }
+
+  thead th {
+    padding: 14px 20px;
+    text-align: left;
+  }
+
+  thead th:first-child {
+    border-radius: 8px 0 0 8px;
+  }
+  thead th:last-child {
+    border-radius: 0 8px 8px 0;
+  }
+
+  tbody tr {
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(26, 188, 156, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
+  }
+
+  tbody tr:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(26, 188, 156, 0.3);
+  }
+
+  tbody td {
+    padding: 14px 20px;
+  }
+
+  tbody td:nth-child(1) {
+    font-weight: 600;
+    color: #16a085;
+  }
+
+  tbody td:nth-child(2) {
+    color: #34495e;
+  }
+
+  tbody td:nth-child(3) {
+    font-weight: 700;
+    color: #27ae60;
+  }
+
+  tbody td:nth-child(4) {
+    color: #7f8c8d;
+  }
+
+  tbody td:nth-child(5) {
+    font-style: italic;
+    color: #95a5a6;
+  }
+
+  tbody td:last-child {
+    font-style: italic;
+    color: #95a5a6;
+  }
+
+  tbody td:last-child a {
+    margin-right: 15px;
+    text-decoration: none;
+    color: #16a085;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  tbody td:last-child a:hover {
+    color: #1abc9c;
+    text-decoration: underline;
+  }
+</style>
+
+<h1 class="title">Product List</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Details</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th>Created By</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in data %}
+    <tr>
+      <td>{{ i.name }}</td>
+      <td>{{ i.description }}</td>
+      <td>${{ i.price }}</td>
+      <td>{{ i.stock }}</td>
+      <td>{{ i.createby }}</td>
+      <td>
+        <a href="#">Edit</a>
+        <a href="#">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock body %}

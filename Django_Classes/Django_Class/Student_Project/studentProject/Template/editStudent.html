@@ -1,0 +1,43 @@
+{% extends 'master.html' %}
+
+{% block body %}
+<div style="max-width: 500px; margin: 60px auto; background-color: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 12px 30px rgba(0,0,0,0.1); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  
+  <h2 style="text-align: center; color: #34495e; font-size: 2rem; font-weight: bold; margin-bottom: 32px;">
+    Update
+  </h2>
+
+  <div style="text-align: center; margin-bottom: 24px;">
+    <a href="{% url 'studentListPage' %}" style="text-decoration: none; color: #2980b9; font-weight: 600; font-size: 1rem;">📋 View Student List</a>
+  </div>
+
+  <form action="#" method="POST" style="display: flex; flex-direction: column;">
+    {% csrf_token %}
+    
+    <label for="name" style="margin-bottom: 6px; font-weight: 600;">ID</label>
+    <input type="text" id="name" name="student_id" value="{{data.id}}" placeholder=""
+           style="padding: 14px; margin-bottom: 20px; border: 1.5px solid #ccc; border-radius: 10px; font-size: 1rem; transition: 0.3s;" readonly>
+
+    <label for="name" style="margin-bottom: 6px; font-weight: 600;">Name</label>
+    <input type="text" id="name" name="student_name" value="{{data.Student_Name}}" placeholder="Enter your full name"
+           style="padding: 14px; margin-bottom: 20px; border: 1.5px solid #ccc; border-radius: 10px; font-size: 1rem; transition: 0.3s;" required>
+    
+    <label for="department" style="margin-bottom: 6px; font-weight: 600;">Department</label>
+    <input type="text" id="department" name="student_department" value="{{data.Student_Department}}" placeholder="e.g., CSE"
+           style="padding: 14px; margin-bottom: 20px; border: 1.5px solid #ccc; border-radius: 10px; font-size: 1rem; transition: 0.3s;" required>
+
+    <label for="city" style="margin-bottom: 6px; font-weight: 600;">City</label>
+    <input type="text" id="city" name="student_city" value="{{data.Student_City}}" placeholder="Enter your city"
+           style="padding: 14px; margin-bottom: 20px; border: 1.5px solid #ccc; border-radius: 10px; font-size: 1rem; transition: 0.3s;" required>
+
+    <label for="age" style="margin-bottom: 6px; font-weight: 600;">Age</label>
+    <input type="number" id="age" name="student_age" value="{{data.Student_Age}}" min="1" max="120" placeholder="Enter your age"
+           style="padding: 14px; margin-bottom: 28px; border: 1.5px solid #ccc; border-radius: 10px; font-size: 1rem; transition: 0.3s;" required>
+
+    <button type="submit"
+            style="padding: 14px; background-color: #2980b9; color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.3s ease;">
+      Update
+    </button>
+  </form>
+</div>
+{% endblock body %}

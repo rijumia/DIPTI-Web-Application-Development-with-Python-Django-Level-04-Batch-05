@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}
+  <title>Recipe Form</title>
+{% endblock title %}
+
+{% block body %}
+
+
+  <style>
+
+
+    .recipe-form {
+      background: #fff;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 25px 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .recipe-form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    textarea,
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+
+
+  <form class="recipe-form" action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2>Submit a Recipe</h2>
+
+    <div class="form-group">
+      <label for="title">Recipe Title</label>
+      <input type="text" id="title" name="recipeTitle" required>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Recipe Description</label>
+      <textarea id="description" name="recipeDescription" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="ingredients">Recipe Ingredients</label>
+      <textarea id="ingredients" name="recipeIngredients" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="instructions">Recipe Instructions</label>
+      <textarea id="instructions" name="recipeInstructions" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="image">Recipe Image</label>
+      <input type="file" id="image" name="recipeImage" accept="image/*" required>
+    </div>
+
+    <button type="submit">Submit Recipe</button>
+  </form>
+
+
+{% endblock body %}

@@ -1,0 +1,78 @@
+{% extends 'master.html' %}
+
+{% block title %}
+<title>User List</title>
+{% endblock title %}
+
+{% block body %}
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body, html {
+    background: #f2f2f2;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .user-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .card {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    text-align: center;
+    transition: transform 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .card h2 {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    color: #333;
+  }
+
+  .user-info {
+    text-align: left;
+  }
+
+  .user-info p {
+    margin: 0.5rem 0;
+    color: #555;
+  }
+
+  .label {
+    font-weight: bold;
+    color: #222;
+  }
+</style>
+
+<div class="user-grid">
+  {% for user in users %}
+    <div class="card">
+      <h2>{{ user.User_Full_Name }}</h2>
+      <div class="user-info">
+        <p><span class="label">First Name:</span> {{ user.User_First_Name }}</p>
+        <p><span class="label">Last Name:</span> {{ user.User_Last_Name }}</p>
+        <p><span class="label">User Name:</span> {{ user.User_Name }}</p>
+      </div>
+    </div>
+  {% empty %}
+    <p>No users found.</p>
+  {% endfor %}
+</div>
+{% endblock body %}
+

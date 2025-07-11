@@ -1,0 +1,55 @@
+{% extends 'master.html' %}
+
+{% block body %}
+
+<style>
+.form-container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+.form-container h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  color: #04AA6D;
+}
+</style>
+
+<div class="form-container">
+  <h3>Add a Job</h3>
+  <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+      <label for="logo" class="form-label">Upload Logo</label>
+      <input class="form-control" type="file" id="logo" name="logo">
+    </div>
+
+    <div class="mb-3">
+      <label for="job_title" class="form-label">Job Title</label>
+      <input type="text" class="form-control" id="job_title" name="job_title" placeholder="Enter job title" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="job_description" class="form-label">Job Description</label>
+      <textarea class="form-control" id="job_description" name="job_description" rows="4" placeholder="Enter job description" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="job_type" class="form-label">Job Type</label>
+      <select id="job_type" name="Job_type" class="form-select" required>
+        <option value="" selected disabled>Select job type</option>
+        <option value="PartTime">Part Time</option>
+        <option value="FullTime">Full Time</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">Submit</button>
+  </form>
+</div>
+
+{% endblock %}

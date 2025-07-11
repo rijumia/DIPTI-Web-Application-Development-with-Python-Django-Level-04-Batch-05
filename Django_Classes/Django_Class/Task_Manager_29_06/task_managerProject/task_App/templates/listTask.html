@@ -1,0 +1,150 @@
+{% extends 'master.html' %}
+
+{% block body %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+  body {
+    background: #f5f7fa;
+  }
+  .task-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 0 12px rgba(0,0,0,0.08);
+    margin-bottom: 1.5rem;
+  }
+  .task-actions button, .task-actions a {
+    margin-right: 0.4rem;
+  }
+</style>
+
+<div class="container py-4">
+  <h2 class="mb-4 fw-bold text-primary">{{ request.user.first_name }} {{ request.user.last_name }}'s Tasks</h2>
+
+  {% if tasks %}
+    {% for task in tasks %}
+    <div class="task-card">
+      <div class="d-flex justify-content-between align-items-start flex-wrap">
+        <div>
+          <h5 class="mb-1">{{ task.TaskTitle }}</h5>
+          <p class="text-muted mb-2">{{ task.TaskDescription|truncatechars:120 }}</p>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="badge bg-danger">
+              {{ task.TaskPriority|capfirst }} Priority
+            </span>
+            <span class="badge bg-secondary">
+              {{ task.get_TaskStatus_display}}
+            </span>
+            <span class="badge bg-light text-dark border">Due: {{ task.TaskDueDate }}</span>
+          </div>
+        </div>
+        <div class="task-actions mt-3 mt-md-0">
+          <!-- View Modal trigger -->
+          <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewModal{{ task.id }}">
+            <i class="bi bi-eye"></i> View
+          </button>
+          <!-- Edit Modal trigger -->
+          <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editModal{{ task.id }}">
+            <i class="bi bi-pencil"></i> Edit
+          </button>
+          <!-- Delete -->
+          <a href="{% url 'DeleteTask' task.id %}" class="btn btn-sm btn-outline-danger">
+            <i class="bi bi-trash"></i> Delete
+          </a>
+          {% if task.TaskStatus != 'completed' %}
+          <a href="{% url 'taskDone' task.id %}" class="btn btn-sm btn-outline-dark">
+            <i class="bi bi-check-circle-fill"></i> Done
+          </a>
+
+          <a href="{% url 'changeStatus' task.id %}" class="btn btn-sm btn-outline-success">
+            <i class="bi bi-airplane-fill"></i> Change Status
+          </a>
+          {% endif %}
+          
+          {% if task.TaskPriority != 'high' %}
+          <a href="{% url 'changePriority' task.id %}" class="btn btn-sm btn-success">
+            <i class="bi bi-caret-down-fill"></i> Change Priority
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- View Modal -->
+    <div class="modal fade" id="viewModal{{ task.id }}" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ task.TaskTitle }}</h5>
+            {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal"></button> {% endcomment %}
+          </div>
+          <div class="modal-body">
+            <p><strong>Description:</strong><br>{{ task.TaskDescription }}</p>
+            <p><strong>Priority:</strong> {{ task.TaskPriority|capfirst }}</p>
+            <p><strong>Status:</strong> {{ task.TaskStatus|capfirst }}</p>
+            <p><strong>Due Date:</strong> {{ task.TaskDueDate }}</p>
+            <p><strong>Due Time:</strong> {{ task.TaskDueDate|timeuntil }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal{{ task.id }}" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form method="POST" action="{% url 'updateTask' task.id %}">
+            {% csrf_token %}
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Task</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input type="text" name="TaskTitle" class="form-control" value="{{ task.TaskTitle }}" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea name="TaskDescription" class="form-control" rows="3">{{ task.TaskDescription }}</textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Due Date</label>
+                <input type="date" name="TaskDueDate" class="form-control" value="{{ task.TaskDueDate|date:'Y-m-d' }}">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Priority</label>
+                <select name="TaskPriority" class="form-select">
+                  <option value="low" {% if task.TaskPriority == 'low' %}selected{% endif %}>Low</option>
+                  <option value="mediumn" {% if task.TaskPriority == 'mediumn' %}selected{% endif %}>Medium</option>
+                  <option value="high" {% if task.TaskPriority == 'high' %}selected{% endif %}>High</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Status</label>
+                <select name="TaskStatus" class="form-select">
+                  <option value="pending" {% if task.TaskStatus == 'pending' %}selected{% endif %}>Pending</option>
+                  <option value="in_progress" {% if task.TaskStatus == 'in_progress' %}selected{% endif %}>In Progress</option>
+                  <option value="completed" {% if task.TaskStatus == 'completed' %}selected{% endif %}>Completed</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <p class="text-muted text-center">No tasks found.</p>
+  {% endif %}
+</div>
+{% endblock %}

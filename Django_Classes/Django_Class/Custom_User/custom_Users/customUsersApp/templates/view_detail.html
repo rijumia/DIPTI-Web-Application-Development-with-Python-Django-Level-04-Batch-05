@@ -1,0 +1,93 @@
+{% extends 'master.html' %}
+
+{% block body %}
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 40px;
+  }
+  .resume-container {
+    background: #fff;
+    max-width: 800px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  }
+  .profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #4b6cb7;
+  }
+  .header {
+    text-align: center;
+  }
+  .header h2 {
+    margin: 15px 0 5px;
+  }
+  .info {
+    margin: 30px 0;
+  }
+  .info h3 {
+    margin-bottom: 8px;
+    color: #4b6cb7;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 4px;
+  }
+  .info p {
+    margin: 4px 0;
+  }
+  .actions {
+    text-align: center;
+    margin-top: 30px;
+  }
+  .actions a {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 10px 18px;
+    background-color: #4b6cb7;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+  }
+  .actions a:hover {
+    background-color: #3c58a0;
+  }
+</style>
+
+<div class="resume-container">
+  <div class="header">
+    {% if user.image %}
+      <img src="{{ user.image.url }}" alt="Profile Image" class="profile-img" />
+    {% else %}
+      <img src="https://via.placeholder.com/120" alt="No Image" class="profile-img" />
+    {% endif %}
+    <h2>{{ user.username }}</h2>
+    <p>{{ user.email }}</p>
+    <p>{{ user.get_user_type_display }}</p>
+  </div>
+
+  <div class="info">
+    <h3>Personal Details</h3>
+    <p><strong>Age:</strong> {{ user.age }}</p>
+    <p><strong>Mobile:</strong> {{ user.mobile }}</p>
+    <p><strong>Description:</strong><br>{{ user.description }}</p>
+  </div>
+
+  <div class="info">
+    <h3>Education & Experience</h3>
+    <p><strong>Institute:</strong> {{ user.instutiteName }}</p>
+    <p><strong>Passing Year:</strong> {{ user.passingYear }}</p>
+    <p><strong>Work Experience:</strong> {{ user.workExperience }} year(s)</p>
+  </div>
+
+  <div class="actions">
+    <a href="{% url 'deletePage' user.id %}">Delete</a>
+    <a href="{% url 'listPage' %}">Back to List</a>
+  </div>
+</div>
+{% endblock %}
