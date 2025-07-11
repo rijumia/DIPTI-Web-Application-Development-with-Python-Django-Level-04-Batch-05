@@ -15,6 +15,7 @@
           </li>
 
           <!-- Teacher Dropdown -->
+           {% if user.user_type == 'Admin' %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="teacherDropdown" role="button" data-bs-toggle="dropdown">
               Teacher
@@ -24,6 +25,7 @@
               <li><a class="dropdown-item" href="{% url 'teacherListPage' %}">Teacher List</a></li>
             </ul>
           </li>
+          {% endif %}
 
           <!-- Student Dropdown -->
           <li class="nav-item dropdown">
