@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #4b6cb7, #182848);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: auto;
+      padding: 40px 0;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+    }
+
+    .signup-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      width: 480px;
+    }
+
+    .signup-box h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .signup-box input,
+    .signup-box select,
+    .signup-box textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .signup-box button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4b6cb7;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 10px;
+    }
+
+    .signup-box button:hover {
+      background-color: #3c58a0;
+    }
+
+    .signup-box .link {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .signup-box .link a {
+      color: #4b6cb7;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .error {
+      color: red;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-box">
+    <h2>Create Your Account</h2>
+    <form method="POST" action="{% url 'signupPage' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% if error %}
+        <div class="error">{{ error }}</div>
+      {% endif %}
+
+      <input type="text" name="Username" placeholder="Username" required />
+      <input type="email" name="Email" placeholder="Email" required />
+      <input type="password" name="Password" placeholder="Password" required />
+      <input type="password" name="Confirm_Password" placeholder="Confirm Password" required />
+
+      <select name="role" required>
+        <option value="" disabled selected>Select Role</option>
+        <option value="seeker">Job Seeker</option>
+        <option value="recruiter">Recruiter</option>
+      </select>
+
+      <input type="number" name="age" placeholder="Age" />
+      <input type="text" name="mobile" placeholder="Mobile Number" />
+      <input type="text" name="instutiteName" placeholder="Institute Name" />
+      <input type="number" name="passingYear" placeholder="Passing Year" />
+      <input type="number" name="workExperience" placeholder="Work Experience (years)" />
+      <textarea name="description" placeholder="About You" rows="3"></textarea>
+      <label for="image">Profile Picture:</label>
+      <input type="file" name="image" accept="image/*" />
+
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <div class="link">
+      Already have an account? <a href="{% url 'loginPage' %}">Login</a>
+    </div>
+  </div>
+</body>
+</html>

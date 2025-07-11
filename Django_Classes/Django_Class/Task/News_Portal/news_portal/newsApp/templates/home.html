@@ -1,0 +1,103 @@
+{% extends 'master.html' %}
+
+{% block body %}
+    
+<style>
+    .body {
+      background: #f4f6fa;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px;
+    }
+
+    .table-container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .table th {
+      background-color: #007bff;
+      color: #fff;
+      vertical-align: middle;
+    }
+
+    .table td,
+    .table th {
+      vertical-align: middle;
+    }
+
+    .thumbnail-img {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .btn-edit {
+      background-color: #ffc107;
+      color: #fff;
+      border: none;
+    }
+
+    .btn-delete {
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+    }
+
+    .btn-edit:hover {
+      background-color: #e0a800;
+    }
+
+    .btn-delete:hover {
+      background-color: #c82333;
+    }
+
+    .table thead th {
+      text-align: center;
+    }
+
+    .table tbody td {
+      text-align: center;
+    }
+  </style>
+
+  <div class="body">
+    <div class="table-container">
+        <h3 class="mb-4 text-center">News List</h3>
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Thumbnail</th>
+              <th>Title</th>
+              <th>Content</th>
+              <th>Published Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Sample Row (Loop through dynamic data here) -->
+            
+            {% for news in news %}
+            <tr>
+                <td><img src="{{news.thumbnail.url}}" alt="Thumbnail" class="thumbnail-img"></td>
+                <td>{{news.title}}</td>
+                <td>{{news.content}}</td>
+                <td>{{news.published_date}}</td>
+                <td>
+                  <a href="{% url 'editNews' news.id %}" class="btn btn-sm btn-edit me-1">Edit</a>
+                  <a href="{% url 'viewNews' news.id %}" class="btn btn-sm btn-info me-1">View</a>
+                  <a href="{% url 'deleteNews' news.id %}" class="btn btn-sm btn-delete">Delete</a>
+                </td>
+              </tr>
+            {% endfor %}
+                
+            <!-- Repeat rows as needed -->
+          </tbody>
+        </table>
+      </div>
+  </div>
+{% endblock body %}
+
+    

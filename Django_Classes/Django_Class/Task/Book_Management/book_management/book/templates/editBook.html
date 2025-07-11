@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <style>
+    .body {
+      background: linear-gradient(120deg, #f5f7fa, #c3cfe2);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 30px;
+    }
+    
+    .form-container {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+    }
+    
+    .form-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .form-control,
+    .form-label {
+      border-radius: 10px;
+    }
+    
+    .btn-submit {
+      background-color: #007bff;
+      color: #fff;
+      font-weight: 500;
+      border-radius: 10px;
+      padding: 10px 20px;
+    }
+    
+    .btn-submit:hover {
+      background-color: #0056b3;
+    }
+  </style>
+
+  <div class="body">
+    <div class="form-container">
+      <h2 class="form-title">Edit Book</h2>
+      <form method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="bookImage" class="form-label">Book Image</label>
+          <img src="{{ book.bookImage.url }}" class="thumbnail-img" alt="Book Thumbnail" width="100px" />
+          <input type="file" class="form-control" id="bookImage" name="bookImage" accept="image/*" />
+        </div>
+        <div class="mb-3">
+          <label for="title" class="form-label">Book Title</label>
+          <input type="text" class="form-control" id="title" value="{{book.title}}" name="title" placeholder="Enter book title" required />
+        </div>
+        <div class="mb-3">
+          <label for="author" class="form-label">Author Name</label>
+          <input type="text" class="form-control" id="author" value="{{book.author}}" name="author" placeholder="Enter author's name" required />
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter a short book description..." required>{{book.description}}</textarea>
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-submit">Update Book</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

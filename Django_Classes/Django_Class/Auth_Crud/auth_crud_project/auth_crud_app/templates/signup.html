@@ -1,0 +1,83 @@
+{% extends 'master.html' %}
+
+{% block title %}Signup{% endblock %}
+
+{% block body %}
+<style>
+  .signup-form {
+    max-width: 500px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  }
+  .signup-form h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+  }
+</style>
+
+<div class="signup-form">
+  <h2>Create Account</h2>
+
+  {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+
+  <form method="POST" action="{% url 'signUpPage' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input type="text" name="username" id="username" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="fullname" class="form-label">Full Name</label>
+      <input type="text" name="fullname" id="fullname" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" name="email" id="email" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="dob" class="form-label">Date of Birth</label>
+      <input type="date" name="dob" id="dob" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="role" class="form-label">Profile Type</label>
+      <select name="role" id="role" class="form-control" required>
+        <option value="" disabled selected>Select Type</option>
+        <option value="customer">Customer</option>
+        <option value="owner">Owner</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="profileImage" class="form-label">Upload Image</label>
+      <input type="file" name="profileImage" id="profileImage" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" name="password" id="password" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="confirm_password" class="form-label">Confirm Password</label>
+      <input type="password" name="confirm_password" id="confirm_password" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+  </form>
+
+  <div class="text-center mt-3">
+    Already have an account? <a href="{% url 'loginPage' %}">Login</a>
+  </div>
+</div>
+{% endblock %}

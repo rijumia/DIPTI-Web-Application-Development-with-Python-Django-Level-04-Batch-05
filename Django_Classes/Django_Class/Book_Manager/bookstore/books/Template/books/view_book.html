@@ -1,0 +1,151 @@
+{% extends "home.html" %}
+
+{% block body %}
+<style>
+  .view-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 4rem 2rem;
+    min-height: 100vh;
+  }
+
+  .book-card {
+    background: #ffffff;
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    max-width: 780px;
+    width: 100%;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .book-card:hover {
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  .book-card h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #1f2937;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .book-detail {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    row-gap: 1.5rem;
+    column-gap: 2rem;
+    font-size: 1.1rem;
+    color: #374151;
+  }
+
+  .book-detail label {
+    font-weight: 600;
+    color: #6b7280;
+    padding-top: 4px;
+  }
+
+  .book-description {
+    grid-column: 1 / -1;
+    margin-top: 2rem;
+  }
+
+  .book-description p {
+    background: #f9fafb;
+    padding: 1.25rem;
+    border-left: 4px solid #3b82f6;
+    border-radius: 8px;
+    color: #4b5563;
+    font-style: italic;
+  }
+
+  .cover-img {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .cover-img img {
+    max-width: 200px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .back-btn {
+    display: inline-block;
+    margin-top: 2rem;
+    text-align: center;
+    background-color: #3b82f6;
+    color: white;
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding: 0.9rem 1.8rem;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .back-btn:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 720px) {
+    .book-detail {
+      grid-template-columns: 1fr;
+    }
+
+    .book-card {
+      padding: 2rem;
+    }
+
+    .book-card h1 {
+      font-size: 1.8rem;
+    }
+
+    .back-btn {
+      width: 100%;
+      display: block;
+    }
+  }
+</style>
+
+<div class="view-container">
+  <div class="book-card">
+    <h1>Book Details</h1>
+
+    {% if books.BookCoverPhoto %}
+    <div class="cover-img">
+      <img src="/{{ books.BookCoverPhoto }}" alt="Book Cover">
+    </div>
+    {% endif %}
+
+    <div class="book-detail">
+      <label>Title:</label>
+      <div>{{ books.BookTitle }}</div>
+
+      <label>Author:</label>
+      <div>{{ books.BookAuthor }}</div>
+
+      <label>Category:</label>
+      <div>{{ books.BookCategory }}</div>
+
+      <label>Publish Date:</label>
+      <div>{{ books.BookPublishDate|date:"F j, Y" }}</div>
+
+      <div class="book-description">
+        <label>Description:</label>
+        <p>{{ books.BookDescription|default:"No description provided." }}</p>
+      </div>
+    </div>
+
+    <div style="text-align: center;">
+      <a href="{% url 'bookList' %}" class="back-btn">← Back to List</a>
+    </div>
+  </div>
+</div>
+{% endblock body %}

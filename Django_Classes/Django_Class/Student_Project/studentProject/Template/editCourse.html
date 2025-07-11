@@ -1,0 +1,43 @@
+{% extends 'master.html' %}
+
+{% block body %}
+<div style="max-width: 500px; margin: 60px auto; background-color: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 12px 30px rgba(0,0,0,0.1); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  
+  <h2 style="text-align: center; color: #34495e; font-size: 2rem; font-weight: bold; margin-bottom: 32px;">
+    Update Course
+  </h2>
+
+  <div style="text-align: center; margin-bottom: 24px;">
+    <a href="{% url 'courseListPage' %}" style="text-decoration: none; color: #2980b9; font-weight: 600; font-size: 1rem;">📋 View Course List</a>
+  </div>
+
+  <form action="#" method="POST" style="display: flex; flex-direction: column;">
+    {% csrf_token %}
+    
+    <label for="course_name" style="margin-bottom: 6px; font-weight: 600;">Course Name</label>
+    <input type="text" id="course_name" name="course_name" value="{{data.Course_Name}}" placeholder="Enter course name"
+           style="padding: 14px; margin-bottom: 20px; border: 1.5px solid #ccc; border-radius: 10px; font-size: 1rem; transition: 0.3s;" required>
+
+    <label for="course_code" style="margin-bottom: 6px; font-weight: 600;">Course Code</label>
+    <input type="text" id="course_code" name="course_code" value="{{data.Course_Code}}" placeholder="e.g., CS101"
+           style="padding: 14px; margin-bottom: 20px; border: 1.5px solid #ccc; border-radius: 10px; font-size: 1rem; transition: 0.3s;" required>
+
+    <label for="instructor" style="margin-bottom: 6px; font-weight: 600;">Instructor</label>
+    <input type="text" id="instructor" name="instructor" value="{{data.Course_Instructor}}" placeholder="Instructor name"
+           style="padding: 14px; margin-bottom: 20px; border: 1.5px solid #ccc; border-radius: 10px; font-size: 1rem; transition: 0.3s;" required>
+
+    <label for="credits" style="margin-bottom: 6px; font-weight: 600;">Credits</label>
+    <input type="number" id="credits" name="credits" value="{{data.Course_Credits}}" min="1" max="10" placeholder="Number of credits"
+           style="padding: 14px; margin-bottom: 20px; border: 1.5px solid #ccc; border-radius: 10px; font-size: 1rem; transition: 0.3s;" required>
+
+    <label for="description" style="margin-bottom: 6px; font-weight: 600;">Description</label>
+    <textarea id="description" name="description" value="" rows="4" placeholder="Brief course description"
+              style="padding: 14px; margin-bottom: 28px; border: 1.5px solid #ccc; border-radius: 10px; font-size: 1rem; resize: vertical; transition: 0.3s;" required>{{data.Course_Description}}</textarea>
+
+    <button type="submit"
+            style="padding: 14px; background-color: #2980b9; color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.3s ease;">
+      Update Course
+    </button>
+  </form>
+</div>
+{% endblock body %}

@@ -1,0 +1,20 @@
+
+{% extends 'profile/baseprofile.html' %}
+{% block proinfo %}
+<!DOCTYPE html>
+<html>
+
+<body>
+
+
+<div>
+  <form action="{% url 'editseekerotherinfo' seeker.id %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+</body>
+</html>
+{% endblock proinfo %}

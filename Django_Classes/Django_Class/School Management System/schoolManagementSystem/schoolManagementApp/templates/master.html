@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}School Management{% endblock title %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" type="image/png">
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f7fa;
+    }
+
+    .navbar {
+      background: linear-gradient(to right, #0069d9, #00bcd4);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .navbar-brand i {
+      font-size: 1.8rem;
+      color: #fff;
+    }
+
+    .nav-link {
+      color: #f1f1f1 !important;
+      font-weight: 500;
+      transition: 0.3s;
+      position: relative;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: #fff !important;
+      text-shadow: 0 0 6px #fff;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      left: 0;
+      bottom: 0;
+      background-color: #fff;
+      transition: 0.4s;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .profile-img {
+      width: 38px;
+      height: 38px;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+
+    .dropdown-header {
+      font-size: 0.9rem;
+      padding: 0.75rem 1rem;
+      color: #6c757d;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .dropdown-header strong {
+      display: block;
+      color: #000;
+    }
+
+    .dropdown-header small {
+      display: block;
+      font-size: 0.75rem;
+    }
+
+    .dropdown-menu {
+      border-radius: 0.75rem;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .dropdown-item:hover {
+      background-color: #e3f2fd;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="">
+      <i class="bi bi-mortarboard-fill"></i>
+    </a>
+    <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav me-auto gap-2">
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="">
+            <i class="bi bi-house-door me-1"></i>Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/addStudent/' %}active{% endif %}" href="{% url 'addStudent' %}">
+            <i class="bi bi-people-fill me-1"></i>Add Students
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/studentList/' %}active{% endif %}" href="{% url 'studentList' %}">
+            <i class="bi bi-person-badge me-1"></i>Student List
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/classes/' %}active{% endif %}" href="">
+            <i class="bi bi-journal me-1"></i>Classes
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/reports/' %}active{% endif %}" href="">
+            <i class="bi bi-graph-up me-1"></i>Reports
+          </a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+            <img src="{{ request.user.profile_image.url|default:'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' }}" class="profile-img me-2" alt="User">
+            <span>{{ request.user.first_name }}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+            <li class="dropdown-header">
+              <strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong>
+              <strong>{{ request.user.user_type|capfirst }}</strong>
+              <small>{{ request.user.email }}</small>
+            </li>
+            <li><a class="dropdown-item" href="{% url 'profilePage' %}">
+              <i class="bi bi-person-circle me-2"></i>Profile
+            </a></li>
+            <li><a class="dropdown-item" href="{% url 'changePasswordPage' %}">
+              <i class="bi bi-gear me-2"></i>Change Password
+            </a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="{% url 'logoutPage' %}">
+              <i class="bi bi-box-arrow-right me-2"></i>Logout
+            </a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+{% block body %}
+{% endblock body %}
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

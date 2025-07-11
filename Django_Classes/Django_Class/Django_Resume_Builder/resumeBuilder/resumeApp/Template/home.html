@@ -1,0 +1,124 @@
+{% extends "master.html" %}
+
+{% block body %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #eef2f7;
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration:none;
+    color: #fff;
+}
+
+.resume-container {
+    max-width: 800px;
+    background-color: white;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.profile-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #007bff;
+    margin-bottom: 10px;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.section h2 {
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+    color: #333;
+}
+
+.buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.buttons button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.buttons button:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+
+   {% for resume in resumes %}
+    <div class="resume-container">
+        <div class="profile-section">
+            <img src="/{{ resume.Profile_Picture }}" alt="Profile Picture" class="profile-img">
+            <h1>{{ resume.Full_Name }}</h1>
+            <p>Email: {{ resume.Email }}</p>
+            <p>Phone: +88 {{ resume.Phone }}</p>
+            <p>Address: {{ resume.Address }}</p>
+        </div>
+
+        <div class="section">
+            <h2>Summary</h2>
+            <p>{{ resume.Summary }}</p>
+        </div>
+
+        <div class="section">
+            <h2>Education</h2>
+            <p><strong>{{ resume.Degree }}</strong><br>{{ resume.Institute_Name }} , {{ resume.Year_of_Graduation }}</p>
+        </div>
+
+        <div class="section">
+            <h2>Experience</h2>
+            <p><strong>{{ resume.Position }}</strong><br>{{ resume.Company_Name }} - {{ resume.Years_of_Experience }}</p>
+        </div>
+
+        <div class="section">
+            <h2>Skills</h2>
+            <p>{{ resume.Skills }}</p>
+        </div>
+
+        <div class="section">
+            <h2>Hobbies</h2>
+            <p>{{ resume.Hobbies }}</p>
+        </div>
+
+        <div class="section">
+            <h2>Achievements</h2>
+            <p>{{ resume.Achievements }}</p>
+        </div>
+
+        <div class="buttons">
+            <button><a href="{% url 'updateDetails' resume.id %}">Edit</a></button>
+            <button><a href="{% url 'deleteResume' resume.id %}">Delete</a></button>
+        </div>
+    </div>
+
+   {% endfor %}
+
+{% endblock body %}

@@ -1,0 +1,88 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block title %}
+  Preskool - add-room
+{% endblock %}
+{% block body %}
+  <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Add Rooms</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="hostel.html">Hostel</a>
+                  </li>
+                  <li class="breadcrumb-item active">Add Rooms</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-12">
+                        <h5 class="form-title"><span>Room Information</span></h5>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Block</label>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Room No</label>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Room Type</label>
+                          <select class="form-control">
+                            <option>Select Type</option>
+                            <option>Normal</option>
+                            <option>AC</option>
+                            <option>Suite</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>No of Beds</label>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Cose per Bed</label>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Availability</label>
+                          <select class="form-control">
+                            <option>Select Availability</option>
+                            <option>Available</option>
+                            <option>Not Available</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+
+
