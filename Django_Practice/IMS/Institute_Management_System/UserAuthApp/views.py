@@ -142,7 +142,7 @@ def teacherListPage(request):
 def registerStudentPage(request):
     if request.method == 'POST':
         username = request.POST.get('username')
-        teacher_name = request.POST.get('teacher_name')
+        Student_name = request.POST.get('Student_name')
         phone = request.POST.get('phone')
         email = request.POST.get('email')
         profile_picture = request.FILES.get('profile_picture')
@@ -156,26 +156,26 @@ def registerStudentPage(request):
             return redirect('registerTeacherPage')
 
  
-        teacherData = CustomUserModel.objects.create_user(
+        studentData = CustomUserModel.objects.create_user(
             username=username,
             password=phone, 
             email=email,
-            user_type = 'Teacher',
+            user_type = 'Student',
             )
-        if teacherData:
-            TeacherModel.objects.create(
-                teacher_user = teacherData,
-                teacher_name = teacher_name,
-                teacher_profile =profile_picture,
-                teacher_phone = phone,
+        if studentData:
+            StudentModel.objects.create(
+                student_user = studentData,
+                student_name = Student_name,
+                student_profile =profile_picture,
+                student_phone = phone,
             )
         
-        messages.success(request, "Teacher registered successfully.")
-        return redirect('teacherListPage')
+        messages.success(request, "Student registered successfully.")
+        return redirect('studentListPage')
 
-    return render(request, 'teacher.html')
+    return render(request, 'registerStudent.html')
 
 def studentListPage(request):
-    teacherInfo = TeacherModel.objects.all()
-    return render(request, 'teacherList.html',{'teacherInfo':teacherInfo})
+    studentInfo = StudentModel.objects.all()
+    return render(request, 'studentList.html',{'teacherInfo':studentInfo})
 
