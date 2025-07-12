@@ -1,0 +1,53 @@
+{% extends 'master.html' %}
+
+{% block body %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0"><i class="bi bi-person-plus me-2"></i>Add Student</h4>
+        </div>
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
+
+           
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="first_name" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="last_name" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" required>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="age" class="form-label">Age</label>
+                <input type="number" min="3" class="form-control" id="age" name="age" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="grade" class="form-label">Grade</label>
+                <input type="text" class="form-control" id="grade" name="grade" required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="enrollment_date" class="form-label">Enrollment Date</label>
+              <input type="date" class="form-control" id="enrollment_date" name="enrollment_date" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="bi bi-save me-1"></i> Save Student
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

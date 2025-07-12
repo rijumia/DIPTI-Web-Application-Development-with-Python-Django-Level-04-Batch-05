@@ -1,0 +1,11 @@
+
+{% extends 'profile/baseprofile.html' %}
+{% block proinfo %}
+<h3>Username:</h3>
+<p>{{user.username}}</p>
+<h3>User Type:</h3>
+<p>{{user.get_user_type_display}}</p>
+<h3>Email:</h3>
+<p>{{user.email}}</p>
+<button><a href="{% url 'editbasic' user.id %}">Edit basic</a></button>
+{% endblock proinfo %}

@@ -1,0 +1,46 @@
+{% extends 'master.html' %}
+{% block title %}Product Detail{% endblock %}
+
+{% block body %}
+<style>
+  .product-detail-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  .product-detail-container img {
+    width: 100%;
+    max-height: 350px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  .product-detail-container h2 {
+    margin-bottom: 10px;
+    color: #4b6cb7;
+  }
+  .product-detail-container p {
+    margin: 10px 0;
+    font-size: 16px;
+  }
+  .price-tag {
+    font-size: 20px;
+    font-weight: bold;
+    color: #3c58a0;
+    margin-top: 10px;
+  }
+</style>
+
+<div class="product-detail-container">
+  {% if product.productImage %}
+    <img src="{{ product.productImage.url }}" alt="Product Image" />
+  {% endif %}
+  <h2>{{ product.productName }}</h2>
+  <p>{{ product.productDescription }}</p>
+  <p class="price-tag">Price: ${{ product.productPrice }}</p>
+</div>
+{% endblock %}

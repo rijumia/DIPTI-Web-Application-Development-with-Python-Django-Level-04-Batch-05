@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>User Registration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #333;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 40px 45px;
+      border-radius: 16px;
+      box-shadow: 0 25px 40px rgba(102, 126, 234, 0.3);
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .form-container:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 35px 50px rgba(102, 126, 234, 0.4);
+    }
+
+    h2 {
+      margin-bottom: 30px;
+      font-weight: 800;
+      font-size: 2.2rem;
+      color: #444;
+      letter-spacing: 0.06em;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+      text-align: left;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #555;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 18px;
+      font-size: 1rem;
+      border: 1.8px solid #d1d5db;
+      border-radius: 12px;
+      background-color: #f9fafb;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      font-weight: 500;
+      color: #444;
+    }
+    input::placeholder {
+      color: #a1a5b0;
+      font-weight: 400;
+    }
+
+    input:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 8px rgba(102, 126, 234, 0.4);
+      outline: none;
+      background-color: #fff;
+    }
+
+    /* Error styling */
+    input.error {
+      border-color: #ef4444;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+      background-color: #fff5f5;
+    }
+
+    .error-message {
+      color: #ef4444;
+      font-size: 13px;
+      margin-top: 5px;
+      display: none;
+      text-align: left;
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      transition: background 0.4s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
+    }
+    button:hover {
+      background: linear-gradient(90deg, #5563c1, #5a3d87);
+      box-shadow: 0 12px 20px rgba(85, 99, 193, 0.5);
+    }
+    button:active {
+      transform: translateY(2px);
+      box-shadow: 0 5px 10px rgba(85, 99, 193, 0.3);
+    }
+
+    .already-account {
+      margin-top: 24px;
+      font-size: 14px;
+      color: #666;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .already-account a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 6px;
+      transition: color 0.3s ease, text-decoration 0.3s ease;
+    }
+
+    .already-account a:hover {
+      color: #5563c1;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container" role="main" aria-label="User Registration Form">
+    <h2>User Registration</h2>
+    <form method="POST" action="">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="FullName">Full Name</label>
+        <input type="text" id="FullName" name="FullName" maxlength="100" placeholder="John Doe" required />
+      </div>
+
+      <div class="form-group">
+        <label for="UserName">Username</label>
+        <input type="text" id="UserName" name="UserName" maxlength="50" placeholder="yourusername" required />
+      </div>
+
+      <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="email" id="Email" name="Email" placeholder="example@mail.com" required />
+      </div>
+
+      <div class="form-group">
+        <label for="ContactNo">Contact No</label>
+        <input type="text" id="ContactNo" name="ContactNo" maxlength="11" placeholder="0123456789" required />
+      </div>
+
+      <div class="form-group">
+        <label for="Password">Password</label>
+        <input type="password" id="Password" name="Password" maxlength="10" placeholder="••••••••" required />
+      </div>
+
+      <div class="form-group">
+        <label for="ConfirmPassword">Confirm Password</label>
+        <input type="password" id="ConfirmPassword" name="ConfirmPassword" maxlength="10" placeholder="••••••••" required />
+        <div class="error-message" id="error-message">Passwords do not match</div>
+      </div>
+
+      <button type="submit" aria-label="Sign up for a new account">Signup</button>
+    </form>
+
+    <div class="already-account">
+      Already have an account?
+      <a href="{% url 'login' %}" aria-label="Go to login page">Login</a>
+    </div>
+  </div>
+
+  <script>
+    function validateForm() {
+      const passwordInput = document.getElementById('Password');
+      const confirmPasswordInput = document.getElementById('ConfirmPassword');
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+      const errorMessage = document.getElementById('error-message');
+
+      if (password !== confirmPassword) {
+        errorMessage.style.display = 'block';
+        passwordInput.classList.add('error');
+        confirmPasswordInput.classList.add('error');
+        return false;
+      } else {
+        errorMessage.style.display = 'none';
+        passwordInput.classList.remove('error');
+        confirmPasswordInput.classList.remove('error');
+        return true;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<style>
+    .job-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    
+    .job-card {
+      width: calc(33.33% - 20px); /* Adjust width based on your design */
+      background-color: #f5f5f5;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .job-card h3 {
+      margin-top: 0;
+      color: #333;
+    }
+    
+    .job-card p {
+      color: #666;
+    }
+    
+    .job-card img {
+      display: block;
+      margin: 10px auto;
+    }
+    
+    .buttons {
+      margin-top: 15px;
+    }
+    
+    .buttons button {
+      margin-right: 10px;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .edit-btn {
+      background-color: #4CAF50;
+      color: white;
+    }
+    
+    .delete-btn {
+      background-color: #f44336;
+      color: white;
+    }
+    
+    .view-btn {
+      background-color: #008CBA;
+      color: white;
+    }
+    
+    </style>
+<div class="job-cards">
+  {% for i,already_applied in job_filtered %}
+  <div class="job-card">
+    <h3>Skill</h3>
+
+    <p>{{i.title}}</p>
+    <p>{{i.skill_sets}}</p>
+    <p>{{i.category}}</p>
+
+        {% if user.user_type == 'recruiter' and user == i.created_by %}
+      
+        <button class="edit-btn"><a href="{% url 'editjob' i.id %}">Edit</a></button>
+        <button class="delete-btn"><a href="{% url 'deletejob' i.id %}">Delete</a></button>
+        
+        {% elif user.user_type == 'seeker' and not already_applied %}
+        
+        <button class="edit-btn"><a href="{% url 'applyjob' i.id %}">Apply job</a></button>
+        
+        {% elif already_applied %}
+        <button class="edit-btn"><a href="{% url 'appliedjob' %}">You Already applied for this job, Check applied job page</a></button>
+  
+        {% endif %}
+
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+{% endblock content %}

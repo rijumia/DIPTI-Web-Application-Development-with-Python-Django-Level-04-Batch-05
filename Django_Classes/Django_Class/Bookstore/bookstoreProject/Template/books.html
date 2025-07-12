@@ -1,0 +1,37 @@
+{% extends 'master.html' %}
+
+
+{% block body %}
+    <h2 style="text-align: center; color: #333;">📘 Book Inventory</h2>
+
+  <div style="overflow-x:auto; max-width: 900px; margin: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 6px; background-color: white;">
+
+    <table style="width: 100%; border-collapse: collapse;">
+      <!-- Table Header -->
+      <thead>
+        <tr style="background-color: #4A90E2; color: white;">
+          <th style="padding: 12px; text-align: left;">Title</th>
+          <th style="padding: 12px; text-align: left;">Author</th>
+          <th style="padding: 12px; text-align: left;">Price</th>
+          <th style="padding: 12px; text-align: left;">Stock</th>
+          <th style="padding: 12px; text-align: left;">Publication Date</th>
+        </tr>
+      </thead>
+
+      <!-- Table Body -->
+      <tbody>
+        {% for x in data %}
+        <tr style="background-color: #f2f2f2;">
+          <td style="padding: 12px;">{{x.title}}</td>
+          <td style="padding: 12px;">{{x.author}}</td>
+          <td style="padding: 12px;"><span>$</span>{{x.price}}</td>
+          <td style="padding: 12px;">{{x.stock}}</td>
+          <td style="padding: 12px;">{{x.publishDate}}</td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+  </div>
+{% endblock body %}

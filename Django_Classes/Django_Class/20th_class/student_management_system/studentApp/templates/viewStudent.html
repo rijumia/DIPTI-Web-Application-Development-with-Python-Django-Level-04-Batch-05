@@ -1,0 +1,79 @@
+{% extends 'master.html' %}
+
+{% block body %}
+<style>
+    .profile-card {
+      max-width: 700px;
+      margin: auto;
+      padding: 25px;
+      background: #f8f9fa;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+    }
+    .profile-img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .profile-header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .info-label {
+      font-weight: 600;
+      color: #555;
+    }
+    .info-value {
+      color: #333;
+    }
+  </style>
+  <div class="container py-5">
+    <div class="profile-card">
+      <div class="profile-header">
+        <img src="{{student.profile_image.url}}" alt="Profile Image" class="profile-img mb-3">
+        <h4 class="fw-bold mb-0">{{student.name}}</h4>
+        <small class="text-muted">{{student.roll_number}}</small>
+        <div class="mt-2">
+            {% if student.is_active %}
+                <span class="badge bg-success">Active</span>
+              {% else %}
+                <span class="badge bg-secondary">Inactive</span>
+              {% endif %}
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <div class="info-label">Email</div>
+          <div class="info-value">{{student.email}}</div>
+        </div>
+        <div class="col-md-6">
+          <div class="info-label">Phone</div>
+          <div class="info-value">{{student.phone}}</div>
+        </div>
+        <div class="col-md-12">
+          <div class="info-label">Address</div>
+          <div class="info-value">{{student.address}}</div>
+        </div>
+        <div class="col-md-6">
+          <div class="info-label">Date of Birth</div>
+          <div class="info-value">{{student.dob}}</div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center gap-3">
+        <a href="{% url 'editStudent' student.id %}" class="btn btn-sm btn-primary me-1">
+            <i class="bi bi-pencil"></i> Edit
+          </a>
+          <a href="{% url 'deleteStudent' student.id %}" class="btn btn-sm btn-danger">
+            <i class="bi bi-trash"></i> Delete
+          </a>
+      </div>
+    </div>
+  </div>
+    
+{% endblock body %}
+    

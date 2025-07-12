@@ -1,0 +1,80 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block title %}
+  Preskool - add-transport
+{% endblock %}
+{% block body %}
+  <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Add Transport</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="transport.html">Transport</a>
+                  </li>
+                  <li class="breadcrumb-item active">Add Transport</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-12">
+                        <h5 class="form-title"><span>Transport Information</span></h5>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Route Name</label>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Vehicle Number</label>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Driver Name</label>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>License Number</label>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Contact Number</label>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Driver Address</label>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+
+
+

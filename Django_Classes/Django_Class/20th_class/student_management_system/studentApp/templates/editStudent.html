@@ -1,0 +1,83 @@
+{% extends 'master.html' %}
+
+{% block body %}
+  <style>
+    .form-container {
+      max-width: 700px;
+      margin: auto;
+      padding: 30px;
+      background: #f8f9fa;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .profile-img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    .form-title {
+      margin-bottom: 30px;
+      font-weight: 600;
+      text-align: center;
+    }
+  </style>
+
+  <div class="container py-5">
+    <div class="form-container">
+      <h2 class="form-title">Edit Student</h2>
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="profile_image" class="form-label">Profile Image</label>
+          <img src="{{student.profile_image.url}}" alt="Profile" class="profile-img">
+          <input type="file" class="form-control" id="profile_image" name="profile_image" accept="image/*" />
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{student.name}}" required />
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="roll_number" class="form-label">Roll Number</label>
+            <input type="text" class="form-control" id="roll_number" name="roll_number" value="{{student.roll_number}}" required />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{student.email}}" required />
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="phone" name="phone" value="{{student.phone}}" required />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="address" class="form-label">Address</label>
+          <textarea class="form-control" id="address" name="address" rows="2" required>{{student.address}}</textarea>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="dob" class="form-label">Date of Birth</label>
+            <input type="date" class="form-control" id="dob" name="dob" value="{{student.dob|date:'Y-m-d'}}" required />
+          </div>
+          <div class="mb-3 col-md-6 d-flex align-items-center">
+            <div class="form-check form-switch mt-4">
+                <input class="form-check-input" type="checkbox" id="is_active" name="is_active" {% if student.is_active %}checked{% endif %}>
+              <label class="form-check-label" for="is_active">Active Student</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-lg">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

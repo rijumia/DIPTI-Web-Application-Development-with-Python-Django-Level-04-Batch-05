@@ -1,0 +1,199 @@
+{% extends "home.html" %}
+
+{% block body %}
+<style>
+  .body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f9fafb;
+    margin: 0;
+    padding: 4rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+  main {
+    background: #fff;
+    max-width: 720px;
+    width: 100%;
+    padding: 3rem 3.5rem;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    transition: box-shadow 0.3s ease;
+  }
+  main:hover {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+  h1 {
+    margin-bottom: 2.5rem;
+    font-weight: 700;
+    color: #222;
+    text-align: center;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+  }
+  form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.8rem 2.5rem;
+  }
+  /* Full width for description and button */
+  form > div.full-width {
+    grid-column: 1 / -1;
+  }
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #444;
+    font-size: 1rem;
+  }
+  input[type="text"],
+  input[type="date"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.65rem 1rem;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #222;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  input[type="text"]:focus,
+  input[type="date"]:focus,
+  select:focus,
+  textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 8px #3b82f6aa;
+    outline: none;
+  }
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  button {
+    grid-column: 1 / -1;
+    margin-top: 1.5rem;
+    background-color: #3b82f6;
+    color: white;
+    font-weight: 700;
+    padding: 1rem 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.25rem;
+    letter-spacing: 1.2px;
+    transition: background-color 0.25s ease;
+  }
+  button:hover {
+    background-color: #2563eb;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 720px) {
+    main {
+      max-width: 100%;
+      padding: 2.5rem 2rem;
+    }
+    form {
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+    }
+    button {
+      font-size: 1.1rem;
+      margin-top: 1rem;
+    }
+  }
+</style>
+
+<div class="body">
+  <main>
+    <h1>Update Book</h1>
+    <form method="POST" action="" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+      <div>
+  <label for="title">Title *</label>
+  <input type="text" id="title" name="title" placeholder="Enter book title" required autocomplete="off" value="{{ books.BookTitle }}" />
+</div>
+<div>
+  <label for="author">Author *</label>
+  <input type="text" id="author" name="author" placeholder="Enter author name" required autocomplete="off" value="{{ books.BookAuthor }}" />
+</div>
+<div>
+  <label for="category">Category *</label>
+  <select id="category" name="category" required>
+    <option value="" disabled>Select category</option>
+    <option {% if books.BookCategory == 'Fiction' %}selected{% endif %}>Fiction</option>
+    <option {% if books.BookCategory == 'Non-fiction' %}selected{% endif %}>Non-fiction</option>
+    <option {% if books.BookCategory == 'Science Fiction' %}selected{% endif %}>Science Fiction</option>
+    <option {% if books.BookCategory == 'Biography' %}selected{% endif %}>Biography</option>
+    <option {% if books.BookCategory == 'Classic' %}selected{% endif %}>Classic</option>
+    <option {% if books.BookCategory == 'Mystery' %}selected{% endif %}>Mystery</option>
+    <option {% if books.BookCategory == 'Fantasy' %}selected{% endif %}>Fantasy</option>
+    <option {% if books.BookCategory == 'History' %}selected{% endif %}>History</option>
+  </select>
+</div>
+<div>
+  <label for="publishDate">Publish Date *</label>
+  <input type="date" id="publishDate" name="publishDate" required value="{{ books.BookPublishDate|date:'Y-m-d' }}" />
+</div>
+<div class="full-width">
+  <label for="description">Description</label>
+  <textarea id="description" name="description" placeholder="Enter a brief description (optional)">{{ books.BookDescription }}</textarea>
+</div>
+<div class="full-width">
+  {% if books.BookCoverPhoto %}
+    <img src="/{{ books.BookCoverPhoto }}" alt="Current Cover" style="max-width: 150px; margin-bottom: 1rem;" />
+  {% endif %}
+  <label for="cover">Cover Image</label>
+  <input type="file" name="cover" value="{{ books.BookCoverPhoto }}" id="cover" />
+</div>
+
+      <!-- <div>
+        <label for="title">Title *</label>
+        <input type="text" id="title" name="title" value="{{ books.BookTitle }}" placeholder="Enter book title" required autocomplete="off" />
+      </div>
+      <div>
+        <label for="author">Author *</label>
+        <input type="text" id="author" name="author" value="{{ books.BookAuthor }}" placeholder="Enter author name" required autocomplete="off" />
+      </div>
+
+      <div>
+        <label for="category">Category *</label>
+        <select id="category" name="category" required>
+         <option value="" disabled {% if not books.BookCategory %}selected{% endif %}>Select category</option>
+         <option {% if books.BookCategory == 'Fiction' %}selected{% endif %}>Fiction</option>
+         <option {% if books.BookCategory == 'Non-fiction' %}selected{% endif %}>Non-fiction</option>
+         <option {% if books.BookCategory == 'Science Fiction' %}selected{% endif %}>Science Fiction</option>
+        <option {% if books.BookCategory == 'Biography' %}selected{% endif %}>Biography</option>
+        <option {% if books.BookCategory == 'Classic' %}selected{% endif %}>Classic</option>
+        <option {% if books.BookCategory == 'Mystery' %}selected{% endif %}>Mystery</option>
+        <option {% if books.BookCategory == 'Fantasy' %}selected{% endif %}>Fantasy</option>
+        <option {% if books.BookCategory == 'History' %}selected{% endif %}>History</option>
+      </select>
+      </div>
+      <div>
+        <label for="publishDate">Publish Date *</label>
+        <input type="date" id="publishDate" name="publishDate" value="{{ books.BookPublishDate|date:'Y-m-d' }}" required />
+      </div>
+      <div class="full-width">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" placeholder="Enter a brief description (optional)">{{ books.BookDescription }}</textarea>
+      </div>
+      <div class="full-width">
+        <img src="{{book.BookCoverPhoto}}" height="50px" alt="">
+        <label for="cover">Cover Image</label>
+        <input type="file" name="cover" id="" value="{{ books.BookCoverPhoto }}">
+      </div>-->
+      <button type="submit" aria-label="Add Book">Update Book</button> 
+    </form>
+  </main>
+</div>
+
+
+
+
+{% endblock body %}

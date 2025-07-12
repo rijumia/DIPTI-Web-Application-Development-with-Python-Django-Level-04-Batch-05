@@ -1,0 +1,19 @@
+
+
+*List = []
+*Tuple = {}
+*Dictionary = {}
+*Set = ()
+
+============== List =======================
+1) List used for store multiple Data: myList = []
+2) list is mutable, index, ordered : 
+3) Allow duplicate
+
+============== List Accessing=======================
+
+color_name = ["Green", "Blue", "White", "Oronge", "Purple", "Lime", "levender"]
+
+color_name[start:end:increment/decrement]
+color_name[0:5]
+color_name[2:]
