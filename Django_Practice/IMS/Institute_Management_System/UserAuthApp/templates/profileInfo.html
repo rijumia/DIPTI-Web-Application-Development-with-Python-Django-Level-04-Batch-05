@@ -1,0 +1,25 @@
+{% extends 'master/master.html' %}
+
+
+<title>{% block title %}Profile Info | Institute Management{% endblock %}</title>
+
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Profile Information</h4>
+    </div>
+    <div class="card-body">
+      <p><strong>Username:</strong> {{ user.username }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      {% if user.get_user_type_display %}
+        <p><strong>User Type:</strong> {{ user.get_user_type_display }}</p>
+      {% endif %}
+      {% if user.is_superuser %}
+        <p><strong>Role:</strong> Admin</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

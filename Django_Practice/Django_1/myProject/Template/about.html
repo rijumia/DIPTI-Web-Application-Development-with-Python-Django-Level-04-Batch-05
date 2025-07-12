@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern Portfolio</title>
+    <style>
+      /* Variables */
+      :root {
+        --primary: #6c63ff;
+        --secondary: #ff6b6b;
+        --background: #0f172a;
+        --surface: #1e293b;
+        --text: #f8fafc;
+        --text-secondary: #94a3b8;
+        --transition: all 0.3s ease;
+      }
+
+      /* Reset & Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--background);
+        color: var(--text);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* Animated Background */
+      .animated-background {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .cube {
+        position: absolute;
+        background: var(--primary);
+        opacity: 0.1;
+        border-radius: 50%;
+        animation: float 15s infinite;
+      }
+
+      .cube:nth-child(1) {
+        width: 200px;
+        height: 200px;
+        top: 10%;
+        left: 10%;
+        animation-delay: 0s;
+      }
+
+      .cube:nth-child(2) {
+        width: 150px;
+        height: 150px;
+        top: 70%;
+        left: 80%;
+        animation-delay: -2s;
+        background: var(--secondary);
+      }
+
+      .cube:nth-child(3) {
+        width: 100px;
+        height: 100px;
+        top: 40%;
+        left: 60%;
+        animation-delay: -4s;
+      }
+
+      .cube:nth-child(4) {
+        width: 180px;
+        height: 180px;
+        top: 80%;
+        left: 20%;
+        animation-delay: -6s;
+        background: var(--secondary);
+      }
+
+      .cube:nth-child(5) {
+        width: 160px;
+        height: 160px;
+        top: 20%;
+        left: 80%;
+        animation-delay: -8s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-100px) rotate(180deg);
+        }
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      /* Header */
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 1.5rem 2rem;
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 500;
+        position: relative;
+        padding: 0.5rem 0;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: var(--transition);
+      }
+
+      .nav-links a:hover::after,
+      .nav-links a.active::after {
+        width: 100%;
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding-top: 5rem;
+      }
+
+      .hero-content {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .hero-text h1 {
+        font-size: 4rem;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+      }
+
+      .glitch-text {
+        position: relative;
+        animation: glitch 3s infinite;
+      }
+
+      .glitch-text::before,
+      .glitch-text::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .glitch-text::before {
+        color: var(--primary);
+        animation: glitch-top 1.5s infinite linear alternate-reverse;
+      }
+
+      .glitch-text::after {
+        color: var(--secondary);
+        animation: glitch-bottom 1.5s infinite linear alternate-reverse;
+      }
+
+      @keyframes glitch-top {
+        0% {
+          transform: translate(-2px, -2px);
+        }
+        100% {
+          transform: translate(2px, 2px);
+        }
+      }
+
+      @keyframes glitch-bottom {
+        0% {
+          transform: translate(2px, 2px);
+        }
+        100% {
+          transform: translate(-2px, -2px);
+        }
+      }
+
+      .typing-container {
+        height: 30px;
+        margin-bottom: 2rem;
+      }
+
+      .typing {
+        color: var(--primary);
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+
+      .hero-description {
+        color: var(--text-secondary);
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+      }
+
+      .circle-container {
+        position: relative;
+        width: 400px;
+        height: 400px;
+      }
+
+      .circle {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        animation: rotate 10s linear infinite;
+      }
+
+      .profile-img {
+        position: absolute;
+        width: 90%;
+        height: 90%;
+        top: 5%;
+        left: 5%;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Buttons */
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .btn {
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .btn.small {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .btn.primary {
+        background: var(--primary);
+        color: white;
+      }
+
+      .btn.secondary {
+        background: transparent;
+        border: 2px solid var(--primary);
+        color: var(--primary);
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(108, 99, 255, 0.2);
+      }
+
+      /* Work Section */
+      .work {
+        padding: 8rem 0;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 4rem;
+        text-align: center;
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .footer{
+        font-size: 1.1rem;
+        margin-top: 4rem;
+        text-align: center;
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .work-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .work-card {
+        background: var(--surface);
+        border-radius: 20px;
+        overflow: hidden;
+        transition: var(--transition);
+      }
+
+      .work-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .work-image {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+      }
+
+      .work-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+
+      .work-card:hover .work-image img {
+        transform: scale(1.1);
+      }
+
+      .work-content {
+        padding: 1.5rem;
+      }
+
+      .work-content h3 {
+        margin-bottom: 0.5rem;
+      }
+
+      .work-content p {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+      }
+
+      /* About Section */
+      .about {
+        padding: 8rem 0;
+      }
+
+      .skills {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .skill-card {
+        margin-bottom: 2rem;
+      }
+
+      .skill-title {
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+      }
+
+      .skill-bar {
+        height: 10px;
+        background: var(--surface);
+        border-radius: 5px;
+        overflow: hidden;
+      }
+
+      .skill-progress {
+        height: 100%;
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        width: 0;
+        transition: width 1.5s ease-in-out;
+      }
+
+      /* Contact Section */
+      .contact {
+        padding: 8rem 0;
+      }
+
+      .contact-container {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .form-group {
+        position: relative;
+        margin-bottom: 2rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 1rem;
+        background: var(--surface);
+        border: none;
+        border-radius: 5px;
+        color: var(--text);
+        font-size: 1rem;
+      }
+
+      .form-group textarea {
+        height: 150px;
+        resize: none;
+      }
+
+      .form-group label {
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+        color: var(--text-secondary);
+        transition: var(--transition);
+        pointer-events: none;
+      }
+
+      .form-group input:focus ~ label,
+      .form-group textarea:focus ~ label,
+      .form-group input:valid ~ label,
+      .form-group textarea:valid ~ label {
+        top: -0.5rem;
+        left: 0;
+        font-size: 0.8rem;
+        color: var(--primary);
+      }
+
+      .line {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: var(--transition);
+      }
+
+      .form-group input:focus ~ .line,
+      .form-group textarea:focus ~ .line {
+        width: 100%;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .hero-content {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+
+        .circle-container {
+          width: 300px;
+          height: 300px;
+          margin: 0 auto;
+        }
+
+        .nav-toggle {
+          display: block;
+        }
+
+        .nav-links {
+          position: fixed;
+          top: 80px;
+          left: 0;
+          width: 100%;
+          background: var(--surface);
+          padding: 2rem;
+          flex-direction: column;
+          text-align: center;
+          transform: translateY(-100%);
+          transition: var(--transition);
+        }
+
+        .nav-links.active {
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hero-text h1 {
+          font-size: 2.5rem;
+        }
+
+        .circle-container {
+          width: 250px;
+          height: 250px;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Animated Background -->
+    <div class="animated-background">
+      <div class="cube"></div>
+      <div class="cube"></div>
+      <div class="cube"></div>
+      <div class="cube"></div>
+      <div class="cube"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+      <!-- Header Section -->
+      <header class="header">
+        <div class="logo">RJ Portfolio</div>
+        <nav class="nav">
+          <div class="nav-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <ul class="nav-links">
+            <li><a href="{% url 'homePage' %}">Home</a></li>
+            <li><a href="{% url 'workPage' %}">Work</a></li>
+            <li><a href="{% url 'aboutPage' %}" class="active">About</a></li>
+            <li><a href="{% url 'contactPage' %}">Contact</a></li>
+            <li><a href="{% url 'loginPage' %}">LogIn</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <!-- Hero Section -->
+      <!-- <section id="home" class="hero">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1 class="glitch-text" data-text="Creative Developer">
+              Creative Developer
+            </h1>
+            <div class="typing-container">
+              <span class="typing"></span>
+            </div>
+            <p class="hero-description">
+              Crafting digital experiences with code and creativity
+            </p>
+            <div class="cta-buttons">
+              <button class="btn primary">View Work</button>
+              <button class="btn secondary">Contact Me</button>
+            </div>
+          </div>
+          <div class="hero-image">
+            <div class="circle-container">
+              <div class="circle"></div>
+              <img
+                src="https://i.imgur.com/T7Am8ag.jpeg?w=500&h=500&fit=crop"
+                alt="Profile"
+                class="profile-img"
+              />
+            </div>
+          </div>
+        </div>
+      </section> -->
+
+      <!-- Work Section -->
+      <!-- <section id="work" class="work">
+        <h2 class="section-title">Featured Work</h2>
+        <div class="work-grid">
+          <div class="work-card">
+            <div class="work-image">
+              <img
+                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=300&fit=crop"
+                alt="Project 1"
+              />
+            </div>
+            <div class="work-content">
+              <h3>Project One</h3>
+              <p>Web Development</p>
+              <a href="#" class="btn small">View Project</a>
+            </div>
+          </div>
+          <div class="work-card">
+            <div class="work-image">
+              <img
+                src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=500&h=300&fit=crop"
+                alt="Project 2"
+              />
+            </div>
+            <div class="work-content">
+              <h3>Project Two</h3>
+              <p>UI/UX Design</p>
+              <a href="#" class="btn small">View Project</a>
+            </div>
+          </div>
+          <div class="work-card">
+            <div class="work-image">
+              <img
+                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&h=300&fit=crop"
+                alt="Project 3"
+              />
+            </div>
+            <div class="work-content">
+              <h3>Project Three</h3>
+              <p>App Development</p>
+              <a href="#" class="btn small">View Project</a>
+            </div>
+          </div>
+        </div>
+      </section> -->
+
+      <!-- About Section -->
+      <section id="about" class="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+          <div class="skills">
+            <div class="skill-card">
+              <div class="skill-title">Web Development</div>
+              <div class="skill-bar">
+                <div class="skill-progress" data-progress="90"></div>
+              </div>
+            </div>
+            <div class="skill-card">
+              <div class="skill-title">UI/UX Design</div>
+              <div class="skill-bar">
+                <div class="skill-progress" data-progress="85"></div>
+              </div>
+            </div>
+            <div class="skill-card">
+              <div class="skill-title">Mobile Development</div>
+              <div class="skill-bar">
+                <div class="skill-progress" data-progress="75"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> -->
+
+      <!-- Contact Section-->
+      <!-- <section id="contact" class="contact">
+        <h2 class="section-title">Get in Touch</h2>
+        <div class="contact-container">
+          <form class="contact-form">
+            <div class="form-group">
+              <input type="text" required />
+              <label>Name</label>
+              <span class="line"></span>
+            </div>
+            <div class="form-group">
+              <input type="email" required />
+              <label>Email</label>
+              <span class="line"></span>
+            </div>
+            <div class="form-group">
+              <textarea required></textarea>
+              <label>Message</label>
+              <span class="line"></span>
+            </div>
+            <button type="submit" class="btn primary">Send Message</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="footer">
+        <p class="text-center">
+          &copy; 2023 RJ Portfolio. All rights reserved.
+        </p>
+      </section>
+    </div>
+
+    <script>
+      // Typing Animation
+      const typingText = document.querySelector(".typing");
+      const words = ["RJ Developer", "UI/UX Designer", "Problem Solver"];
+      let wordIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+
+      function type() {
+        const currentWord = words[wordIndex];
+
+        if (isDeleting) {
+          typingText.textContent = currentWord.substring(0, charIndex - 1);
+          charIndex--;
+        } else {
+          typingText.textContent = currentWord.substring(0, charIndex + 1);
+          charIndex++;
+        }
+
+        if (!isDeleting && charIndex === currentWord.length) {
+          isDeleting = true;
+          setTimeout(type, 1500);
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          wordIndex = (wordIndex + 1) % words.length;
+          setTimeout(type, 500);
+        } else {
+          setTimeout(type, isDeleting ? 50 : 100);
+        }
+      }
+
+      // Start typing animation
+      type();
+
+      // Skill Progress Animation
+      const skillProgress = document.querySelectorAll(".skill-progress");
+
+      function animateSkills() {
+        skillProgress.forEach((progress) => {
+          const value = progress.getAttribute("data-progress");
+          progress.style.width = value + "%";
+        });
+      }
+
+      // Intersection Observer for skills
+      const skillsObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animateSkills();
+              skillsObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+
+      document.querySelector(".skills").forEach((section) => {
+        skillsObserver.observe(section);
+      });
+
+      // Smooth Scrolling
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          target.scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+
+      // Mobile Navigation
+      const navToggle = document.querySelector(".nav-toggle");
+      const navLinks = document.querySelector(".nav-links");
+
+      navToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+
+      // Active Navigation Link
+      const sections = document.querySelectorAll("section");
+      const navItems = document.querySelectorAll(".nav-links a");
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+
+          if (scrollY >= sectionTop - 300) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        navItems.forEach((item) => {
+          item.classList.remove("active");
+          if (item.getAttribute("href").slice(1) === current) {
+            item.classList.add("active");
+          }
+        });
+      });
+
+      // Form Animation
+      const formGroups = document.querySelectorAll(".form-group");
+
+      formGroups.forEach((group) => {
+        const input = group.querySelector("input, textarea");
+        const label = group.querySelector("label");
+
+        input.addEventListener("focus", () => {
+          label.classList.add("active");
+        });
+
+        input.addEventListener("blur", () => {
+          if (input.value === "") {
+            label.classList.remove("active");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

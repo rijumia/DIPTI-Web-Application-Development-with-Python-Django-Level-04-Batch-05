@@ -1,0 +1,47 @@
+{% extends 'home.html' %}
+
+{% block title %}
+<title>Add New Book</title>
+{% endblock title %}
+
+{% block body %}
+<section style="padding: 2rem; font-family: 'Segoe UI', sans-serif; background-color: #f4f6fa;">
+
+  <h2 style="text-align: center; margin-bottom: 2rem;">Add a New Book</h2>
+
+  <div style="max-width: 600px; margin: 0 auto; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+    <form method="POST" action="" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div style="margin-bottom: 1rem;">
+        <label for="book_name" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Book Name</label>
+        <input type="text" id="book_name" name="book_name" required style="width: 100%; padding: 0.7rem; border: 1px solid #ccc; border-radius: 6px;">
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label for="author_name" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Author Name</label>
+        <input type="text" id="author_name" name="author_name" required style="width: 100%; padding: 0.7rem; border: 1px solid #ccc; border-radius: 6px;">
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label for="book_price" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Book Price</label>
+        <input type="number" step="0.01" id="book_price" name="book_price" required style="width: 100%; padding: 0.7rem; border: 1px solid #ccc; border-radius: 6px;">
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label for="book_description" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Description</label>
+        <textarea id="book_description" name="book_description" rows="4" required style="width: 100%; padding: 0.7rem; border: 1px solid #ccc; border-radius: 6px;"></textarea>
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label for="book_image" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Book Image</label>
+        <input type="file" id="book_image" name="book_image" accept="image/*" required style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 6px;">
+      </div>
+
+      <button type="submit" style="width: 100%; background-color: #0077ff; color: white; padding: 0.8rem; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
+        Add Book
+      </button>
+    </form>
+  </div>
+</section>
+{% endblock body %}

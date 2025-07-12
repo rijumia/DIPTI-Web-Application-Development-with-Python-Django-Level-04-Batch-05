@@ -1,0 +1,30 @@
+{% extends "master.html" %}
+
+{% block body %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+
+<div class="w3-container">
+  <h2 class="w3-center">All Events</h2>
+
+  <div class="w3-row-padding w3-margin-top">
+    {% for event in events %}
+    <div class="w3-third w3-margin-bottom">
+      <div class="w3-card-4">
+        <header class="w3-container w3-blue">
+          <h3>{{ event.event_title }}</h3>
+        </header>
+
+        <div class="w3-container w3-padding">
+          <p>{{ event.event_description }}</p>
+        </div>
+
+        <footer class="w3-container w3-blue">
+          <h5>Status: {{ event.event_status }}</h5>
+        </footer>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock body %}

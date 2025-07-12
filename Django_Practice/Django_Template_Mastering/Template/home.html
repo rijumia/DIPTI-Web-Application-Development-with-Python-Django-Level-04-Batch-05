@@ -1,0 +1,30 @@
+{% extends 'master.html' %}
+
+{% block body %}
+
+  <h2 style="text-align: center; color: #333;">Customer List</h2>
+
+  <table style="width: 100%; border-collapse: collapse; background-color: #fff; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+    <thead>
+      <tr style="background-color: #2f80ed; color: white;">
+        <th style="padding: 12px 15px; text-align: left;">Name</th>
+        <th style="padding: 12px 15px; text-align: left;">Email</th>
+        <th style="padding: 12px 15px; text-align: left;">Contact</th>
+        <th style="padding: 12px 15px; text-align: left;">Address</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for i in data %}
+      <tr style="border-bottom: 1px solid #e0e0e0;">
+        <td style="padding: 12px 15px;">{{i.name}}</td>
+        <td style="padding: 12px 15px;">{{i.email}}</td>
+        <td style="padding: 12px 15px;">{{i.address}}</td>
+        <td style="padding: 12px 15px;">{{i.phone}}</td>
+      </tr>
+    {% endfor %}
+      
+    </tbody>
+  </table>
+ 
+{% endblock body %}

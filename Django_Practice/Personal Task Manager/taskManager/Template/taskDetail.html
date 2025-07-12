@@ -1,0 +1,99 @@
+{% extends 'master.html' %}
+
+{% block title %}📌 Task Details{% endblock %}
+
+{% block body %}
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+  }
+
+  .detail-container {
+    max-width: 700px;
+    margin: 80px auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .detail-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #2f3640;
+  }
+
+  .detail-item {
+    margin-bottom: 20px;
+  }
+
+  .detail-item strong {
+    display: inline-block;
+    width: 120px;
+    color: #2f3640;
+  }
+
+  .status {
+    font-weight: bold;
+  }
+
+  .completed {
+    color: green;
+  }
+
+  .not-completed {
+    color: red;
+  }
+
+  .back-btn {
+    display: block;
+    width: 120px;
+    margin: 30px auto 0;
+    text-align: center;
+    background-color: #00a8ff;
+    color: white;
+    padding: 10px 0;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+
+  .back-btn:hover {
+    background-color: #0077cc;
+  }
+</style>
+
+<div class="detail-container">
+  <h2>Task Details</h2>
+
+  <div class="detail-item">
+    <strong>Title:</strong> {{ task.title }}
+  </div>
+
+  <div class="detail-item">
+    <strong>Category:</strong> {{ task.category }}
+  </div>
+
+  <div class="detail-item">
+    <strong>Description:</strong> {{ task.description|default:"(No description provided)" }}
+  </div>
+
+  <div class="detail-item">
+    <strong>Deadline:</strong> {{ task.deadline }}
+  </div>
+
+  <div class="detail-item">
+    <strong>Status:</strong>
+    <span class="status {% if task.completed %}completed{% else %}not-completed{% endif %}">
+      {% if task.completed %}Completed{% else %}Pending{% endif %}
+    </span>
+  </div>
+
+  <a href="{% url 'taskListPage' %}" class="back-btn">← Back to List</a>
+</div>
+
+{% endblock %}

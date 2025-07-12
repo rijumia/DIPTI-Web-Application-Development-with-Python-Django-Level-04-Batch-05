@@ -1,0 +1,56 @@
+{% extends 'master.html' %}
+{% block title %}Add To-Do{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white text-center">
+          <h4 class="mb-0">Add New Task</h4>
+        </div>
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
+
+            <!-- Title -->
+            <div class="mb-3">
+              <label for="id_title" class="form-label">Title</label>
+              <input type="text" name="title" id="id_title" class="form-control" required>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+              <label for="id_description" class="form-label">Description</label>
+              <textarea name="description" id="id_description" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <!-- Status -->
+            <div class="mb-3">
+              <label for="id_status" class="form-label">Status</label>
+              <select name="status" id="id_status" class="form-select" required>
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+
+            <!-- Due Date -->
+            <div class="mb-3">
+              <label for="id_due_date" class="form-label">Due Date</label>
+              <input type="date" name="due_date" id="id_due_date" class="form-control" required>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Add Task</button>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer text-center">
+          <small><a href="">← Back to Task List</a></small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'master.html' %}
+
+
+{% block body %}
+
+
+<section id="add-student" style="max-width: 700px; margin: auto; padding: 40px;">
+    <h2 style="color: #333;">Add New Student</h2>
+    <form action="" method="POST">
+      {% csrf_token %}
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; margin-bottom: 6px; font-weight: 600;">Name</label>
+        <input type="text" placeholder="Enter full name" name="studentname" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px;" required>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; margin-bottom: 6px; font-weight: 600;">Address</label>
+        <input type="text" placeholder="Enter address" name="studentaddress" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px;" required>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; margin-bottom: 6px; font-weight: 600;">Department</label>
+        <input type="text" placeholder="Enter department" name="studentdepartment" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px;" required>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <label style="display: block; margin-bottom: 6px; font-weight: 600;">Age</label>
+        <input type="number" placeholder="Enter age" name="studentage" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px;" required>
+      </div>
+
+      <button type="submit" 
+        style="background-color: #4a90e2; color: white; padding: 12px 20px; border: none; border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer;"
+        onmouseover="this.style.backgroundColor='#357ABD';"
+        onmouseout="this.style.backgroundColor='#4a90e2';">
+        Add Student
+      </button>
+    </form>
+  </section>
+
+
+
+
+{% endblock body %}

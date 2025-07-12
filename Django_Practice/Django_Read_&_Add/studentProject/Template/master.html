@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Record System</title>
+</head>
+<body style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f7fa;">
+
+  <!-- Navbar -->
+  <div style="background-color: #ffffff; padding: 16px 40px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000;">
+    <div style="font-size: 22px; font-weight: 700; color: #4a90e2;">Student Portal</div>
+    <div>
+      <a href="{% url 'homePage' %}" style="margin: 0 12px; text-decoration: none; color: #333; font-weight: 500; padding: 8px 12px; border-radius: 6px;"
+         onmouseover="this.style.backgroundColor='#f0f0f0';"
+         onmouseout="this.style.backgroundColor='transparent';">Home</a>
+      <a href="{% url 'studentListPage' %}" style="margin: 0 12px; text-decoration: none; color: #333; font-weight: 500; padding: 8px 12px; border-radius: 6px;"
+         onmouseover="this.style.backgroundColor='#f0f0f0';"
+         onmouseout="this.style.backgroundColor='transparent';">Student List</a>
+      <a href="{% url 'addStudentPage' %}" style="margin: 0 12px; text-decoration: none; color: #333; font-weight: 500; padding: 8px 12px; border-radius: 6px;"
+         onmouseover="this.style.backgroundColor='#f0f0f0';"
+         onmouseout="this.style.backgroundColor='transparent';">Add Student</a>
+    </div>
+  </div>
+
+  {% block body %}
+
+  {% endblock body %}
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+{% extends 'master.html' %}
+
+{% block title %}✅Update Task{% endblock %}
+
+  {% block body %}
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: 80px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2f3640;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #dcdde1;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-group input[type="checkbox"] {
+      width: auto;
+      margin-right: 10px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      background-color: #2f3640;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #00a8ff;
+    }
+  </style>
+
+
+  <div class="form-container">
+    <h2>Update Task</h2>
+    <form action="" method="POST">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" value="{{task.title}}" required maxlength="200">
+      </div>
+
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+  <option value="" disabled>Select a category</option>
+  <option value="Work" {% if task.category == 'Work' %}selected{% endif %}>Work</option>
+  <option value="Personal" {% if task.category == 'Personal' %}selected{% endif %}>Personal</option>
+  <option value="Shopping" {% if task.category == 'Shopping' %}selected{% endif %}>Shopping</option>
+  <option value="Health" {% if task.category == 'Health' %}selected{% endif %}>Health</option>
+  <option value="Other" {% if task.category == 'Other' %}selected{% endif %}>Other</option>
+</select>
+
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" placeholder="Optional...">{{ task.description }}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="deadline">Deadline</label>
+        <input type="date" id="deadline" name="deadline" value="{{ task.deadline|date:'Y-m-d' }}" required>
+      </div>
+
+      <div class="form-group">
+  <label>
+    <input type="checkbox" name="completed" {% if task.completed %}checked{% endif %}>
+    Mark as Completed
+  </label>
+</div>
+
+
+      <button type="submit" class="submit-btn">Update Task</button>
+    </form>
+  </div>
+
+
+  {% endblock %}

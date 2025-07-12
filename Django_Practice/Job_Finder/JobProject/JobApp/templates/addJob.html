@@ -1,0 +1,55 @@
+{% extends 'master.html' %}
+
+
+{% block body %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white text-center">
+          <h4 class="mb-0">Post a New Job</h4>
+        </div>
+        <div class="card-body">
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+            {% csrf_token %}
+            
+            <div class="mb-3">
+              <label for="JobTitle" class="form-label">Job Title</label>
+              <input type="text" name="JobTitle" class="form-control" placeholder="e.g. Software Engineer" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="JobDescription" class="form-label">Job Description</label>
+              <textarea name="JobDescription" rows="5" class="form-control" placeholder="Describe the job responsibilities..." required></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="Job_type" class="form-label">Job Type</label>
+              <select name="Job_type" class="form-select" required>
+                <option value="">Select Type</option>
+                <option value="full_time">Full Time</option>
+                <option value="part_time">Part Time</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="CompanyLogo" class="form-label">Company Logo</label>
+              <input type="file" name="CompanyLogo" class="form-control" accept="image/*">
+            </div>
+
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-success">Post Job</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}

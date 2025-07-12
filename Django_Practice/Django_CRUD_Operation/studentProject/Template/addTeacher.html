@@ -1,0 +1,33 @@
+{% extends 'master.html' %}
+
+{% block body %}
+
+    <div class="container">
+    <h2>Add Teacher</h2>
+    <div class="link">
+      <a href="{% url 'teacherListPage' %}">View Teacher List</a>
+    </div>
+    <form action="" method="POST">
+        {% csrf_token %}
+      <div class="form-group">
+        <label for="Teacher_Name">Full Name</label>
+        <input type="text" id="Teacher_Name" name="Teacher_Name" required />
+      </div>
+      <div class="form-group">
+        <label for="Teacher_Email">Email</label>
+        <input type="email" id="Teacher_Email" name="Teacher_Email" required />
+      </div>
+      <div class="form-group">
+        <label for="Teacher_Department">Department</label>
+        <input type="text" id="Teacher_Department" name="Teacher_Department" required />
+      </div>
+      <div class="form-group">
+        <label for="Teacher_Experience">Experience (Years)</label>
+        <input type="number" id="Teacher_Experience" name="Teacher_Experience" min="0" required />
+      </div>
+      <button type="submit">Add Teacher</button>
+    </form>
+    
+  </div>
+
+{% endblock body %}

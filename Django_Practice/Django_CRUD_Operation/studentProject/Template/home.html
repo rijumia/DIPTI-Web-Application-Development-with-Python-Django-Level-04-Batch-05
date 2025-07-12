@@ -1,0 +1,80 @@
+{% extends 'master.html' %}
+
+{% block body %}
+<style>
+  .dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  .card h3 {
+    margin-bottom: 12px;
+    color: #2c3e50;
+  }
+
+  .card a {
+    text-decoration: none;
+    color: #3498db;
+    font-weight: 600;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  h2 {
+    text-align: center;
+    color: #34495e;
+  }
+
+  p {
+    text-align: center;
+    color: #555;
+    margin-bottom: 30px;
+  }
+</style>
+
+<div class="container">
+  <h2>Welcome to the Student Record Store</h2>
+  <p>This website allows you to add and view student & teacher records easily with a modern and clean interface.</p>
+
+  <div class="dashboard">
+    <div class="card">
+      <h3>Add Student</h3>
+      <a href="{% url 'addStudentPage' %}">Go to Add</a>
+    </div>
+    <div class="card">
+      <h3>View Students</h3>
+      <a href="{% url 'studentListPage' %}">See List</a>
+    </div>
+    <div class="card">
+      <h3>Add Teacher</h3>
+      <a href="{% url 'addTeacherPage' %}">Go to Add</a>
+    </div>
+    <div class="card">
+      <h3>View Teachers</h3>
+      <a href="{% url 'teacherListPage' %}">See List</a>
+    </div>
+  </div>
+</div>
+{% endblock body %}
+
