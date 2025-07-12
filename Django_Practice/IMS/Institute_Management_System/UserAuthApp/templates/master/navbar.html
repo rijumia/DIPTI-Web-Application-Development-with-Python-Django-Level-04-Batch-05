@@ -28,13 +28,18 @@
           {% endif %}
 
           <!-- Student Dropdown -->
-           {% if user.user_type == 'Teacher' %}
+           {% if user.user_type == 'Admin' or user.user_type == 'Teacher' %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="studentDropdown" role="button" data-bs-toggle="dropdown">
               Student
             </a>
             <ul class="dropdown-menu" aria-labelledby="studentDropdown">
+              {% if user.user_type == 'Admin' %}
               <li><a class="dropdown-item" href="{% url 'registerStudentPage' %}">Register Student</a></li>
+              {% endif %}
+              {% if user.user_type == 'Teacher' %}
+              <li><a class="dropdown-item" href="{% url 'registerStudentPage' %}">Register Student By Teacher</a></li>
+              {% endif %}
               <li><a class="dropdown-item" href="{% url 'studentListPage' %}">Student List</a></li>
             </ul>
           </li>

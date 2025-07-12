@@ -29,3 +29,12 @@ class StudentModel(models.Model):
     def __str__(self):
         return self.student_name
     
+class PendingModeel(models.Model):
+    username = models.CharField(max_length=100, null=True)
+    email = models.EmailField(null=True)
+    full_name = models.CharField(max_length=100, null=True)
+    phone = models.CharField(max_length=15, null=True)
+    profile = models.ImageField(upload_to='Media/Profile/Students', null=True)
+    
+    def __str__(self):
+        return self.full_name
