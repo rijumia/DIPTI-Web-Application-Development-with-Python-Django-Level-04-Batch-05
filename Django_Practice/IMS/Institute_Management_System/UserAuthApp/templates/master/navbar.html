@@ -38,12 +38,16 @@
               <li><a class="dropdown-item" href="{% url 'registerStudentPage' %}">Register Student</a></li>
               {% endif %}
               {% if user.user_type == 'Teacher' %}
-              <li><a class="dropdown-item" href="{% url 'registerStudentPage' %}">Register Student By Teacher</a></li>
+              <li><a class="dropdown-item" href="{% url 'pendingStudentRegPage' %}">Register Student By Teacher</a></li>
               {% endif %}
               <li><a class="dropdown-item" href="{% url 'studentListPage' %}">Student List</a></li>
+              <li><a class="dropdown-item" href="{% url 'pendingPage' %}">PendingStudent List</a></li>
             </ul>
           </li>
           {% endif %}
+
+
+         
 
           <!-- My Account Dropdown -->
           <li class="nav-item dropdown">

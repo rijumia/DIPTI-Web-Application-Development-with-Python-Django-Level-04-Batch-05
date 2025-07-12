@@ -179,3 +179,47 @@ def studentListPage(request):
     studentInfo = StudentModel.objects.all()
     return render(request, 'studentList.html',{'studentInfo':studentInfo})
 
+def pendingStudentRegPage(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        Student_name = request.POST.get('Student_name')
+        phone = request.POST.get('phone')
+        email = request.POST.get('email')
+        profile_picture = request.FILES.get('profile_picture')
+        
+        PendingModeel.objects.create(
+            username = username,
+            full_name = Student_name,
+            email = email,
+            phone = phone,
+            profile = profile_picture,
+        )
+        return redirect('pendingPage')
+    return render(request, 'pendingStudent/pendingStudentReg.html')
+
+def pendingPage(request):
+    pendingStudent = PendingModeel.objects.all()
+    return render(request, 'pendingStudent/pending.html',{'pendingStudent':pendingStudent})
+
+def pendingAcceptPage(request,id):
+    pendingStudentInfo = PendingModeel.objects.get(id=id)
+    
+    if pendingStudentInfo:
+        pendingStudentData = CustomUserModel.objects.create_user(
+            username=pendingStudentInfo.username,
+            email=pendingStudentInfo.email,
+            password=pendingStudentInfo.phone,
+            user_type='Student',
+        )
+        if pendingStudentData:
+            StudentModel.objects.create(
+                student_user = pendingStudentData,
+                student_name = pendingStudentInfo.full_name,
+                student_phone = pendingStudentInfo.phone,
+                student_profile = pendingStudentInfo.profile,
+            )
+            
+            pendingStudentInfo.delete()
+        messages.success(request, "Student accepted successfully.")
+        return redirect('studentListPage')
+
