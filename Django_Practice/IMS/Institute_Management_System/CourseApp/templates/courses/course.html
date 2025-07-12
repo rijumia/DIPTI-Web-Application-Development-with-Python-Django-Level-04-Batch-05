@@ -1,0 +1,42 @@
+{% extends 'master/master.html' %}
+
+{% block title %}
+<title>Course List | Institute Management</title>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4 text-center text-primary"><i class="bi bi-journal-text"></i> All Courses</h2>
+
+  {% if courses %}
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-primary">
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Duration</th>
+            <th>Start Date</th>
+            <th>Fee</th>
+            <th>Assigned Teacher</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for course in courses %}
+          <tr>
+            <td>{{ course.course_title }}</td>
+            <td>{{ course.course_description|truncatewords:10 }}</td>
+            <td>{{ course.course_duration }}</td>
+            <td>{{ course.course_Start_date }}</td>
+            <td>{{ course.course_fee }} ৳</td>
+            <td>{{ course.assign_course.teacher_name }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="text-muted text-center">No courses available.</p>
+  {% endif %}
+</div>
+{% endblock %}

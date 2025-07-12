@@ -21,3 +21,4 @@ urlpatterns = [
     path('student/pendingPage/', pendingPage, name='pendingPage'),
     path('student/pendingAcceptPage/<str:id>/', pendingAcceptPage, name='pendingAcceptPage'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
