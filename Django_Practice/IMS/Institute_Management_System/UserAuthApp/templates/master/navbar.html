@@ -46,6 +46,21 @@
           </li>
           {% endif %}
 
+            <!-- Course Dropdown -->
+           {% if user.user_type == 'Admin' or user.user_type == 'Teacher' %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="studentDropdown" role="button" data-bs-toggle="dropdown">
+              Courses
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="studentDropdown">
+              {% if user.user_type == 'Admin' %}
+              <li><a class="dropdown-item" href="{% url 'createCoursePage' %}">Create Course</a></li>
+              {% endif %}
+              <li><a class="dropdown-item" href="">Course List</a></li>
+            </ul>
+          </li>
+          {% endif %}
+
 
          
 
