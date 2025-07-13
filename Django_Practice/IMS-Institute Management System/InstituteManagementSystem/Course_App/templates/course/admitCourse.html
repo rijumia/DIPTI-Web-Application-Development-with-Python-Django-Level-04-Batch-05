@@ -1,0 +1,92 @@
+{% extends 'master/master.html' %}
+{% load static %}
+
+{% block title %}Admit Course | InstituteMS{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(to right, #e0f7fa, #ffffff);
+    }
+    .card {
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    .card-header {
+        background: linear-gradient(to right, #00bcd4, #009688);
+        color: white;
+        border-radius: 15px 15px 0 0;
+        padding: 20px 0;
+        text-align: center;
+    }
+    .form-label {
+        font-weight: 600;
+        color: #333;
+    }
+    .form-control:focus {
+        border-color: #00acc1;
+        box-shadow: 0 0 6px rgba(0, 172, 193, 0.5);
+    }
+    .btn-custom {
+        background: linear-gradient(to right, #26c6da, #00acc1);
+        border: none;
+        font-weight: 600;
+    }
+    .btn-custom:hover {
+        background: linear-gradient(to right, #00acc1, #00838f);
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Admit Student to Course</h3>
+                </div>
+                <div class="card-body px-4 py-3">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="student" class="form-label">Select Student</label>
+                            <select name="student" id="student" class="form-control" required>
+                                <option value="">-- Choose Student --</option>
+                                {% for student in students %}
+                                <option value="{{ student.id }}">{{ student.student_name }} ({{ student.student_user }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="admitted_course" class="form-label">Select Course</label>
+                            <select name="admitted_course" id="admitted_course" class="form-control" required>
+                                <option value="">-- Choose Course --</option>
+                                {% for course in courses %}
+                                <option value="{{ course.id }}">{{ course.course_title }} ({{ course.course_fee }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% comment %} <div class="mb-3">
+                            <label for="course_fee" class="form-label">Course Fee</label>
+                            <input type="number" name="course_fee" id="course_fee" class="form-control" min="0" required>
+                        </div> {% endcomment %}
+                        <div class="mb-3">
+                            <label for="payment" class="form-label">Payment</label>
+                            <input type="number" name="payment" id="payment" class="form-control" min="0" required>
+                        </div>
+                        {% comment %} <div class="mb-3">
+                            <label for="due" class="form-label">Due</label>
+                            <input type="number" name="due" id="due" class="form-control" min="0" required>
+                        </div> {% endcomment %}
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-custom btn-lg">Admit Now</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

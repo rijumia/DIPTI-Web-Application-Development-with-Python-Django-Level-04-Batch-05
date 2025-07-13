@@ -1,0 +1,82 @@
+{% extends 'master/master.html' %}
+{% load static %}
+
+{% block title %}Admitted Course List | InstituteMS{% endblock %}
+
+{% block content %}
+<style>
+    .card {
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+    }
+    .card-header {
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        color: white;
+        padding: 20px;
+        border-radius: 15px 15px 0 0;
+    }
+    .table thead {
+        background-color: #f0f4ff;
+    }
+    .btn-sm {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Admitted Course List</h4>
+            <a href="{% url 'admitedCoursePage' %}" class="btn btn-light btn-sm text-primary fw-semibold">+ Admit New Student</a>
+        </div>
+        <div class="card-body">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center align-middle">
+                    <thead>
+                        <tr>
+                            <th>SL</th>
+                            <th>Student Name</th>
+                            <th>Course Title</th>
+                            <th>Fee</th>
+                            <th>Paid</th>
+                            <th>Due</th>
+                            <th>Admitted Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for admit in admittedCourses %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ admit.student.student_name }}</td>
+                            <td>{{ admit.admitted_course.course_title }}</td>
+                            <td>{{ admit.course_fee }}</td>
+                            <td>{{ admit.payment }}</td>
+                            <td>{{ admit.due }}</td>
+                            <td>{{ admit.admitted_date|date:"d M, Y h:i A" }}</td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-info disabled">View</a>
+                                <a href="#" class="btn btn-sm btn-warning disabled">Edit</a>
+                                <a href="#" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-muted">No admission records found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

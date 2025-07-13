@@ -30,6 +30,33 @@ def allCoursePage(request):
 
 
 
-def admittedCoursePage(request):
-    
-    return render(request, 'course/admittedCourse.html')
+def admitedCoursePage(request):
+    students = StudentModel.objects.all()
+    courses = CourseModel.objects.all()
+
+    if request.method == 'POST':
+        admitted_course = request.POST.get('admitted_course')
+        student = request.POST.get('student')
+        payment = request.POST.get('payment')
+
+        studentData = StudentModel.objects.get(id=student)
+        courseData = CourseModel.objects.get(id=admitted_course)
+        due = int(courseData.course_fee) - int(payment)
+
+        admittedCourseData = AdmittedCourseModel.objects.create(
+            student = studentData,
+            admitted_course= courseData,
+            course_fee = courseData.course_fee,
+            payment =payment,
+            due = due,
+        )
+        PaymentHistoryModel.objects.create(
+            admitted_course = admittedCourseData,
+            payment =payment,
+        )
+        return redirect('admittedCourseListPage')
+    return render(request, 'course/admitCourse.html',{'students':students,'courses':courses})
+
+def admittedCourseListPage(request):
+    admittedCourses = AdmittedCourseModel.objects.all()
+    return render(request, 'course/admittedCourse.html',{'admittedCourses':admittedCourses})
