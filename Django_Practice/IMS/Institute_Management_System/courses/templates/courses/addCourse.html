@@ -1,1 +1,63 @@
 {% extends 'master/master.html' %}
+
+{% block title %}Create Course | StudentApp{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+  <div class="card shadow-sm rounded-4 border-0">
+    <div class="card-header bg-primary text-white rounded-top-4">
+      <h4 class="mb-0">Create New Course</h4>
+    </div>
+
+    <div class="card-body">
+      <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Course Title -->
+        <div class="mb-3">
+          <label for="course_title" class="form-label">Course Title</label>
+          <input type="text" class="form-control rounded-3" id="course_title" name="course_title" placeholder="Enter course name" required>
+        </div>
+
+        <!-- Course Description -->
+        <div class="mb-3">
+          <label for="course_description" class="form-label">Course Description</label>
+          <textarea class="form-control rounded-3" id="course_description" name="course_description" rows="3" placeholder="Write a short description..."></textarea>
+        </div>
+
+        <!-- Course Duration -->
+        <div class="mb-3">
+          <label for="course_duration" class="form-label">Duration</label>
+          <input type="text" class="form-control rounded-3" id="course_duration" name="course_duration" placeholder="e.g. 3 Months, 6 Weeks">
+        </div>
+
+        <!-- Start Date -->
+        <div class="mb-3">
+          <label for="course_start_date" class="form-label">Start Date</label>
+          <input type="date" class="form-control rounded-3" id="course_start_date" name="course_start_date">
+        </div>
+
+        <!-- Course Fee -->
+        <div class="mb-3">
+          <label for="course_fee" class="form-label">Course Fee</label>
+          <input type="number" class="form-control rounded-3" id="course_fee" name="course_fee" placeholder="Enter fee amount">
+        </div>
+
+        <!-- Assign Teacher -->
+        <div class="mb-3">
+          <label for="assign_teacher" class="form-label">Assign Teacher</label>
+          <select class="form-select rounded-3" id="assign_teacher" name="assign_teacher" required>
+            <option value="">-- Select Teacher --</option>
+            {% for teacher in teacher_list %}
+              <option value="{{ teacher.id }}">{{ teacher.teacher_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-success w-100 rounded-3">Create Course</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

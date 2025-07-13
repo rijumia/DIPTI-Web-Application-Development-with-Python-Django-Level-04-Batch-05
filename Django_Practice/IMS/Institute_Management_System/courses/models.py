@@ -20,8 +20,7 @@ class AdmittedCourseModel(models.Model):
     admitted_date = models.DateTimeField(auto_now_add=True,null=True)
 
 class PaymentHistoryModel(models.Model):
-    student = models.ForeignKey(StudentModel, on_delete=models.CASCADE, null=True, related_name='studentPayment_info')
-    admitted_course = models.ForeignKey(CourseModel, on_delete=models.CASCADE, null=True, related_name='paymentCourse_info')
+    admitted_course = models.ForeignKey(AdmittedCourseModel, on_delete=models.CASCADE, null=True, related_name='paymentCourse_info')
     payment = models.PositiveIntegerField(null=True)
     due = models.PositiveIntegerField(null=True)
     payment_date = models.DateTimeField(auto_now_add=True,null=True)

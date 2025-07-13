@@ -2,56 +2,75 @@
 
 {% block body %}
 <style>
-    .profile-card {
-      max-width: 700px;
-      margin: auto;
-      padding: 25px;
-      background: #f8f9fa;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.08);
-    }
-    .profile-img {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 4px solid #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .profile-header {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-    .info-label {
-      font-weight: 600;
-      color: #555;
-    }
-    .info-value {
-      color: #333;
-    }
-  </style>
-  <div class="container py-5">
-    <div class="profile-card">
-      <div class="profile-header">
-        <img src="{{request.user.profile_image.url}}" alt="Profile Image" class="profile-img mb-3">
-        <h4 class="fw-bold mb-0">{{request.user.full_name}}</h4>
-        
+  .profile-card {
+    max-width: 700px;
+    margin: auto;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.08);
+  }
+  .profile-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  .profile-header {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  .info-label {
+    font-weight: 600;
+    color: #555;
+  }
+  .info-value {
+    color: #333;
+  }
+</style>
+
+<div class="container py-5">
+  <div class="profile-card">
+    <div class="profile-header">
+      {% if request.user.user_type == "Teacher" and request.user.teacher_info.teacher_profile %}
+        <img src="/{{ request.user.teacher_info.teacher_profile }}" alt="Profile Image" class="profile-img mb-3">
+      {% elif request.user.user_type == "Student" and request.user.student_info.student_profile %}
+        <img src="/{{ request.user.student_info.student_profile }}" alt="Profile Image" class="profile-img mb-3">
+      {% else %}
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-MASH1cd505q-0PEQbyKAE3fs6UZoY92ScA&s" alt="Profile Image" class="profile-img mb-3">
+      {% endif %}
+      <h4 class="fw-bold mb-0">{{ request.user.get_full_name }}</h4>
+    </div>
+
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <div class="info-label">Username</div>
+        <div class="info-value">{{ request.user.username }}</div>
       </div>
 
-      <div class="row g-3 mb-3">
-        <div class="col-md-6">
-          <div class="info-label">Email</div>
-          <div class="info-value">{{request.user.email}}</div>
-        </div>
-        <div class="col-md-6">
-          <div class="info-label">Phone</div>
-          <div class="info-value">{{request.user.phone_number}}</div>
-        </div>
-        
+      <div class="col-md-6">
+        <div class="info-label">Email</div>
+        <div class="info-value">{{ request.user.email }}</div>
       </div>
 
+      <div class="col-md-6">
+        <div class="info-label">Phone</div>
+        {% if request.user.user_type == "Teacher" %}
+          <div class="info-value">{{ request.user.teacher_info.teacher_phone }}</div>
+        {% elif request.user.user_type == "Student" %}
+          <div class="info-value">{{ request.user.student_info.student_phone }}</div>
+        {% else %}
+          <div class="info-value text-muted">Admin (No phone)</div>
+        {% endif %}
+      </div>
+
+      <div class="col-md-6">
+        <div class="info-label">User Type</div>
+        <div class="info-value">{{ request.user.user_type }}</div>
+      </div>
     </div>
   </div>
-    
-{% endblock body %}
-    
+</div>
+{% endblock %}
