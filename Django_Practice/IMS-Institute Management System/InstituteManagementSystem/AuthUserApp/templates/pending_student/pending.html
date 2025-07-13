@@ -1,0 +1,70 @@
+{% extends 'master/master.html' %}
+
+
+<title>{% block title %}Pending Student List | InstituteMS{% endblock %}</title>
+
+
+{% block content %}
+<div class="card mt-4 shadow-sm">
+  <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
+    <h4 class="mb-0">All Pending Student</h4>
+  </div>
+
+  <div class="card-body">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <table class="table table-bordered table-hover text-center align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>SL</th>
+          <th>Username</th>
+          <th>Student Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Profile</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in pendingStudent %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ student.username }}</td>
+          <td>{{ student.full_name }}</td>
+          <td>{{ student.email }}</td>
+          <td>{{ student.phone }}</td>
+          <td>
+            {% if student.profile %}
+              <img src="/{{ student.profile }}" width="40" height="40" class="rounded-circle">
+            {% else %}
+              <span class="text-muted">No Photo</span>
+            {% endif %}
+          </td>
+          {% if user.user_type == 'Admin' %}
+          <td>
+            <a href="{% url 'pendingAcceptPage' student.id %}" class="btn btn-sm btn-info">Accept</a>
+
+            <a href="" 
+               class="btn btn-sm btn-danger" 
+               onclick="return confirm('Are you sure you want to delete this student?');">Decline</a>
+          </td>
+          {% else %}
+           <td>
+            <a href="" class="btn btn-sm btn-info">Waiting</a>
+           </td>
+          {% endif %}
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="7">No students found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

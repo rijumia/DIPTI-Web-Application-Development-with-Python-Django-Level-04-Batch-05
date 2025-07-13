@@ -1,0 +1,72 @@
+{% extends 'master/master.html' %}
+
+
+<title>{% block title %}Home | Institute Management{% endblock %}</title>
+
+
+{% block content %}
+<div class="container mt-5" style="font-family: 'Segoe UI', sans-serif;">
+
+  {% if user.is_authenticated %}
+    <div class="text-center mb-5">
+      <h1 class="fw-bold text-primary"><i class="bi bi-person-circle"></i> Welcome, {{ user.username }}!</h1>
+      <p class="lead">You are successfully logged in to the Institute Management System.</p>
+    </div>
+
+    {% if user.is_superuser %}
+    <!-- Admin View -->
+    <div class="row text-center g-4">
+      <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <i class="bi bi-person-plus-fill display-4 text-success mb-3"></i>
+            <h5 class="card-title">Manage Teachers</h5>
+            <p class="card-text">Add or remove teachers and manage teacher data.</p>
+            <a href="{% url 'registerTeacherPage' %}" class="btn btn-outline-success">Add Teacher</a>
+            <a href="{% url 'teacherListPage' %}" class="btn btn-outline-primary mt-2">Teacher List</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <i class="bi bi-person-lines-fill display-4 text-info mb-3"></i>
+            <h5 class="card-title">Manage Students</h5>
+            <p class="card-text">Enroll new students and update their info.</p>
+            <a href="{% url 'registerStudentPage' %}" class="btn btn-outline-info">Add Student</a>
+            <a href="{% url 'studentListPage' %}" class="btn btn-outline-primary mt-2">Student List</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% else %}
+    <!-- Non-Admin View (Teacher or Student) -->
+    <div class="card shadow-sm text-center p-4">
+      <h4 class="mb-3"><i class="bi bi-people-fill text-primary"></i> Welcome to the Institute</h4>
+      <p class="mb-0">As a {{ user.user_type|title }}, you can view your profile, access notifications, and update your password using the menu above.</p>
+    </div>
+    {% endif %}
+
+    <!-- Features Section (For All Logged-in Users) -->
+    <div class="mt-5">
+      <h4 class="text-center mb-3"><i class="bi bi-info-circle-fill text-secondary"></i> System Features</h4>
+      <ul class="list-group list-group-flush shadow-sm">
+        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Clean Role-Based Dashboard</li>
+        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Admin can manage teachers & students</li>
+        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Teachers and Students can view their info only</li>
+        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Secure Profile & Password Management</li>
+      </ul>
+    </div>
+
+  {% else %}
+    <!-- Guest View -->
+    <div class="text-center">
+      <h1 class="fw-bold"><i class="bi bi-building"></i> Welcome to Institute Management System</h1>
+      <p class="lead mt-3">Please <a href="{% url 'loginPage' %}" class="fw-semibold text-primary">login</a> to access your account.</p>
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}
