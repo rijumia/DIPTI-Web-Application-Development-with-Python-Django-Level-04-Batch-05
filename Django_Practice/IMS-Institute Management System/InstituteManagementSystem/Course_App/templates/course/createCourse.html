@@ -1,0 +1,86 @@
+{% extends 'master/master.html' %}
+
+{% block title %}Create Course | InstituteMS{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(135deg, #f2f7ff, #e0f2ff);
+    }
+    .card {
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        border: none;
+    }
+    .card-header {
+        background: linear-gradient(to right, #4e54c8, #8f94fb);
+        color: white;
+        border-radius: 20px 20px 0 0;
+        padding: 20px 0;
+    }
+    .form-label {
+        font-weight: 600;
+        color: #333;
+    }
+    .form-control:focus {
+        border-color: #6c63ff;
+        box-shadow: 0 0 5px rgba(108, 99, 255, 0.4);
+    }
+    .btn-primary {
+        background: linear-gradient(to right, #667eea, #764ba2);
+        border: none;
+    }
+    .btn-primary:hover {
+        background: linear-gradient(to right, #5a67d8, #6b46c1);
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Create New Course</h3>
+                </div>
+                <div class="card-body px-4 py-3">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="course_title" class="form-label">Course Title</label>
+                            <input type="text" class="form-control" id="course_title" name="course_title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="course_description" class="form-label">Course Description</label>
+                            <textarea class="form-control" id="course_description" name="course_description" rows="4"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="course_duration" class="form-label">Course Duration</label>
+                            <input type="text" class="form-control" id="course_duration" name="course_duration" placeholder="e.g., 6 months">
+                        </div>
+                        <div class="mb-3">
+                            <label for="course_start_date" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" id="course_start_date" name="course_start_date">
+                        </div>
+                        <div class="mb-3">
+                            <label for="course_fee" class="form-label">Course Fee</label>
+                            <input type="number" class="form-control" id="course_fee" name="course_fee" min="0">
+                        </div>
+                        <div class="mb-3">
+                            <label for="assign_teacher" class="form-label">Assign Teacher</label>
+                            <select class="form-control" id="assign_teacher" name="assign_teacher">
+                                <option value="">Select Teacher</option>
+                                {% for teacher in teacherData %}
+                                <option value="{{teacher.id}}">{{teacher.teacher_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Create Course</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

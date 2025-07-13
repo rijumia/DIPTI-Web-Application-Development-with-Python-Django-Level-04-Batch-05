@@ -15,7 +15,7 @@ class TeacherModel(models.Model):
     teacher_user = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE, null=True, related_name='teacher_info')
     teacher_name = models.CharField(max_length=100, null=True)
     teacher_phone = models.CharField(max_length=15, null=True)
-    teacher_profile = models.ImageField(upload_to='Media/Profile/Teachers', null=True)
+    teacher_profile = models.ImageField(upload_to='Profile/Teachers', null=True)
     
     def __str__(self):
         return self.teacher_name
@@ -24,7 +24,7 @@ class StudentModel(models.Model):
     student_user = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE, null=True, related_name='student_info')
     student_name = models.CharField(max_length=100, null=True)
     student_phone = models.CharField(max_length=15, null=True)
-    student_profile = models.ImageField(upload_to='Media/Profile/Students', null=True)
+    student_profile = models.ImageField(upload_to='Profile/Students', null=True)
     
     def __str__(self):
         return self.student_name
@@ -34,7 +34,7 @@ class PendingModeel(models.Model):
     email = models.EmailField(null=True)
     full_name = models.CharField(max_length=100, null=True)
     phone = models.CharField(max_length=15, null=True)
-    profile = models.ImageField(upload_to='Media/Profile/Students', null=True)
+    profile = models.ImageField(upload_to='Profile/Students', null=True)
     
     def __str__(self):
         return self.full_name

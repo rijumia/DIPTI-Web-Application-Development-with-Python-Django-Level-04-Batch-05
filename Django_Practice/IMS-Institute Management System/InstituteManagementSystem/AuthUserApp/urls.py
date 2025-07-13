@@ -20,4 +20,6 @@ urlpatterns = [
     path('student/pendingStudentRegPage/', pendingStudentRegPage, name='pendingStudentRegPage'),
     path('student/pendingPage/', pendingPage, name='pendingPage'),
     path('student/pendingAcceptPage/<str:id>/', pendingAcceptPage, name='pendingAcceptPage'),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
