@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from auth_crud_app.views import*
+from auth_crud_app.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -16,3 +16,4 @@ urlpatterns = [
     path('updateProduct/<str:id>',updateProduct,name='updateProduct'),
     path('viewProduct/<str:id>',viewProduct,name='viewProduct'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

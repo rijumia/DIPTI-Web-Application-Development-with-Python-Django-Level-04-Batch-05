@@ -1,3 +1,10 @@
 from django.shortcuts import render
+from CourseApp.models import *
 
-# Create your views here.
+
+def createCoursePage(request):
+    return render(request, 'courses/create_course.html')
+
+def coursePage(request):
+    return render(request, 'courses/course.html')
+
