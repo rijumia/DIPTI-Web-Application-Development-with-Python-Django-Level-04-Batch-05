@@ -1,85 +1,88 @@
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
-    <div class="container">
-      <a class="navbar-brand" href="{% url 'homePage' %}">InstituteMS</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="{% url 'homePage' %}">
+      <i class="bi bi-mortarboard-fill me-1"></i> InstituteMS
+    </a>
 
-      <div class="collapse navbar-collapse" id="mainNavbar">
-        <ul class="navbar-nav ms-auto">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-          <!-- Home -->
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'homePage' %}">Home</a>
-          </li>
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <ul class="navbar-nav ms-auto">
 
-          <!-- Teacher Dropdown -->
-           {% if user.user_type == 'Admin' %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="teacherDropdown" role="button" data-bs-toggle="dropdown">
-              Teacher
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="teacherDropdown">
-              <li><a class="dropdown-item" href="{% url 'registerTeacherPage' %}">Register Teacher</a></li>
-              <li><a class="dropdown-item" href="{% url 'teacherListPage' %}">Teacher List</a></li>
-            </ul>
-          </li>
-          {% endif %}
+        <!-- Home -->
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'homePage' %}">
+            <i class="bi bi-house-door-fill me-1"></i> Home
+          </a>
+        </li>
 
-          <!-- Student Dropdown -->
-           {% if user.user_type == 'Admin' or user.user_type == 'Teacher' %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="studentDropdown" role="button" data-bs-toggle="dropdown">
-              Student
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="studentDropdown">
-              {% if user.user_type == 'Admin' %}
+        {% if user.user_type == 'Admin' %}
+        <!-- Teacher Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="teacherDropdown" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-person-badge-fill me-1"></i> Teacher
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="teacherDropdown">
+            <li><a class="dropdown-item" href="{% url 'registerTeacherPage' %}">Register Teacher</a></li>
+            <li><a class="dropdown-item" href="{% url 'teacherListPage' %}">Teacher List</a></li>
+          </ul>
+        </li>
+        {% endif %}
+
+        {% if user.user_type == 'Admin' or user.user_type == 'Teacher' %}
+        <!-- Student Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="studentDropdown" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-people-fill me-1"></i> Student
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="studentDropdown">
+            {% if user.user_type == 'Admin' %}
               <li><a class="dropdown-item" href="{% url 'registerStudentPage' %}">Register Student</a></li>
-              {% endif %}
-              {% if user.user_type == 'Teacher' %}
-              <li><a class="dropdown-item" href="{% url 'pendingStudentRegPage' %}">Register Student By Teacher</a></li>
-              {% endif %}
-              <li><a class="dropdown-item" href="{% url 'studentListPage' %}">Student List</a></li>
-              <li><a class="dropdown-item" href="{% url 'pendingPage' %}">PendingStudent List</a></li>
-            </ul>
-          </li>
-          {% endif %}
+            {% elif user.user_type == 'Teacher' %}
+              <li><a class="dropdown-item" href="{% url 'pendingStudentRegPage' %}">Register by Teacher</a></li>
+            {% endif %}
+            <li><a class="dropdown-item" href="{% url 'studentListPage' %}">Student List</a></li>
+            <li><a class="dropdown-item" href="{% url 'pendingPage' %}">Pending Students</a></li>
+          </ul>
+        </li>
 
-          <!-- Course Dropdown -->
-           {% if user.user_type == 'Admin' or user.user_type == 'Teacher' %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="courseDropdown" role="button" data-bs-toggle="dropdown">
-              Course
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="courseDropdown">
-              {% if user.user_type == 'Admin' %}
+        <!-- Course Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="courseDropdown" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-journal-bookmark-fill me-1"></i> Course
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="courseDropdown">
+            {% if user.user_type == 'Admin' %}
               <li><a class="dropdown-item" href="{% url 'createCoursePage' %}">Create Course</a></li>
-              {% endif %}
-              <li><a class="dropdown-item" href="{% url 'allCoursePage' %}">All Course</a></li>
-              <li><a class="dropdown-item" href="{% url 'admitedCoursePage' %}">Admit Course</a></li>
-              <li><a class="dropdown-item" href="{% url 'admittedCourseListPage' %}">Admitted Course List</a></li>
-              <li><a class="dropdown-item" href="{% url 'makePaymentPage' %}">Make Payment</a></li>
-              <li><a class="dropdown-item" href="{% url 'paymentHistoryPage' %}">Payment History</a></li>
-            </ul>
-          </li>
-          {% endif %}
-         
+            {% endif %}
+            <li><a class="dropdown-item" href="{% url 'allCoursePage' %}">All Courses</a></li>
+            <li><a class="dropdown-item" href="{% url 'admitedCoursePage' %}">Admit Course</a></li>
+            <li><a class="dropdown-item" href="{% url 'admittedCourseListPage' %}">Admitted Courses</a></li>
+            <li><a class="dropdown-item" href="{% url 'makePaymentPage' %}">Make Payment</a></li>
+            <li><a class="dropdown-item" href="{% url 'paymentHistoryPage' %}">Payment History</a></li>
+          </ul>
+        </li>
+        {% endif %}
 
-          <!-- My Account Dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown">
-              My Account
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
-              <li><a class="dropdown-item" href="{% url 'profileInfoPage' %}">Profile Info</a></li>
-              <li><a class="dropdown-item" href="{% url 'changePasswordPage' %}">Change Password</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-danger" href="{% url 'logoutPage' %}">Logout</a></li>
-            </ul>
-          </li>
+        <!-- Account Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-person-circle me-1"></i> My Account
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+            <li><a class="dropdown-item" href="{% url 'profileInfoPage' %}">Profile Info</a></li>
+            <li><a class="dropdown-item" href="{% url 'changePasswordPage' %}">Change Password</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="{% url 'logoutPage' %}">
+              <i class="bi bi-box-arrow-right me-1"></i> Logout
+            </a></li>
+          </ul>
+        </li>
 
-        </ul>
-      </div>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
