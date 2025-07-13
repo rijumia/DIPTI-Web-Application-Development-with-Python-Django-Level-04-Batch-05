@@ -1,0 +1,57 @@
+{% extends 'master/master.html' %}
+
+{% block body %}
+  <style>
+    .form-container {
+      max-width: 700px;
+      margin: auto;
+      padding: 30px;
+      background: #f8f9fa;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .form-title {
+      margin-bottom: 30px;
+      font-weight: 600;
+      text-align: center;
+    }
+  </style>
+
+  <div class="container py-5">
+    <div class="form-container">
+      <h2 class="form-title">Register new Student</h2>
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="username" name="username" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="student_name" class="form-label">Student Name</label>
+          <input type="text" class="form-control" id="student_name" name="student_name" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="student_phone" class="form-label">Student Phone</label>
+          <input type="tel" class="form-control" id="student_phone" name="student_phone" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="tel" class="form-control" id="email" name="email" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="student_profile" class="form-label">Student Profile</label>
+          <input type="file" class="form-control" id="student_profile" name="student_profile" accept="image/*" required />
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

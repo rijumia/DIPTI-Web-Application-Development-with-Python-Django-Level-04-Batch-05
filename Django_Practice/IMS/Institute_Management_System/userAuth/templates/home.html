@@ -1,0 +1,65 @@
+{% extends 'master/master.html' %}
+
+{% block body %}
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .hero {
+      background: url('https://via.placeholder.com/1400x400') center center/cover no-repeat;
+      color: black;
+      padding: 100px 0;
+      text-align: center;
+    }
+    .features .icon {
+      font-size: 2rem;
+      color: #0d6efd;
+    }
+    footer {
+      background-color: #343a40;
+      color: white;
+      padding: 20px 0;
+    }
+  </style>
+
+<!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="display-4 fw-bold">Welcome {{request.user.username}}</h1>
+      <p class="lead">Your all-in-one solution for managing academic operations smoothly and efficiently.</p>
+      <a href="#" class="btn btn-light btn-lg">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features py-5">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <div class="icon mb-3">📊</div>
+          <h4>Student Records</h4>
+          <p>Track admissions, attendance, and academic performance with ease.</p>
+        </div>
+        <div class="col-md-4">
+          <div class="icon mb-3">📅</div>
+          <h4>Course Scheduling</h4>
+          <p>Create and manage classes, exams, and events efficiently.</p>
+        </div>
+        <div class="col-md-4">
+          <div class="icon mb-3">📈</div>
+          <h4>Reports & Analytics</h4>
+          <p>Generate insightful reports for decision-making and improvements.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center">
+    <div class="container">
+      <p class="mb-0">© 2025 InstituteMS. Designed with ❤️ by Mehedi.</p>
+    </div>
+  </footer>
+
+
+{% endblock %}

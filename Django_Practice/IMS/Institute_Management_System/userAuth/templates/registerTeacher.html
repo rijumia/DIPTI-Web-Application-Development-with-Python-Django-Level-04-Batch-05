@@ -1,0 +1,57 @@
+{% extends 'master/master.html' %}
+
+{% block body %}
+  <style>
+    .form-container {
+      max-width: 700px;
+      margin: auto;
+      padding: 30px;
+      background: #f8f9fa;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .form-title {
+      margin-bottom: 30px;
+      font-weight: 600;
+      text-align: center;
+    }
+  </style>
+
+  <div class="container py-5">
+    <div class="form-container">
+      <h2 class="form-title">Register new Teacher</h2>
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="username" name="username" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="teacher_name" class="form-label">Teacher Name</label>
+          <input type="text" class="form-control" id="teacher_name" name="teacher_name" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="teacher_phone" class="form-label">Teacher Phone</label>
+          <input type="tel" class="form-control" id="teacher_phone" name="teacher_phone" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="tel" class="form-control" id="email" name="email" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="teacher_profile" class="form-label">Teacher Profile</label>
+          <input type="file" class="form-control" id="teacher_profile" name="teacher_profile" accept="image/*" required />
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
