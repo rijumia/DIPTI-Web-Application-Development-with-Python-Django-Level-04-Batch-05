@@ -30,6 +30,7 @@
         <div class="card-header d-flex justify-content-between align-items-center">
             <h4 class="mb-0">Admitted Course List</h4>
             <a href="{% url 'admitedCoursePage' %}" class="btn btn-light btn-sm text-primary fw-semibold">+ Admit New Student</a>
+            <a href="{% url 'makePaymentPage' %}" class="btn btn-light btn-sm text-warning fw-semibold">Make Payment</a>
         </div>
         <div class="card-body">
             {% if messages %}
@@ -49,6 +50,7 @@
                             <th>Paid</th>
                             <th>Due</th>
                             <th>Admitted Date</th>
+                            <th>Course Start Date</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -62,6 +64,7 @@
                             <td>{{ admit.payment }}</td>
                             <td>{{ admit.due }}</td>
                             <td>{{ admit.admitted_date|date:"d M, Y h:i A" }}</td>
+                            <td>{{ admit.admitted_course.course_start_date|date:"d M Y" }}</td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-info disabled">View</a>
                                 <a href="#" class="btn btn-sm btn-warning disabled">Edit</a>

@@ -1,0 +1,72 @@
+{% extends 'master/master.html' %}
+
+{% block title %}Make Payment | InstituteMS{% endblock %}
+
+{% block content %}
+<style>
+    .card {
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        border: none;
+    }
+    .card-header {
+        background: linear-gradient(to right, #0d6efd, #6610f2);
+        color: white;
+        border-radius: 20px 20px 0 0;
+        text-align: center;
+        padding: 20px;
+    }
+    .form-label {
+        font-weight: 600;
+        color: #333;
+    }
+    .form-control:focus {
+        border-color: #6c63ff;
+        box-shadow: 0 0 5px rgba(108, 99, 255, 0.4);
+    }
+    .btn-primary {
+        background: linear-gradient(to right, #0d6efd, #6610f2);
+        border: none;
+    }
+    .btn-primary:hover {
+        background: linear-gradient(to right, #0b5ed7, #520dc2);
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Make a Payment</h3>
+                </div>
+                <div class="card-body px-4 py-3">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="admitted_course" class="form-label">Select Admitted Course</label>
+                            <select class="form-control" id="admitted_course" name="admitted_course" required>
+                                <option value="">-- Select --</option>
+                                {% for admission in admittedCourseData %}
+                                    <option value="{{ admission.id }}">
+                                        {{ admission.student.student_name }} - {{ admission.admitted_course.course_title }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="payment" class="form-label">Payment Amount</label>
+                            <input type="number" class="form-control" id="payment" name="payment" min="1" required>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Submit Payment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

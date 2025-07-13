@@ -60,3 +60,34 @@ def admitedCoursePage(request):
 def admittedCourseListPage(request):
     admittedCourses = AdmittedCourseModel.objects.all()
     return render(request, 'course/admittedCourse.html',{'admittedCourses':admittedCourses})
+
+
+def makePaymentPage(request):
+    admittedCourseData = AdmittedCourseModel.objects.all()
+
+    if request.method == 'POST':
+        admitted_course = request.POST.get('admitted_course')
+        payment = request.POST.get('payment')
+
+        admitted_course_data = AdmittedCourseModel.objects.get(id=admitted_course)
+
+        priviewsPayment = admitted_course_data.payment
+        newPayment = int(priviewsPayment) + int(payment)
+        admitted_course_data.payment = newPayment
+
+        # admitted_course_data.payment += payment
+        due = admitted_course_data.course_fee - admitted_course_data.payment
+        admitted_course_data.due = due
+
+        admitted_course_data.save()
+
+        PaymentHistoryModel.objects.create(
+            admitted_course = admitted_course_data,
+            payment = payment,
+        )
+        return redirect('admittedCourseListPage')
+    return render(request, 'payment/makePayment.html',{'admittedCourseData':admittedCourseData})
+
+def paymentHistoryPage(request):
+    paymentHistories = PaymentHistoryModel.objects.all().order_by('-payment_date')
+    return render(request, 'payment/paymentHistoryPage.html',{'paymentHistories':paymentHistories})

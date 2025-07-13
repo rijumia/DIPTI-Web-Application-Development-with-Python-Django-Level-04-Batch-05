@@ -7,5 +7,8 @@ urlpatterns = [
 
     path('admitedCoursePage/',admitedCoursePage, name='admitedCoursePage'),
     path('admittedCourseListPage/',admittedCourseListPage, name='admittedCourseListPage'),
+
+    path('makePaymentPage/',makePaymentPage, name='makePaymentPage'),
+    path('paymentHistoryPage/',paymentHistoryPage, name='paymentHistoryPage'),
     
 ]

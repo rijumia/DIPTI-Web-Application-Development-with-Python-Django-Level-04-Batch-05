@@ -1,0 +1,49 @@
+{% extends 'master/master.html' %}
+
+{% block title %}Payment History | InstituteMS{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white text-center">
+            <h4 class="mb-0">Payment History</h4>
+        </div>
+        <div class="card-body">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <table class="table table-bordered table-hover text-center align-middle">
+                <thead class="table-success">
+                    <tr>
+                        <th>SL</th>
+                        <th>Student Name</th>
+                        <th>Course Title</th>
+                        <th>Payment</th>
+                        <th>Due</th>
+                        <th>Payment Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for history in paymentHistories %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ history.admitted_course.student.student_name }}</td>
+                        <td>{{ history.admitted_course.admitted_course.course_title }}</td>
+                        <td>৳{{ history.payment }}</td>
+                        <td>৳{{ history.admitted_course.due }}</td>
+                        <td>{{ history.payment_date|date:"d M Y, h:i A" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6">No payment history found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
