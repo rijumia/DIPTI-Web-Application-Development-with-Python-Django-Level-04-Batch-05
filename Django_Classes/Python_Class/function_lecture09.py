@@ -14,4 +14,8 @@ Num()
 Num(3)
 Num(3,4)
 Num(3,5,9)
-    
+
+
+def color(*col):
+    print('Color are :',col[1])
+color('Black','Blue')
