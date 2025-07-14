@@ -1,5 +1,12 @@
 from django import forms
-from .models import BasicInfoModel
+from FormsApp.models import BasicInfoModel
+
+class BasicInfoForm(forms.Form):
+    username = forms.CharField()
+    fullName = forms.CharField()
+    email = forms.EmailField()
+    addrees = forms.CharField()
+    profileImage = forms.ImageField()
 
 class BasicInfoModelForm(forms.ModelForm):
     class Meta:
