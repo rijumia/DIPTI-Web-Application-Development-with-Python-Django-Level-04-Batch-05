@@ -129,18 +129,18 @@ def resetPassword(request):
     email = request.session.get('reset_email')
     if request.method == 'POST':
         # email = request.POST.get('email')
-        new_password = request.get('new_password')
-        confirm_password = request.get('new_password1')
+        new_password = request.POST.get('new_password') 
+        confirm_password = request.POST.get('new_password1')
 
-        otp_verify = cache.set(f'verify_otp_{email}')
+        otp_verify = cache.get(f'verify_otp_{email}')
 
         if otp_verify:
             if new_password == confirm_password:
                 user_data = CustomUserModel.objects.get(email=email)
                 user_data.set_password(new_password)
                 user_data.save()
-                del request.session.get('reset_email')
-                
+                del request.session['reset_email']
+
                 return redirect('loginPage')
     return render(request, 'forgot_password/reset_password.html')
 
