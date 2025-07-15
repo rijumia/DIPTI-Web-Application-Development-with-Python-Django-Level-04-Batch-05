@@ -101,15 +101,51 @@ def forgetPasswordPage(request):
         user = CustomUserModel.objects.filter(email=email).exists()
         if user:
             otp = random.randint(1000,9999)
-            cache.set(email,otp,timeout=500)
+            cache.set(email,otp,timeout=120)
             send_mail(
                 'Forget Password OTP',
                 f'Your otp is: {otp}',
                 settings.EMAIL_HOST_USER,
                 [email]
             )
-            
-    return render(request, 'forget_password/forget_password.html')
+
+            request.session['reset_email'] = email
+            return redirect('verifyOtpPage')
+    return render(request, 'forgot_password/forget_password.html')
+
+def verifyOtpPage(request):
+    email = request.session.get('reset_email')
+    if request.method == 'POST':
+        # email = request.POST.get('email')
+        input_otp = request.POST.get('otp')
+
+        send_otp = cache.get(email)
+        if input_otp == str(send_otp):
+            cache.set(f'verify_otp_{email}', True, timeout=120)
+            return redirect('resetPassword')
+    return render(request, 'forgot_password/verifyOtpPage.html')
+
+def resetPassword(request):
+    email = request.session.get('reset_email')
+    if request.method == 'POST':
+        # email = request.POST.get('email')
+        new_password = request.get('new_password')
+        confirm_password = request.get('new_password1')
+
+        otp_verify = cache.set(f'verify_otp_{email}')
+
+        if otp_verify:
+            if new_password == confirm_password:
+                user_data = CustomUserModel.objects.get(email=email)
+                user_data.set_password(new_password)
+                user_data.save()
+                del request.session.get('reset_email')
+                
+                return redirect('loginPage')
+    return render(request, 'forgot_password/reset_password.html')
+
+
+
 
 def profileInfoPage(request):
     return render(request, 'profileInfo.html')

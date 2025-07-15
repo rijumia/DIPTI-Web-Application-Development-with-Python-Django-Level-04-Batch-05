@@ -22,6 +22,8 @@ urlpatterns = [
     path('student/pendingAcceptPage/<str:id>/', pendingAcceptPage, name='pendingAcceptPage'),
     
     path('forgetPasswordPage/',forgetPasswordPage, name='forgetPasswordPage'),
+    path('verifyOtpPage/',verifyOtpPage, name='verifyOtpPage'),
+    path('resetPassword/',resetPassword, name='resetPassword'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
