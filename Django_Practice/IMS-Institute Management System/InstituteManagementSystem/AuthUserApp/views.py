@@ -4,6 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 
+import random
+from django.core.mail import send_mail
+from django.conf import settings
+from django.core.cache import cache
 
 def registerPage(request):
     if request.method == 'POST':
@@ -88,6 +92,24 @@ def changePasswordPage(request):
         return redirect('homePage')
 
     return render(request, 'changePassword.html')
+
+#Forget Password Code Here
+def forgetPasswordPage(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        
+        user = CustomUserModel.objects.filter(email=email).exists()
+        if user:
+            otp = random.randint(1000,9999)
+            cache.set(email,otp,timeout=500)
+            send_mail(
+                'Forget Password OTP',
+                f'Your otp is: {otp}',
+                settings.EMAIL_HOST_USER,
+                [email]
+            )
+            
+    return render(request, 'forget_password/forget_password.html')
 
 def profileInfoPage(request):
     return render(request, 'profileInfo.html')
