@@ -1,46 +1,81 @@
-{% extends 'master.html' %}
+{% extends 'master/master.html' %}
 {% block title %}Add Student{% endblock %}
 
 {% block body %}
-<h2 class="mb-4">Add Student Information</h2>
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
 
-<form method="POST">
-    {% csrf_token %}
-    
-    <!-- Student Basic Info -->
-    <div class="card mb-4">
-        <div class="card-header">Basic Information</div>
-        <div class="card-body">
+      <h2 class="mb-4 text-center">Add Student Information</h2>
+
+      <form method="POST">
+        {% csrf_token %}
+
+        <!-- Student Basic Info -->
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header bg-primary text-white">Basic Information</div>
+          <div class="card-body p-4">
             <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
+              <label for="name" class="form-label">Name</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
                 <input type="text" name="name" class="form-control" required>
+              </div>
             </div>
+
             <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
+              <label for="email" class="form-label">Email</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
                 <input type="email" name="email" class="form-control">
+              </div>
             </div>
+
             <div class="mb-3">
-                <label for="address" class="form-label">Address</label>
+              <label for="address" class="form-label">Address</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
                 <textarea name="address" class="form-control" rows="3"></textarea>
+              </div>
             </div>
-        </div>
+          </div>
 
-        <div class="card-body">
+          <div class="card-header bg-secondary text-white">Academic Information</div>
+          <div class="card-body p-4">
             <div class="mb-3">
-                <label for="degreeName" class="form-label">Degree Name</label>
+              <label for="degreeName" class="form-label">Degree Name</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
                 <input type="text" name="degreeName" class="form-control">
+              </div>
             </div>
-            <div class="mb-3">
-                <label for="grade" class="form-label">Grade</label>
-                <input type="text" name="grade" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="passingYear" class="form-label">Passing Year</label>
-                <input type="number" name="passingYear" class="form-control">
-            </div>
-        </div>
-    </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+            <div class="mb-3">
+              <label for="grade" class="form-label">Grade</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-bar-chart-fill"></i></span>
+                <input type="text" name="grade" class="form-control">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="passingYear" class="form-label">Passing Year</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-calendar-check-fill"></i></span>
+                <input type="number" name="passingYear" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-send-fill me-1"></i>Submit
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
 {% endblock body %}
