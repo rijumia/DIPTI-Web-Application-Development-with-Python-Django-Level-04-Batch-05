@@ -1,0 +1,37 @@
+{% extends 'master.html' %}
+
+{% block title %}Dashboard | EduPortal{% endblock %}
+
+{% block body %}
+<h3 class="mb-4"><i class="bi bi-speedometer2 me-2"></i>Welcome to Your Dashboard</h3>
+<h4 class="mb-4"><i class="bi bi-speedometer2 me-2"></i>Your Role Is : {{request.user.user_type}}</h4>
+
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-person-video2 me-2 text-primary"></i>Total Teachers</h5>
+        <p class="card-text fs-4 text-primary">{{ total_teachers }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-people-fill me-2 text-success"></i>Total Students</h5>
+        <p class="card-text fs-4 text-success">{{ total_students }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-person-check-fill me-2 text-warning"></i>Logged in as</h5>
+        <p class="card-text">{{ request.user.username }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}

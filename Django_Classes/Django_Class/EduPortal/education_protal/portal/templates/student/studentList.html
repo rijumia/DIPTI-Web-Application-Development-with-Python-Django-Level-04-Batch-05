@@ -1,0 +1,33 @@
+{% extends 'master.html' %}
+{% block title %}Student List{% endblock %}
+
+{% block body %}
+<h2 class="mb-4">All Students</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Degree</th>
+            <th>Grade</th>
+            <th>Passing Year</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ student.student.name }}</td>
+                    <td>{{ student.student.email }}</td>
+                    <td>{{ student.student.address }}</td>
+                    <td>{{ student.degreeName }}</td>
+                    <td>{{ student.grade }}</td>
+                    <td>{{ student.passingYear }}</td>
+                </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock body%}

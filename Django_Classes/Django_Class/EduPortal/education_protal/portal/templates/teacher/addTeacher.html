@@ -1,0 +1,10 @@
+{% extends 'master.html' %}
+
+{% block body %}
+  <h2>Add Teacher</h2>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{form}}
+    <button type="submit" class="btn btn-primary">Add Teacher</button>
+  </form>
+{% endblock body %}
