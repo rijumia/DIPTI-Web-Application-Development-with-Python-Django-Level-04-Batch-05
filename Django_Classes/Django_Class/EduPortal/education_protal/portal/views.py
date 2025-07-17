@@ -155,4 +155,34 @@ def forgotPassword(request):
     return render(request, 'forgot_password/forgotPassword.html')
 
 def verifyOtp(request):
+    email = request.session.get('reset_email')
+    if request.method == 'POST':
+        mail_otp = request.POST.get('otp_mail')
+        
+        send_otp = cache.get(email)
+        
+        if mail_otp == str(send_otp):
+            cache.set(email, True, timeout=120)
+            
+            return redirect('resetPassword')
+            
     return render(request, 'verifyOtp.html')
+
+def resetPassword(request):
+    email = request.session.get('reset_email')
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password')
+        confirm_new_password = request.POST.get('confirm_new_password')
+        
+        otp_verify = cache.get(email)
+        
+        if otp_verify:
+            if new_password == confirm_new_password:
+                user_data = CustomUserModel.objects.get(email=email)
+                user_data.set_password(new_password)
+                user_data.save()
+                del request.session['reset_email']
+
+                return redirect('loginPage')
+            
+    return render(request, 'forgot_password/resetPassword.html')

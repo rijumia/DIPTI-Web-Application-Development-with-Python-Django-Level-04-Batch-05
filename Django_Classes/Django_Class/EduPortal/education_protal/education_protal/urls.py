@@ -11,6 +11,7 @@ urlpatterns = [
     
     path('forgotPassword/', forgotPassword, name='forgotPassword'),
     path('verifyOtp/', verifyOtp, name='verifyOtp'),
+    path('resetPassword/', resetPassword, name='resetPassword'),
     
     path('dashboardPage/', dashboardPage, name='dashboardPage'),
     
