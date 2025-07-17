@@ -166,7 +166,7 @@ def verifyOtp(request):
             
             return redirect('resetPassword')
             
-    return render(request, 'verifyOtp.html')
+    return render(request, 'forgot_password/verifyOtp.html')
 
 def resetPassword(request):
     email = request.session.get('reset_email')
