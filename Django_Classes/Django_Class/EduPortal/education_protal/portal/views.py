@@ -9,7 +9,7 @@ from django.core.cache import cache
 from django.core.mail import send_mail
 from django.conf import settings
 
-
+#______________Login___________
 def loginPage(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -21,6 +21,8 @@ def loginPage(request):
             return redirect('dashboardPage')
     return render(request, 'login.html')
 
+
+#______________SignUp___________
 def signupPage(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -38,6 +40,8 @@ def signupPage(request):
             user.save()
             return redirect('loginPage')
     return render(request, 'signup.html')
+
+#______________Change Password___________
 
 @login_required
 def changePasswordPage(request):
