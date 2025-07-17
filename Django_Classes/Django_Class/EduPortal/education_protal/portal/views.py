@@ -1,7 +1,13 @@
 from django.shortcuts import render,redirect
 from portal.models import *
-from django.contrib.auth import login,logout,authenticate
+from django.contrib.auth import login,logout,authenticate,update_session_auth_hash
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth.decorators import login_required
 from portal.form import *
+import random
+from django.core.cache import cache
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 def loginPage(request):
@@ -33,17 +39,39 @@ def signupPage(request):
             return redirect('loginPage')
     return render(request, 'signup.html')
 
+@login_required
+def changePasswordPage(request):
+    if request.method == 'POST':
+        oldPassword = request.POST.get('oldPassword')
+        newPassword1 = request.POST.get('newPassword1')
+        newPassword2 = request.POST.get('newPassword2')
+        
+        current_user = request.user
+        
+        if check_password(oldPassword, current_user.password):
+            if newPassword1 == newPassword2:
+                current_user.set_password(newPassword1)
+                current_user.save()
+                update_session_auth_hash(request, current_user)
+                return redirect('dashboardPage')
+        
+    return render(request, 'master/changePassword.html')
+
+@login_required
 def logoutPage(request):
     logout(request)
     return redirect('loginPage')
 
 
+
+@login_required
 def dashboardPage(request):
     
     return render(request, 'dashboard.html')
 
 #________________Teacher_________________
 
+@login_required
 def addTeacherPage(request):
     if request.method == 'POST':
         form = AddTeacherForm(request.POST)
@@ -55,6 +83,7 @@ def addTeacherPage(request):
 
     return render(request, 'teacher/addTeacher.html',{'form':form})
 
+@login_required
 def updateTeacherPage(request,id):
     teacher = TeacherModel.objects.get(id=id)
     if request.method == 'POST':
@@ -66,6 +95,7 @@ def updateTeacherPage(request,id):
         form = AddTeacherForm(instance=teacher)
     return render(request, 'teacher/updateTeacher.html',{'form':form})
 
+@login_required
 def allTeacherPage(request):
     teachers = TeacherModel.objects.all()
     return render(request, 'teacher/allTeacher.html',{'teachers':teachers})
@@ -73,6 +103,7 @@ def allTeacherPage(request):
 
 #__________________STUDENT__________________________
 
+@login_required
 def addStudentPage(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -98,6 +129,30 @@ def addStudentPage(request):
             return redirect('studentList')
     return render(request, 'student/addStudent.html')
 
+@login_required
 def studentList(request):
     students = StudentEducationInfoModel.objects.all()
     return render(request, 'student/studentList.html',{'students':students})
+
+#________________Forgot Password__________________________
+
+def forgotPassword(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        
+        user = CustomUserModel.objects.filter(email=email).exists()
+        if user:
+            otp = random.randint(100000, 999999)
+            cache.set(email, otp, timeout=500)
+            send_mail(
+                "Forgot Password OTP",
+                f"Your Otp is :{otp}",
+                settings.EMAIL_HOST_USER,
+                [email],
+            )
+            request.session['reset_email'] = email
+            return redirect('verifyOtp')
+    return render(request, 'forgot_password/forgotPassword.html')
+
+def verifyOtp(request):
+    return render(request, 'verifyOtp.html')

@@ -6,7 +6,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', loginPage, name='loginPage'),
     path('signupPage/', signupPage, name='signupPage'),
+    path('changePasswordPage/', changePasswordPage, name='changePasswordPage'),
     path('logoutPage/', logoutPage, name='logoutPage'),
+    
+    path('forgotPassword/', forgotPassword, name='forgotPassword'),
+    path('verifyOtp/', verifyOtp, name='verifyOtp'),
     
     path('dashboardPage/', dashboardPage, name='dashboardPage'),
     
