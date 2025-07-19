@@ -1,0 +1,39 @@
+{% extends 'master/master.html' %}
+
+{% block title %}Employer Profile{% endblock %}
+
+{% block body %}
+<div class="container mt-4" style="max-width: 800px;">
+  <h2 class="mb-4">Employer Profile</h2>
+
+  <div class="card shadow-sm">
+    <div class="row g-0">
+      <div class="col-md-4 text-center p-3">
+        {% if employerInfo.company_logo %}
+          <img src="{{ employerInfo.company_logo.url }}" class="img-fluid rounded" alt="Company Logo">
+        {% else %}
+          <img src="https://static.vecteezy.com/system/resources/previews/008/214/517/non_2x/abstract-geometric-logo-or-infinity-line-logo-for-your-company-free-vector.jpg" class="img-fluid rounded" alt="Company Logo">
+        {% endif %}
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{ employerInfo.company_name }}</h5>
+          <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+          <p class="card-text"><strong>Phone:</strong> {{ user.phone }}</p>
+          <p class="card-text"><strong>Location:</strong> {{ employerInfo.location }}</p>
+          <p class="card-text"><strong>About Company:</strong><br>{{ employerInfo.about_company }}</p>
+
+          <a href="" class="btn btn-primary mt-2">Edit Profile</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create New Job Button -->
+  <div class="mt-4 text-end">
+    <a href="{% url 'createJobPage' %}" class="btn btn-success">
+      <i class="bi bi-plus-circle"></i> Create New Job
+    </a>
+  </div>
+</div>
+{% endblock %}

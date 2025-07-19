@@ -1,0 +1,61 @@
+{% extends 'master/master.html' %}
+
+{% block title %}Create New Job{% endblock %}
+
+{% block body %}
+<div class="container mt-5" style="max-width: 700px;">
+  <h2 class="mb-4 text-center">Post a New Job</h2>
+  
+  <form action="" method="POST" class="card p-4 shadow-sm">
+    {% csrf_token %}
+    
+    <!-- Job Title -->
+    <div class="mb-3">
+      <label for="title" class="form-label">Job Title</label>
+      <input type="text" name="title" id="title" class="form-control" required>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label for="description" class="form-label">Job Description</label>
+      <textarea name="description" id="description" rows="4" class="form-control" required></textarea>
+    </div>
+
+    <!-- Requirements -->
+    <div class="mb-3">
+      <label for="requirements" class="form-label">Job Requirements</label>
+      <textarea name="requirements" id="requirements" rows="3" class="form-control" required></textarea>
+    </div>
+
+    <!-- Salary -->
+    <div class="mb-3">
+      <label for="salary" class="form-label">Salary (Optional)</label>
+      <input type="number" name="salary" id="salary" class="form-control" step="0.01">
+    </div>
+
+    <!-- Job Type -->
+    <div class="mb-3">
+      <label for="job_type" class="form-label">Job Type</label>
+      <select name="job_type" id="job_type" class="form-select" required>
+        <option value="" disabled selected>Select job type</option>
+        <option value="Full-Time">Full-Time</option>
+        <option value="Remote">Remote</option>
+        <option value="Internship">Internship</option>
+      </select>
+    </div>
+
+    <!-- Deadline -->
+    <div class="mb-3">
+      <label for="deadline" class="form-label">Application Deadline</label>
+      <input type="date" name="deadline" id="deadline" class="form-control" required>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="d-grid">
+      <button type="submit" class="btn btn-success">
+        <i class="bi bi-check-circle"></i> Post Job
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

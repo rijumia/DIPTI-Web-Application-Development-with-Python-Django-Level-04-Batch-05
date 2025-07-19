@@ -1,0 +1,44 @@
+{% extends 'master/master.html' %}
+
+{% block title %}Pending Accounts{% endblock %}
+
+{% block body %}
+<h2 class="mb-4">Pending User Accounts</h2>
+
+{% if pendingUser %}
+<table class="table table-bordered table-striped" style="max-width: 900px;">
+  <thead class="table-light">
+    <tr>
+      <th>Username</th>
+      <th>Email</th>
+      <th>User Type</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pending in pendingUser %}
+    <tr>
+      <td>{{ pending.username }}</td>
+      <td>{{ pending.email }}</td>
+      <td>{{ pending.user_types }}</td>
+      <td>
+        <form action="{% url 'approveUser' pending.id %}" method="POST" style="display:inline;">
+            {% csrf_token %}
+                <button type="submit" class="btn btn-success btn-sm">Approve</button>
+        </form>
+        <form action="{% url 'rejectUser' pending.id %}" method="POST" style="display:inline;">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+</form>
+
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No pending accounts to display.</p>
+{% endif %}
+
+{% endblock %}
+
