@@ -20,7 +20,7 @@ def signupPage(request):
                     email=email,
                     phone=phone,
                     password=phone,
-                    user_types='Admin',
+                    user_types= user_type,
                 )
                 return redirect('loginPage')
             else:
@@ -29,6 +29,7 @@ def signupPage(request):
                     email=email,
                     phone=phone,
                     user_types=user_type,
+                    pending_status = 'Pending',
                 )
                 return redirect('loginPage')
 

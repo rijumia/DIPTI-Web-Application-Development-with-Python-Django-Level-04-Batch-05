@@ -10,6 +10,9 @@ class CustomUserModel(AbstractUser):
         ('Candidate', 'Candidate'),
     ],max_length=10,null=True)
     
+    def __str__(self):
+        return self.username
+    
     
 class PendingAccountModel(models.Model):
     username = models.CharField(max_length=100, null=True)
@@ -24,3 +27,6 @@ class PendingAccountModel(models.Model):
         ('Accept', 'Accept'),
         ('Rejected', 'Rejected'),
     ], max_length=10, null=True)
+    
+    def __str__(self):
+        return self.username
