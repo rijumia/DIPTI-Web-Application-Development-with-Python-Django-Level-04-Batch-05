@@ -1,5 +1,5 @@
 from django.db import models
-from users_auth_app.models import *
+from users_auth_app.models import CustomUserModel
 
 # Create your models here.
 
@@ -16,7 +16,6 @@ class EmployerProfileModel(models.Model):
         return self.company_name
 
 
-from django.db import models
 
 class JobModel(models.Model):
     JOB_TYPE_CHOICES = [

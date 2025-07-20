@@ -1,26 +1,38 @@
 {% extends 'master/master.html' %}
 
+{% block title %}Dashboard{% endblock %}
+
 {% block body %}
-<div class="container mt-4">
-  <h2 class="mb-4 text-center">Dashboard</h2>
+<div class="container mt-5">
+  <h2 class="mb-4 text-center text-primary">
+    <i class="bi bi-speedometer2 me-2"></i>Dashboard
+  </h2>
 
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
+    <!-- Example Card -->
+    {% for job in jobs %}
     <div class="col">
-      <div class="card shadow-sm">
+      <div class="card border-0 shadow-sm rounded-4 h-100">
         <div class="card-body">
-          <h5 class="card-title"></h5>
+          <h5 class="card-title text-dark mb-3">
+            <i class="bi bi-briefcase-fill me-2 text-primary"></i>{{ job.title }}
+          </h5>
           <p class="card-text">
-            <strong>Company:</strong> <br>
-            <strong>Location:</strong><br>
-            <strong>Type:</strong>
+            <i class="bi bi-building me-1 text-muted"></i> <strong>Company:</strong> {{ job.company }} <br>
+            <i class="bi bi-geo-alt me-1 text-muted"></i> <strong>Location:</strong> {{ job.location }} <br>
+            <i class="bi bi-diagram-3 me-1 text-muted"></i> <strong>Type:</strong> {{ job.job_type }}
           </p>
-          <a href="" class="btn btn-primary btn-sm">View Details</a>
+          <a href="{% url 'job_detail' job.id %}" class="btn btn-outline-primary btn-sm mt-2">
+            <i class="bi bi-eye me-1"></i>View Details
+          </a>
         </div>
       </div>
     </div>
+    {% empty %}
+    <p class="text-center text-muted">No jobs available.</p>
+    {% endfor %}
 
   </div>
 </div>
-{% endblock body %}
-
+{% endblock %}

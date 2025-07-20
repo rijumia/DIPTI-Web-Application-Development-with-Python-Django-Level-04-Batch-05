@@ -10,12 +10,12 @@
       <ul class="navbar-nav me-auto">
         
         {% if user.user_types == 'Admin' %}
-             <!-- Admin Only -->
+            <!-- Admin Only -->
         <li class="nav-item d-none" data-role="Admin">
           <a class="nav-link" href="{% url 'pendingList' %}">Pending Account List</a>
         </li>
 
-                <!-- Profile -->
+          <!-- Profile -->
         <li class="nav-item d-none" data-role="All">
           <a class="nav-link" href="{% url 'profilePage' %}">Profile</a>
         </li>

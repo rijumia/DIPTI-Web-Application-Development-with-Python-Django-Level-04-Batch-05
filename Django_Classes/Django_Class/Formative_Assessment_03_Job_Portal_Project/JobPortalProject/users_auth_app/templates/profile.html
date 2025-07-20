@@ -1,18 +1,26 @@
 {% extends 'master/master.html' %}
 
-{% block title %}Profile{% endblock %}
+{% block title %}User Profile{% endblock %}
 
 {% block body %}
-<h2 class="mb-4">User Profile</h2>
+<div class="container d-flex justify-content-center">
+  <div class="card w-100" style="max-width: 600px;">
+    <div class="card-body text-center">
+      <div class="mb-3">
+        <i class="bi bi-person-circle" style="font-size: 4rem; color: #0d6efd;"></i>
+      </div>
+      <h4 class="card-title text-primary mb-3">{{ user.username }}</h4>
+      
+      <ul class="list-group list-group-flush text-start mb-4">
+        <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+        <li class="list-group-item"><strong>Phone:</strong> {{ user.phone }}</li>
+        <li class="list-group-item"><strong>User Type:</strong> {{ user.user_types }}</li>
+      </ul>
 
-<div class="card" style="max-width: 600px;">
-  <div class="card-body">
-    <h5 class="card-title">{{ user.username }}</h5>
-    <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
-    <p class="card-text"><strong>Phone:</strong> {{ user.phone }}</p>
-    <p class="card-text"><strong>User Type:</strong> {{ user.user_types }}</p>
-
-    <a href="{% url 'profileUpdatePage' %}" class="btn btn-primary">Update Profile</a>
+      <a href="{% url 'profileUpdatePage' %}" class="btn btn-outline-primary px-4">
+        <i class="bi bi-pencil-square me-1"></i> Update Profile
+      </a>
+    </div>
   </div>
 </div>
-{% endblock body %}
+{% endblock %}

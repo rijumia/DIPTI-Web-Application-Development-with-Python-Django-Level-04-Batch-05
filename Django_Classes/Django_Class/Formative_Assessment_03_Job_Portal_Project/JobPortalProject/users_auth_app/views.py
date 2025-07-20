@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate,login, logout, update_session_auth_hash
 from django.contrib.auth.hashers import check_password
 from users_auth_app.models import *
+from employer_app.models import EmployerProfileModel
+from candidate_app.models import CandidateProfileModel
+from django.contrib import messages
 
 # Create your views here.
 
@@ -51,6 +54,8 @@ def loginPage(request):
             else:
                 login(request, user)
                 return redirect('dashboardPage')
+        else:
+            messages.error(request, 'User Don\'t Exist')
     return render(request, 'login.html')
 
 def changePasswordPage(request):
@@ -101,23 +106,38 @@ def pendingList(request):
     return render(request, 'pendingList.html',{'pendingUser':pendingUser})
 
 def approveUser(request, id):
-    if request.method == 'POST':
-        pending = PendingAccountModel.objects.get(id=id)
-        CustomUserModel.objects.create_user(
+
+    pending = PendingAccountModel.objects.get(id=id)
+    if pending:
+        userData = CustomUserModel.objects.create_user(
             username=pending.username,
             email=pending.email,
             phone=pending.phone,
             password=pending.phone,  
             user_types=pending.user_types,
         )
-        pending.delete()
+        
+        if userData:
+            if pending.user_types == 'Employer':
+                EmployerProfileModel.objects.create(
+                    employer_user=userData,
+                    email=pending.email,
+                    phone=pending.phone,
+                )
+            elif pending.user_types == 'Candidate':
+                CandidateProfileModel.objects.create(
+                    candidate_user=userData,
+                    email=pending.email,
+                    phone=pending.phone,  
+                )
+        pending.delete()       
     return redirect('pendingList')
 
 
 def rejectUser(request, id):
-    if request.method == 'POST':
-        pending = PendingAccountModel.objects.get(id=id)
-        pending.delete()
+
+    pending = PendingAccountModel.objects.get(id=id)
+    pending.delete()
     return redirect('pendingList')
 
 

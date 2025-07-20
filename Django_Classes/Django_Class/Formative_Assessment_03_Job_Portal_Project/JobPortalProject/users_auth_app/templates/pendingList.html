@@ -3,42 +3,54 @@
 {% block title %}Pending Accounts{% endblock %}
 
 {% block body %}
-<h2 class="mb-4">Pending User Accounts</h2>
+<div class="container mt-5">
+  <div class="card shadow-lg border-0 rounded-4">
+    <div class="card-header bg-gradient text-white fw-semibold rounded-top-4" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+      <h3 class="mb-0">
+        <i class="bi bi-person-lines-fill me-2"></i>
+        Pending User Accounts
+      </h3>
+    </div>
+    <div class="card-body p-4">
+      {% if pendingUser %}
+      <div class="table-responsive">
+        <table class="table table-hover align-middle text-center">
+          <thead class="table-light">
+            <tr>
+              <th><i class="bi bi-person-circle"></i> Username</th>
+              <th><i class="bi bi-envelope-at"></i> Email</th>
+              <th><i class="bi bi-person-badge"></i> User Type</th>
+              <th><i class="bi bi-shield-check"></i> Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for pending in pendingUser %}
+            <tr class="align-middle">
+              <td class="fw-medium">{{ pending.username }}</td>
+              <td>{{ pending.email }}</td>
+              <td>
+                <span class="badge bg-info text-dark px-3 py-2">{{ pending.user_types }}</span>
+              </td>
+              <td>
+  <a href="{% url 'approveUser' pending.id %}" class="btn btn-success btn-sm me-2">
+    <i class="bi bi-check-circle-fill"></i> Accept
+  </a>
+  <a href="{% url 'rejectUser' pending.id %}" class="btn btn-danger btn-sm">
+    <i class="bi bi-x-circle-fill"></i> Decline
+  </a>
+</td>
 
-{% if pendingUser %}
-<table class="table table-bordered table-striped" style="max-width: 900px;">
-  <thead class="table-light">
-    <tr>
-      <th>Username</th>
-      <th>Email</th>
-      <th>User Type</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for pending in pendingUser %}
-    <tr>
-      <td>{{ pending.username }}</td>
-      <td>{{ pending.email }}</td>
-      <td>{{ pending.user_types }}</td>
-      <td>
-        <form action="{% url 'approveUser' pending.id %}" method="POST" style="display:inline;">
-            {% csrf_token %}
-                <button type="submit" class="btn btn-success btn-sm">Approve</button>
-        </form>
-        <form action="{% url 'rejectUser' pending.id %}" method="POST" style="display:inline;">
-  {% csrf_token %}
-  <button type="submit" class="btn btn-danger btn-sm">Reject</button>
-</form>
-
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% else %}
-<p>No pending accounts to display.</p>
-{% endif %}
-
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="alert alert-info text-center mt-4">
+        <i class="bi bi-info-circle"></i> No pending accounts to display.
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
 {% endblock %}
-
