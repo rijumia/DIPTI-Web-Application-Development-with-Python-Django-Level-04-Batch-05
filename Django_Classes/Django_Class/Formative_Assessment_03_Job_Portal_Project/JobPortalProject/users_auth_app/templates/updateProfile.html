@@ -1,0 +1,50 @@
+{% extends 'master/master.html' %}
+
+{% block title %}Update Profile{% endblock %}
+
+{% block body %}
+<h2 class="mb-4">Update Profile</h2>
+
+<form method="POST" style="max-width: 600px;">
+  {% csrf_token %}
+  
+  <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input
+      type="text"
+      class="form-control"
+      id="username"
+      name="username"
+      value="{{ user.username }}"
+      required
+    />
+  </div>
+  
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      name="email"
+      value="{{ user.email }}"
+      required
+    />
+  </div>
+  
+  <div class="mb-3">
+    <label for="phone" class="form-label">Phone</label>
+    <input
+      type="text"
+      class="form-control"
+      id="phone"
+      name="phone"
+      value="{{ user.phone }}"
+      required
+    />
+  </div>
+
+  <button type="submit" class="btn btn-primary">Save Changes</button>
+  <a href="{% url 'profilePage' %}" class="btn btn-secondary ms-2">Cancel</a>
+</form>
+{% endblock %}
