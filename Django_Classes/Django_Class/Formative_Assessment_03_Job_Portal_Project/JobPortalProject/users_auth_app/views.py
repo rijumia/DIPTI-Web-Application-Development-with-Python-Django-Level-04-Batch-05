@@ -144,9 +144,9 @@ def approveUser(request, id):
 
 
 def rejectUser(request, id):
-
     pending = PendingAccountModel.objects.get(id=id)
-    pending.pending_status == 'Rejected'
+    pending.pending_status = 'Rejected'
+    pending.save() 
     return redirect('pendingList')
 
 
