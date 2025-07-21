@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate,login, logout, update_session_auth_hash
 from django.contrib.auth.hashers import check_password
 from users_auth_app.models import *
-from employer_app.models import EmployerProfileModel
+from employer_app.models import EmployerProfileModel, JobModel
 from candidate_app.models import CandidateProfileModel
 from django.contrib import messages
 
@@ -108,6 +108,7 @@ def profileUpdatePage(request, id):
     return render(request, 'updateProfile.html',{'em_profile_data':em_profile_data})
 
 def dashboardPage(request):
+    
     return render(request, 'dashboard.html')
 
 def pendingList(request):

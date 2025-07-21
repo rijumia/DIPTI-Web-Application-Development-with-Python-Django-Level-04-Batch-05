@@ -41,39 +41,7 @@
 
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="#"><i class="bi bi-briefcase-fill me-2"></i>Job Portal</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-
-          {% if user.is_authenticated %}
-            {% if user.user_types == 'Admin' %}
-              <li class="nav-item"><a class="nav-link" href="{% url 'pendingList' %}"><i class="bi bi-clock-history me-1"></i>Pending Accounts</a></li>
-            {% elif user.user_types == 'Employer' %}
-              <li class="nav-item"><a class="nav-link" href="{% url 'dashboardPage' %}"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a></li>
-              <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-briefcase me-1"></i>My Jobs</a></li>
-            {% elif user.user_types == 'Candidate' %}
-              <li class="nav-item"><a class="nav-link" href="{% url 'dashboardPage' %}"><i class="bi bi-house-door me-1"></i>Dashboard</a></li>
-              <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-search me-1"></i>All Jobs</a></li>
-              <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-clipboard-check me-1"></i>My Applications</a></li>
-            {% endif %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'profilePage' %}"><i class="bi bi-person-circle me-1"></i>Profile</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'changePasswordPage' %}"><i class="bi bi-shield-lock me-1"></i>Change Password</a></li>
-            <li class="nav-item"><a class="nav-link text-danger" href="{% url 'logoutPage' %}"><i class="bi bi-box-arrow-right me-1"></i>Logout</a></li>
-          {% else %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'signupPage' %}"><i class="bi bi-person-plus me-1"></i>Register</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'loginPage' %}"><i class="bi bi-box-arrow-in-right me-1"></i>Login</a></li>
-          {% endif %}
-
-        </ul>
-      </div>
-    </div>
-  </nav>
+  {% include 'master/navbar.html' %}
 
   <!-- Main Content -->
   <main class="container py-5">

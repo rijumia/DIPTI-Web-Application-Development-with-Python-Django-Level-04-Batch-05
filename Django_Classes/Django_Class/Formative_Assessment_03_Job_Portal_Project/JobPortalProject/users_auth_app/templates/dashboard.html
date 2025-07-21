@@ -19,11 +19,11 @@
             <i class="bi bi-briefcase-fill me-2 text-primary"></i>{{ job.title }}
           </h5>
           <p class="card-text">
-            <i class="bi bi-building me-1 text-muted"></i> <strong>Company:</strong> {{ job.company }} <br>
+            <i class="bi bi-building me-1 text-muted"></i> <strong>Company:</strong> {{ job.employer.company_name }} <br>
             <i class="bi bi-geo-alt me-1 text-muted"></i> <strong>Location:</strong> {{ job.location }} <br>
             <i class="bi bi-diagram-3 me-1 text-muted"></i> <strong>Type:</strong> {{ job.job_type }}
           </p>
-          <a href="{% url 'job_detail' job.id %}" class="btn btn-outline-primary btn-sm mt-2">
+          <a href="" class="btn btn-outline-primary btn-sm mt-2">
             <i class="bi bi-eye me-1"></i>View Details
           </a>
         </div>
