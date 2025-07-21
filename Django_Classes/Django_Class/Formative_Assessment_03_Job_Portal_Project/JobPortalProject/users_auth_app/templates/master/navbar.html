@@ -53,24 +53,30 @@
             </li>
           {% endif %}
 
-          <li class="nav-item">
-            <a class="nav-link {% if request.resolver_match.url_name == 'profilePage' %}active{% endif %}" 
-               href="{% url 'profilePage' %}">
-              <i class="bi bi-person-circle me-1"></i>Profile
+          <!-- My Account Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle {% if request.resolver_match.url_name in 'profilePage changePasswordPage logoutPage' %}active{% endif %}" 
+               href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle me-1"></i>My Account
             </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link {% if request.resolver_match.url_name == 'changePasswordPage' %}active{% endif %}" 
-               href="{% url 'changePasswordPage' %}">
-              <i class="bi bi-shield-lock me-1"></i>Change Password
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link text-danger" href="{% url 'logoutPage' %}">
-              <i class="bi bi-box-arrow-right me-1"></i>Logout
-            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+              <li>
+                <a class="dropdown-item" href="{% url 'profilePage' %}">
+                  <i class="bi bi-person me-1"></i>Profile
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'changePasswordPage' %}">
+                  <i class="bi bi-shield-lock me-1"></i>Change Password
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item text-danger" href="{% url 'logoutPage' %}">
+                  <i class="bi bi-box-arrow-right me-1"></i>Logout
+                </a>
+              </li>
+            </ul>
           </li>
 
         {% else %}
