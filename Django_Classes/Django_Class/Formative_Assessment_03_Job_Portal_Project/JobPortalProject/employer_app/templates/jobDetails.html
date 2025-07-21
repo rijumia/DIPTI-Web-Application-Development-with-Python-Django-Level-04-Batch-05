@@ -1,0 +1,80 @@
+{% extends 'master/master.html' %}
+
+{% block title %}{{ job.title }} Details{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+  <div class="card border-0 shadow-lg rounded-4 p-5 bg-white">
+    <div class="d-flex justify-content-between align-items-start flex-wrap mb-4">
+      <div>
+        <h2 class="text-primary fw-bold mb-2">
+          <i class="bi bi-briefcase-fill me-2"></i>{{ job.title }}
+        </h2>
+        <h5 class="text-muted mb-1">{{ job.employer.company_name }}</h5>
+        <p class="text-muted small mb-0">
+          <i class="bi bi-geo-alt me-1"></i>{{ job.employer.location }}
+        </p>
+      </div>
+      <div class="text-end">
+        <span class="badge bg-primary-subtle text-primary px-3 py-2 fs-6 rounded-pill">{{ job.job_type }}</span>
+        <br>
+        <small class="text-muted">Posted {{ job.posted_date }}</small>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-6 mb-2">
+        <i class="bi bi-cash-coin me-1 text-success"></i> 
+        <strong>Salary:</strong> {{ job.salary }} BDT
+      </div>
+      <div class="col-md-6 mb-2">
+        <i class="bi bi-hourglass-split me-1 text-warning"></i> 
+        <strong>Deadline:</strong> {{ job.deadline }}
+        <small class="text-muted ms-2">({{ job.deadline|timeuntil }} left)</small>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="mb-4">
+      <h5 class="text-dark fw-semibold mb-2">Job Description</h5>
+      <p class="text-secondary">{{ job.description }}</p>
+    </div>
+
+    <div class="mb-4">
+      <h5 class="text-dark fw-semibold mb-2">Job Requirements</h5>
+<ul class="list-group list-group-flush">
+  {% for requirement in job.requirements.splitlines %}
+    {% if requirement %}
+    <li class="list-group-item">
+      <i class="bi bi-check-circle-fill text-success me-2"></i>{{ requirement }}
+    </li>
+    {% endif %}
+  {% endfor %}
+</ul>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap mt-4">
+      <a href="{% url 'dashboardPage' %}" class="btn btn-outline-secondary rounded-pill px-4">
+        <i class="bi bi-arrow-left"></i> Back
+      </a>
+
+      {% if request.user.user_types == 'Candidate' %}
+        <a href="#" class="btn btn-success rounded-pill px-4">
+          <i class="bi bi-send-fill me-1"></i> Apply Now
+        </a>
+
+      {% elif request.user.user_types == 'Employer' and job.employer.employer_user == request.user %}
+        <div>
+          <a href="{% url 'updateJobPage' job.id %}" class="btn btn-warning rounded-pill px-4 me-2">
+            <i class="bi bi-pencil-square"></i> Edit
+          </a>
+          <a href="{% url 'deleteJobPage' job.id %}" class="btn btn-danger rounded-pill px-4" onclick="return confirm('Are you sure you want to delete this job?');">
+            <i class="bi bi-trash"></i> Delete
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

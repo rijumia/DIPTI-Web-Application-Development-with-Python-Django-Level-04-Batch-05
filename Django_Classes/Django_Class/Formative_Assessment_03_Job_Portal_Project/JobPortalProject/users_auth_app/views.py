@@ -112,8 +112,8 @@ def profileUpdatePage(request, id):
 
 
 def dashboardPage(request):
-    
-    return render(request, 'dashboard.html')
+    jobs = JobModel.objects.all()
+    return render(request, 'dashboard.html',{'jobs':jobs})
 
 def pendingList(request):
     pendingUser = PendingAccountModel.objects.all()

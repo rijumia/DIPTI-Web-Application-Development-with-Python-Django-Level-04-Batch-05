@@ -1,0 +1,57 @@
+{% extends 'master/master.html' %}
+
+{% block title %}Job List{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-success mb-0">
+      <i class="bi bi-briefcase me-2"></i>All Posted Jobs
+    </h2>
+    {% if request.user.user_types == 'Employer' %}
+    <a href="{% url 'createJobPage' %}" class="btn btn-primary rounded-pill">
+      <i class="bi bi-plus-circle me-1"></i>Add Job
+    </a>
+    {% endif %}
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle shadow-sm">
+      <thead class="table-light">
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Requirements</th>
+          <th>Type</th>
+          <th>Deadline</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in jobs %}
+        <tr>
+          <td>{{ job.title }}</td>
+          <td>{{ job.description|truncatechars:20 }}</td>
+          <td>{{ job.requirements|truncatechars:20 }}</td>
+          <td>{{ job.job_type }}</td>
+          <td>{{ job.deadline }}</td>
+          <td>
+            <a href="{% url 'updateJobPage' job.id %}" class="btn btn-outline-warning btn-sm me-2">
+              <i class="bi bi-pencil-square"></i> Update
+            </a>
+            <a href="{% url 'deleteJobPage' job.id %}" class="btn btn-outline-danger btn-sm"
+               onclick="return confirm('Are you sure you want to delete this job?');">
+              <i class="bi bi-trash"></i> Delete
+            </a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="text-center text-muted">No jobs found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

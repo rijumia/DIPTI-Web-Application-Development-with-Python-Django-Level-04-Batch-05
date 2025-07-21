@@ -1,10 +1,10 @@
 {% extends 'master/master.html' %}
 
-{% block title %}Create New Job{% endblock %}
+{% block title %}Update Job{% endblock %}
 
 {% block body %}
 <div class="container mt-5" style="max-width: 700px;">
-  <h2 class="mb-4 text-center">Post a New Job</h2>
+  <h2 class="mb-4 text-center">Update Job</h2>
   
   <form action="" method="POST" class="card p-4 shadow-sm">
     {% csrf_token %}
@@ -14,7 +14,7 @@
     <!-- Submit Button -->
     <div class="d-grid">
       <button type="submit" class="btn btn-success">
-        <i class="bi bi-check-circle"></i> Post Job
+        <i class="bi bi-check-circle"></i> Update Job
       </button>
     </div>
   </form>
