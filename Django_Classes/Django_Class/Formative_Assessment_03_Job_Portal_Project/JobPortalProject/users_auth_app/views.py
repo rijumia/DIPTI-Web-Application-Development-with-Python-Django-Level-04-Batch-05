@@ -85,10 +85,11 @@ def profilePage(request):
     return render(request, 'profile.html')
 
 def profileUpdatePage(request, id):
-    
+    em_profile_data = None
+    ca_profile_data = None
+
     if request.user.user_types == 'Employer':
-        
-        em_profile_data = EmployerProfileModel.objects.get(id=id)
+        em_profile_data = EmployerProfileModel.objects.get(employer_user=request.user)
         if request.method == 'POST':
             em_profile_data.company_name = request.POST.get('company_name')
             em_profile_data.email = request.POST.get('email')
@@ -100,12 +101,15 @@ def profileUpdatePage(request, id):
                 em_profile_data.company_logo = img
             em_profile_data.save()
             return redirect('profilePage')
-        
-    if request.user.user_types == 'Candidate':  
-        
-        ca_profile_data = CandidateProfileModel.objects.get(id=id)  
 
-    return render(request, 'updateProfile.html',{'em_profile_data':em_profile_data})
+    elif request.user.user_types == 'Candidate':
+        ca_profile_data = CandidateProfileModel.objects.get(candidate_user=id)
+
+    return render(request, 'updateProfile.html', {
+        'em_profile_data': em_profile_data,
+        'ca_profile_data': ca_profile_data,
+    })
+
 
 def dashboardPage(request):
     
