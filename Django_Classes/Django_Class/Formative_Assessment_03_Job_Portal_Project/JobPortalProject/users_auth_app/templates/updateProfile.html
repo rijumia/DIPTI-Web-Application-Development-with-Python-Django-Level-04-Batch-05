@@ -4,25 +4,25 @@
 
 {% block body %}
 <div class="container d-flex justify-content-center">
-  <div class="card shadow-sm w-100" style="max-width: 600px;">
+  <div class="card shadow-sm w-100" style="max-width: 700px;">
     <div class="card-body">
       <h4 class="card-title text-center text-primary mb-4">
-        <i class="bi bi-pencil-square me-2"></i>Update Your Profile
+        <i class="bi bi-pencil-square me-2"></i>Update Your Company Profile
       </h4>
 
-      <form method="POST" novalidate>
+      <form method="POST" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
 
         <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
+          <label for="company_name" class="form-label">Company Name</label>
           <div class="input-group">
-            <span class="input-group-text"><i class="bi bi-person"></i></span>
+            <span class="input-group-text"><i class="bi bi-building"></i></span>
             <input
               type="text"
               class="form-control"
-              id="username"
-              name="username"
-              value="{{ user.username }}"
+              id="company_name"
+              name="company_name"
+              value="{{ user.employer_profile.company_name }}"
               required
             />
           </div>
@@ -37,13 +37,13 @@
               class="form-control"
               id="email"
               name="email"
-              value="{{ user.email }}"
+              value="{{ user.employer_profile.email }}"
               required
             />
           </div>
         </div>
 
-        <div class="mb-4">
+        <div class="mb-3">
           <label for="phone" class="form-label">Phone</label>
           <div class="input-group">
             <span class="input-group-text"><i class="bi bi-telephone"></i></span>
@@ -58,11 +58,47 @@
           </div>
         </div>
 
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+            <input
+              type="text"
+              class="form-control"
+              id="location"
+              name="location"
+              value="{{ user.employer_profile.location }}"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="about" class="form-label">About Company</label>
+          <textarea
+            class="form-control"
+            id="about"
+            name="about"
+            rows="4"
+            required
+          >{{ user.employer_profile.about_company }}</textarea>
+        </div>
+
+        <div class="mb-4">
+          <label for="logo" class="form-label">Company Logo</label>
+          {% if user.employer_profile.company_logo %}
+            <div class="mb-2">
+              <img src="{{ user.employer_profile.company_logo.url }}" alt="Current Logo" width="100" class="rounded border">
+            </div>
+          {% endif %}
+          <input type="file" class="form-control" id="logo" name="logo" />
+        </div>
+
         <div class="d-flex justify-content-between">
           <button type="submit" class="btn btn-primary">
-            <i class="bi bi-check-circle me-1"></i> Save Changes
+            <i class="bi bi-check-circle me-1"></i> Update
           </button>
-          <a href="{% url 'profilePage' %}" class="btn btn-outline-secondary">
+          <a href="{% url 'profilePage'  %}" class="btn btn-outline-secondary">
             <i class="bi bi-x-circle me-1"></i> Cancel
           </a>
         </div>

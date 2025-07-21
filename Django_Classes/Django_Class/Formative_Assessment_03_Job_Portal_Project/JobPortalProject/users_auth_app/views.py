@@ -84,21 +84,28 @@ def logoutPage(request):
 def profilePage(request):
     return render(request, 'profile.html')
 
-def profileUpdatePage(request):
-    user = request.user
+def profileUpdatePage(request, id):
+    
+    if request.user.user_types == 'Employer':
+        
+        em_profile_data = EmployerProfileModel.objects.get(id=id)
+        if request.method == 'POST':
+            em_profile_data.company_name = request.POST.get('company_name')
+            em_profile_data.email = request.POST.get('email')
+            em_profile_data.phone = request.POST.get('phone')
+            em_profile_data.location = request.POST.get('location')
+            em_profile_data.about_company = request.POST.get('about')
+            img = request.FILES.get('logo')
+            if img:
+                em_profile_data.company_logo = img
+            em_profile_data.save()
+            return redirect('profilePage')
+        
+    if request.user.user_types == 'Candidate':  
+        
+        ca_profile_data = CandidateProfileModel.objects.get(id=id)  
 
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        phone = request.POST.get('phone')
-        user.username = username
-        user.email = email
-        user.phone = phone
-        user.save()
-
-        return redirect('profilePage')
-
-    return render(request, 'updateProfile.html')
+    return render(request, 'updateProfile.html',{'em_profile_data':em_profile_data})
 
 def dashboardPage(request):
     return render(request, 'dashboard.html')
@@ -139,7 +146,7 @@ def approveUser(request, id):
 def rejectUser(request, id):
 
     pending = PendingAccountModel.objects.get(id=id)
-    pending.delete()
+    pending.pending_status == 'Rejected'
     return redirect('pendingList')
 
 

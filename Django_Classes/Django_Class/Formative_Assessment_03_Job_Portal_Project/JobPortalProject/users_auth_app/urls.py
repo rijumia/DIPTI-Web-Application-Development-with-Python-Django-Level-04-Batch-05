@@ -10,7 +10,7 @@ urlpatterns = [
     
     path('dashboard/',dashboardPage, name='dashboardPage'),
     path('profile/',profilePage, name='profilePage'),
-    path('profileUpdatePage/',profileUpdatePage, name='profileUpdatePage'),
+    path('profileUpdatePage/<int:id>/',profileUpdatePage, name='profileUpdatePage'),
     path('pendingList/',pendingList, name='pendingList'),
     
     path('approve/<str:id>/', approveUser, name='approveUser'),
