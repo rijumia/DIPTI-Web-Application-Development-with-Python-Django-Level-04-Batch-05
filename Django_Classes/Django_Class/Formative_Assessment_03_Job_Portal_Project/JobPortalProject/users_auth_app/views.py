@@ -71,7 +71,7 @@ def changePasswordPage(request):
                 current_user.set_password(new_password1)
                 current_user.save()
                 update_session_auth_hash(request, current_user)
-                return redirect('homePage')
+                return redirect('dashboardPage')
             messages.error(request, 'New Password and Confim New Password Not Macth')
         
     return render(request, 'changePassword.html')
