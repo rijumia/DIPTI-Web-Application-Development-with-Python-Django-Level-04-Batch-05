@@ -8,21 +8,21 @@ class JobModelForm(forms.ModelForm):
 
         widgets = {
             'title': forms.TextInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control m-2',
                 'placeholder': 'Enter job title'
             }),
             'description': forms.Textarea(attrs={
-                'class': 'form-control',
+                'class': 'form-control m-2',
                 'placeholder': 'Job description',
                 'rows': 4
             }),
             'requirements': forms.Textarea(attrs={
-                'class': 'form-control',
+                'class': 'form-control m-2',
                 'placeholder': 'Job requirements',
                 'rows': 4
             }),
             'salary': forms.NumberInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control m-2',
                 'placeholder': 'Enter salary amount'
             }),
             'job_type': forms.Select(attrs={

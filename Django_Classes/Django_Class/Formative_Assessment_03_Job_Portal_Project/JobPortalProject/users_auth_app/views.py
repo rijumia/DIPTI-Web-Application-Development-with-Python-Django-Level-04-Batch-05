@@ -103,7 +103,15 @@ def profileUpdatePage(request, id):
             return redirect('profilePage')
 
     elif request.user.user_types == 'Candidate':
-        ca_profile_data = CandidateProfileModel.objects.get(candidate_user=id)
+        ca_profile_data = CandidateProfileModel.objects.get(candidate_user=request.user)
+        if request.method == 'POST':
+            ca_profile_data.full_name = request.POST.get('full_name')
+            ca_profile_data.email = request.POST.get('email')
+            ca_profile_data.phone = request.POST.get('phone')
+            ca_profile_data.address = request.POST.get('address')
+            ca_profile_data.date_of_birth = request.POST.get('date_of_birth')
+            ca_profile_data.save()
+            return redirect('profilePage')
 
     return render(request, 'updateProfile.html', {
         'em_profile_data': em_profile_data,
