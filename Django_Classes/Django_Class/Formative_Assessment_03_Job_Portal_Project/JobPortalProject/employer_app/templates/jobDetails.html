@@ -60,7 +60,7 @@
       </a>
 
       {% if request.user.user_types == 'Candidate' %}
-        <a href="#" class="btn btn-success rounded-pill px-4">
+        <a href="{% url 'applyJob' job.id %}" class="btn btn-success rounded-pill px-4">
           <i class="bi bi-send-fill me-1"></i> Apply Now
         </a>
 

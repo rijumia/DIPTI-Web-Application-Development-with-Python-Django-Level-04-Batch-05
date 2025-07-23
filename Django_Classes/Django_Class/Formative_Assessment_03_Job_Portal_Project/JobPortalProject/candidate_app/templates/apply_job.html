@@ -1,0 +1,22 @@
+{% extends 'master/master.html' %}
+
+{% block title %}Apply Job{% endblock %}
+
+{% block body %}
+<div class="container mt-5" style="max-width: 700px;">
+  <h2 class="mb-4 text-center">Apply Job</h2>
+  
+  <form action="" method="POST" class="card p-4 shadow-sm">
+    {% csrf_token %}
+    <h3>You Apply For: {{jobData.title}}</h3>
+    {{formData}}
+
+    <!-- Submit Button -->
+    <div class="d-grid">
+      <button type="submit" class="btn btn-success">
+        <i class="bi bi-check-circle"></i> Apply Job
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}
