@@ -11,6 +11,7 @@ urlpatterns = [
     
     path('dashboardPage/', dashboardPage, name='dashboardPage'),
     path('profilePage/', profilePage, name='profilePage'),
+    path('updateProfilePage/', updateProfilePage, name='updateProfilePage'),
     
     path('createJobPage/', createJobPage, name='createJobPage'),
     path('jobListPage/', jobListPage, name='jobListPage'),

@@ -12,28 +12,6 @@ class CustomUserModel(AbstractUser):
     def __str__(self):
         return self.username
     
-class CreateJobModel(models.Model):
-    JOB_TYPE_CHOICES = [
-        ('Full-Time', 'Full-Time'),
-        ('Part-Time', 'Part-Time'),
-        ('Internship', 'Internship'),
-        ('Remote', 'Remote'),
-    ]
-
-    recruiter = models.ForeignKey(RecruiterProfile, on_delete=models.CASCADE, related_name='jobs')
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    requirements = models.TextField()
-    salary = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    location = models.CharField(max_length=255)
-    job_type = models.CharField(max_length=20, choices=JOB_TYPE_CHOICES)
-    deadline = models.DateField()
-    posted_date = models.DateField(auto_now_add=True)
-
-    def __str__(self):
-        return self.title
-
-
 class RecruiterProfile(models.Model):
     user = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE, related_name='recruiter_profile')
     company_name = models.CharField(max_length=255)
@@ -42,6 +20,29 @@ class RecruiterProfile(models.Model):
 
     def __str__(self):
         return self.company_name
+    
+class CreateJobModel(models.Model):
+    JOB_TYPE_CHOICES = [
+        ('Full-Time', 'Full-Time'),
+        ('Part-Time', 'Part-Time'),
+        ('Internship', 'Internship'),
+        ('Remote', 'Remote'),
+    ]
+
+    recruiter = models.ForeignKey(RecruiterProfile, on_delete=models.CASCADE, related_name='jobs',null=True)
+    title = models.CharField(max_length=255,null=True)
+    description = models.TextField(null=True)
+    requirements = models.TextField(null=True)
+    salary = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    location = models.CharField(max_length=255)
+    job_type = models.CharField(max_length=20, choices=JOB_TYPE_CHOICES,null=True)
+    deadline = models.DateField(null=True)
+    posted_date = models.DateField(auto_now_add=True,null=True)
+
+    def __str__(self):
+        return self.title
+
+
 
     
 class JobSeekerProfile(models.Model):

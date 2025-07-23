@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login,logout,authenticate, update_session_auth_hash
 from django.contrib.auth.hashers import check_password
@@ -69,11 +70,21 @@ def dashboardPage(request):
 def profilePage(request):
     return render(request, 'profile.html')
 
+def updateProfilePage(request):
+    
+    return render(request, 'updateProfile.html')
+    
+
+
 def createJobPage(request):
     if request.method == 'POST':
         form = CreateJobModelForm(request.POST)
+
+        recruiter_profile = RecruiterProfile.objects.get(user= request.user)
         if form.is_valid():
-            form.save()
+            job = form.save(commit=False) 
+            job.recruiter = recruiter_profile
+            job.save() 
             return redirect('jobList') 
     else:
         form = CreateJobModelForm()
@@ -82,5 +93,5 @@ def createJobPage(request):
 
 
 def jobListPage(request):
-    job_data = CreateJobModel.objects.filter(user=request.user)
+    job_data = CreateJobModel.objects.filter(recruiter__user=request.user)
     return render(request, 'jobList.html',{'job_data':job_data})
