@@ -1,0 +1,73 @@
+{% extends 'master/master.html' %}
+
+{% block title %}Dashboard | JobNest{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">
+    <i class="bi bi-speedometer2 me-2"></i>Dashboard
+  </h2>
+
+  <!-- Welcome Message -->
+  <div class="alert alert-info text-center">
+    Welcome back, <strong>{{ request.user.username }}</strong>!
+    {% if request.user.user_types == "recruiter" %}
+      You are logged in as a <strong>Recruiter</strong>.
+    {% elif request.user.user_types == "job_seeker" %}
+      You are logged in as a <strong>Job Seeker</strong>.
+    {% endif %}
+  </div>
+
+  <div class="row g-4">
+    {% if request.user.user_types == "recruiter" %}
+      <!-- Post a Job -->
+      <div class="col-md-4">
+        <div class="card shadow-sm text-center">
+          <div class="card-body">
+            <i class="bi bi-briefcase-fill display-5 text-primary mb-3"></i>
+            <h5 class="card-title">Post a Job</h5>
+            <p class="card-text">Create a new job opening to hire talents.</p>
+            <a href="{% url 'postJob' %}" class="btn btn-primary">Post Now</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- View Applicants -->
+      <div class="col-md-4">
+        <div class="card shadow-sm text-center">
+          <div class="card-body">
+            <i class="bi bi-people-fill display-5 text-success mb-3"></i>
+            <h5 class="card-title">View Applicants</h5>
+            <p class="card-text">See who applied to your job posts.</p>
+            <a href="{% url 'viewApplicants' %}" class="btn btn-success">View</a>
+          </div>
+        </div>
+      </div>
+    {% elif request.user.user_types == "job_seeker" %}
+      <!-- Browse Jobs -->
+      <div class="col-md-4">
+        <div class="card shadow-sm text-center">
+          <div class="card-body">
+            <i class="bi bi-search display-5 text-warning mb-3"></i>
+            <h5 class="card-title">Browse Jobs</h5>
+            <p class="card-text">Explore available job opportunities.</p>
+            <a href="{% url 'browseJobs' %}" class="btn btn-warning text-white">Search</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- My Applications -->
+      <div class="col-md-4">
+        <div class="card shadow-sm text-center">
+          <div class="card-body">
+            <i class="bi bi-file-earmark-check-fill display-5 text-info mb-3"></i>
+            <h5 class="card-title">My Applications</h5>
+            <p class="card-text">Track the status of your job applications.</p>
+            <a href="{% url 'myApplications' %}" class="btn btn-info text-white">View</a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

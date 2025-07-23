@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="">
+      <i class="bi bi-briefcase-fill text-primary me-2"></i>JobNest
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+
+        {% if user.is_authenticated %}
+          {% if user.user_types == 'Recruiter' %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'dashboardPage' %}"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'jobListPage' %}"><i class="bi bi-plus-circle"></i> All Job</a></li>
+          {% elif user.user_types == 'Job_seeker' %}
+            <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-search"></i> Find Jobs</a></li>
+            <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-clipboard-check"></i> My Applications</a></li>
+          {% elif user.is_superuser %}
+            <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-hourglass-split"></i> Pending Accounts</a></li>
+          {% endif %}
+
+          <li class="nav-item"><a class="nav-link" href="{% url 'profilePage' %}"><i class="bi bi-person-circle"></i> Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'changePassword' %}"><i class="bi bi-shield-lock"></i> Change Password</a></li>
+          <li class="nav-item"><a class="nav-link text-danger" href="{% url 'logoutPage' %}"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'signupPage' %}"><i class="bi bi-person-plus"></i> Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'loginPage' %}"><i class="bi bi-box-arrow-in-right"></i> Login</a></li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </div>
+</nav>
