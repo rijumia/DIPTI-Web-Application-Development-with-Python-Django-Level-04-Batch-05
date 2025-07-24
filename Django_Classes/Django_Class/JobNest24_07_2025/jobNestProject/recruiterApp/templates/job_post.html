@@ -1,0 +1,18 @@
+{% extends 'master/base.html' %}
+
+{% block body %}
+<body>
+    <div class="container">
+        <h2>Post a New Job</h2>
+        <form method='POST'>
+            {% csrf_token %}
+            <input type="text" name="JobTitle" placeholder="Job Title" required>
+            <textarea name="JobDescription" placeholder="Job Description" required></textarea>
+            <input type="text" name="Salary" placeholder="Salary" required>
+            <input type="text" name="Location" placeholder="Location" required>
+            <input type="date" name="deadline" required>
+            <button type="submit">Post Job</button>
+        </form>
+    </div>
+</body>
+{% endblock body %}

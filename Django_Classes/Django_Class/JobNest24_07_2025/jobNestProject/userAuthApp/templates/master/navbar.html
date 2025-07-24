@@ -1,0 +1,24 @@
+    <header>
+        <h2>JobNest</h2>
+        <nav>
+            {% if request.user.user_types == 'recruiter' %}
+            <a href="{% url 'jobPostPage' %}">Post Job</a>
+            <a href="{% url 'recruiterProfile' %}">My Profile</a>
+
+            {% elif request.user.user_types == 'jobseeker' %}
+            <a href="job_list.html">Browse Jobs</a>
+            <a href="profile_seeker.html">My Applications</a>
+            <a href="profile_recruiter.html">My Profile</a>
+
+            {% else %}
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+            {% endif %}
+
+            <a href="{% url 'changePassword' %}">Change Password</a>
+            <a href="{% url 'logoutPage' %}">logout</a>
+
+            
+
+        </nav>
+    </header>

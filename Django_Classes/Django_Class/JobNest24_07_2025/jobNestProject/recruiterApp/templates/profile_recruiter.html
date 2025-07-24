@@ -1,0 +1,43 @@
+{% extends 'master/base.html' %}
+
+{% block body %}
+<div class="container py-4">
+    <h2>My Profile ({{ request.user.user_types|capfirst }})</h2>
+    <p><strong>Username:</strong> {{ request.user.username }}</p>
+    <a href="{% url 'recruiterProfileUpdate' %}" class="btn btn-primary mb-3">Update Profile</a>
+
+    <h3>My Jobs</h3>
+    {% if recruiter_jobs %}
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Title</th>
+                    <th>Job Type</th>
+                    <th>Salary</th>
+                    <th>Posted</th>
+                    <th>Deadline</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in recruiter_jobs %}
+                    <tr>
+                        <td>{{ job.title }}</td>
+                        <td>{{ job.job_type }}</td>
+                        <td>{{ job.salary }}</td>
+                        <td>{{ job.posted_date }}</td>
+                        <td>{{ job.deadline }}</td>
+                        <td>
+                            <a href="{% url 'jobUpdate' job.id %}" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{% url 'jobDelete' job.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-muted">You haven’t posted any jobs yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
