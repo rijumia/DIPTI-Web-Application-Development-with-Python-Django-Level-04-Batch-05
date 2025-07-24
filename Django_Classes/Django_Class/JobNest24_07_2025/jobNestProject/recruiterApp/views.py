@@ -38,7 +38,10 @@ def jobPostPage(request):
             job_type = 'Full-Time'
         )
         return redirect('JobList')
-    return render(request, 'job_post.html')
+    else:
+        recruiter_jobs = JobModel.objects.filter(recruiter = request.user)
+    return render(request, 'job_post.html',{'recruiter_jobs':recruiter_jobs})
 
 def jobList(request):
-    return render(request, 'job_list.html')
+    recruiter_jobs = JobModel.objects.filter(recruiter = request.user)
+    return render(request, 'job_list.html',{'recruiter_jobs':recruiter_jobs})

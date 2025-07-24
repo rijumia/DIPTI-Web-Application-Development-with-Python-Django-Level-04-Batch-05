@@ -7,7 +7,6 @@
     <a href="{% url 'recruiterProfileUpdate' %}" class="btn btn-primary mb-3">Update Profile</a>
 
     <h3>My Jobs</h3>
-    {% if recruiter_jobs %}
         <table class="table table-bordered">
             <thead class="table-dark">
                 <tr>
@@ -28,16 +27,14 @@
                         <td>{{ job.posted_date }}</td>
                         <td>{{ job.deadline }}</td>
                         <td>
-                            <a href="{% url 'jobUpdate' job.id %}" class="btn btn-sm btn-warning">Edit</a>
-                            <a href="{% url 'jobDelete' job.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                            <a href="" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-    {% else %}
-        <p class="text-muted">You haven’t posted any jobs yet.</p>
-    {% endif %}
+
 </div>
 {% endblock %}
 
