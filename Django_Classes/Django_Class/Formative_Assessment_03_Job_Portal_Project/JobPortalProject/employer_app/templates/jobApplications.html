@@ -1,0 +1,62 @@
+{% extends 'master/master.html' %}
+
+{% block title %}All Job Applications{% endblock %}
+
+{% block body %}
+<h2 class="mb-4">All Applications for Your Posted Jobs</h2>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Job Title</th>
+        <th scope="col">Candidate Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Education</th>
+        <th scope="col">Experience</th>
+        <th scope="col">Status</th>
+        <th scope="col">Applied At</th>
+        <th scope="col">Actions</th>  <!-- New header -->
+      </tr>
+    </thead>
+    <tbody>
+      {% for app in applications %}
+        <tr>
+          <td>{{ app.job.title }}</td>
+          <td>{{ app.candidate.full_name }}</td>
+          <td><a href="mailto:{{ app.candidate.email }}">{{ app.candidate.email }}</a></td>
+          <td><a href="tel:{{ app.candidate.phone }}">{{ app.candidate.phone }}</a></td>
+          <td>{{ app.last_education }}</td>
+          <td>{{ app.work_experience }}</td>
+          <td>
+            {% if app.status == "Applied" %}
+              <span class="badge bg-primary">{{ app.status }}</span>
+            {% elif app.status == "Interview" %}
+              <span class="badge bg-info text-dark">{{ app.status }}</span>
+            {% elif app.status == "Offered" %}
+              <span class="badge bg-success">{{ app.status }}</span>
+            {% elif app.status == "Rejected" %}
+              <span class="badge bg-danger">{{ app.status }}</span>
+            {% else %}
+              <span class="badge bg-secondary">{{ app.status }}</span>
+            {% endif %}
+          </td>
+          <td>{{ app.applied_at|date:"d M Y H:i" }}</td>
+
+          <td>
+            <a href="{% url 'changeApplicationStatusPage' app.id %}" class="btn btn-sm btn-outline-primary">
+                Change Status
+            </a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="9" class="text-center py-4">No applications submitted yet.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

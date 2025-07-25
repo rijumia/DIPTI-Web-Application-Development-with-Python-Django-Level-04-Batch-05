@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from employer_app.models import *
 from employer_app.forms import *
+from candidate_app.models import *
 from django.contrib import messages
 
 # Create your views here.
@@ -61,3 +62,25 @@ def deleteJobPage(request, id):
 def jobDetailsPage(request, id):
     job = JobModel.objects.get(id=id)
     return render(request, 'jobDetails.html',{'job':job})
+
+
+
+def allJobApplicationsPage(request):
+    employer = request.user
+    jobs = JobModel.objects.filter(employer__employer_user=employer)
+    applications = JobApplicationModel.objects.filter(job__in=jobs).select_related('job', 'candidate')
+
+    return render(request, 'jobApplications.html', {
+        'applications': applications,
+    })
+
+def changeApplicationStatusPage(request, id):
+    status = JobApplicationModel.objects.get(id=id)
+    if status.status == 'Applied':
+        status.status = 'Interview'
+    elif status.status == 'Interview':
+        status.status = 'Offered'
+    else:
+        status.status = 'Rejected'   
+    status.save()
+    return redirect('allJobApplicationsPage')

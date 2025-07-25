@@ -8,4 +8,7 @@ urlpatterns = [
     path('deleteJobPage/<str:id>/',deleteJobPage, name='deleteJobPage'),
     path('jobDetailsPage/<str:id>/',jobDetailsPage, name='jobDetailsPage'),
 
+    path('jobApplications/', allJobApplicationsPage, name='allJobApplicationsPage'),
+    path('changeApplicationStatusPage/<str:id>/', changeApplicationStatusPage, name='changeApplicationStatusPage'),
+
 ]
