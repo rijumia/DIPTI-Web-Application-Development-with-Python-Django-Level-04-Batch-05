@@ -1,0 +1,72 @@
+{% extends 'master/master.html' %}
+
+{% block title %}Leave Requests{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+  {% comment %} <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3><i class="bi bi-clipboard-data text-primary"></i> Leave Requests</h3>
+    <a href="{% url 'addLeavePage' %}" class="btn btn-success">
+      <i class="bi bi-plus-circle"></i> Add Leave Request
+    </a>
+  </div> {% endcomment %}
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle bg-white">
+      <thead class="table-primary">
+        <tr>
+          <th>#</th>
+          <th>Employee</th>
+          <th>Leave Type</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Reason</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for leave in leaveRequests %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ leave.Employee.FullName }}</td>
+          <td>{{ leave.LeaveType|capfirst }}</td>
+          <td>{{ leave.FromDate }}</td>
+          <td>{{ leave.ToDate }}</td>
+          <td>{{ leave.Reason }}</td>
+          <td>
+            {% if leave.Status == 'Pending' %}
+              <span class="badge bg-warning text-dark">{{ leave.Status }}</span>
+            {% elif leave.Status == 'Approved' %}
+              <span class="badge bg-success">{{ leave.Status }}</span>
+            {% else %}
+              <span class="badge bg-danger">{{ leave.Status }}</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if leave.Status == 'Approved' %}
+            Request Approved.
+            {% elif leave.Status == 'Rejected' %}
+            Request Rejected.
+            {% else %}
+            <a href="{% url 'ApprovePage' leave.id %}" class="btn btn-sm btn-outline-primary">Approve<i class="bi bi-pencil-square"></i></a>
+            <a href="{% url 'RejectedPage' leave.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to reject this request?');">Reject<i class="bi bi-trash"></i></a>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="8" class="text-center text-muted">No leave requests found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

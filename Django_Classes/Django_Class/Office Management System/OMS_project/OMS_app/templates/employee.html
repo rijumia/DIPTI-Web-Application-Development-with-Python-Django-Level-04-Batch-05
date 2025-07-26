@@ -1,0 +1,61 @@
+{% extends 'master/master.html' %}
+
+{% block body %}
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3><i class="bi bi-people-fill text-primary"></i> Employee List</h3>
+    <a href="{% url 'addEmployeePage' %}" class="btn btn-success">
+      <i class="bi bi-person-plus-fill"></i> Add Employee
+    </a>
+  </div>
+
+  {% if employees %}
+    <div class="table-responsive">
+      <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th><i class="bi bi-person"></i>Profile Picture</th>
+            <th><i class="bi bi-person"></i> Name</th>
+            <th><i class="bi bi-envelope"></i> Email</th>
+            <th><i class="bi bi-briefcase"></i> Department</th>
+            <th><i class="bi bi-calendar-date"></i> Join Date</th>
+            <th><i class="bi bi-gear"></i> Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for emp in employees %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+              
+                {% if emp.ProfilePicture %}
+                  <img src="/{{ emp.ProfilePicture }}" alt="Profile" class="img-thumbnail" style="width: 60px; height: 60px;">
+                {% else %}
+                  <span class="text-muted">No Image</span>
+                {% endif %}
+            </td>
+            <td>{{ emp.FullName }}</td>
+            <td>{{ emp.Email }}</td>
+            <td>{{ emp.Department.Name }}</td>
+            <td>{{ emp.Date_ofJoining }}</td>
+            <td>
+              <a href="" class="btn btn-sm btn-warning">
+                <i class="bi bi-pencil-square"></i>
+              </a>
+              <a href="" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
+                <i class="bi bi-trash-fill"></i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center">
+      <i class="bi bi-info-circle-fill"></i> No employees found.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

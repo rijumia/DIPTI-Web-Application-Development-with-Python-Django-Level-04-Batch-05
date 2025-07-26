@@ -1,0 +1,64 @@
+{% extends 'master/master.html' %}
+
+{% block title %}Add Leave Request{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0"><i class="bi bi-calendar-plus me-2"></i> Add Leave Request</h4>
+    </div>
+    <div class="card-body">
+      <form method="POST">
+        {% csrf_token %}
+        
+        {% comment %} <div class="mb-3">
+          <label for="employee" class="form-label">Employee</label>
+          <select class="form-select" name="employee" required>
+            <option value="" disabled selected>-- Select Employee --</option>
+            {% for emp in employees %}
+              <option value="{{ emp.id }}">{{ emp.FullName }}</option>
+            {% endfor %}
+          </select>
+        </div> {% endcomment %}
+
+        <div class="mb-3">
+          <label for="leave_type" class="form-label">Leave Type</label>
+          <select class="form-select" name="leave_type" required>
+            <option value="" disabled selected>-- Select Leave Type --</option>
+            <option value="casual_leave">Casual Leave</option>
+            <option value="sick_leave">Sick Leave</option>
+            <option value="earned_leave">Earned Leave</option>
+            <option value="annual_leave">Annual Leave</option>
+            <option value="maternity_leave">Maternity Leave</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="from_date" class="form-label">From Date</label>
+            <input type="date" class="form-control" name="from_date" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="to_date" class="form-label">To Date</label>
+            <input type="date" class="form-control" name="to_date" required>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="reason" class="form-label">Reason</label>
+          <input type="text" class="form-control" name="reason" maxlength="100" required>
+        </div>
+
+       
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-circle me-1"></i> Submit Request
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'dashboardPage' %}">
+      <i class="bi bi-building-check"></i> OfficeSys
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        {% if request.user.is_authenticated %}
+          {% if request.user.user_types == 'Admin' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'employeePage' %}">
+                <i class="bi bi-people-fill"></i> Employees
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'departmentPage' %}">
+                <i class="bi bi-diagram-3-fill"></i> Departments
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'leaveRequestPage' %}">
+                <i class="bi bi-hourglass-split"></i> Leave Requests
+              </a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'profilePage' %}">
+                <i class="bi bi-person-circle"></i> My Profile
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'addLeavePage' %}">
+                <i class="bi bi-calendar-plus"></i> Apply Leave
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'leaveListPage' %}">
+                <i class="bi bi-check2-circle"></i> Leave Status
+              </a>
+            </li>
+          {% endif %}
+        {% endif %}
+      </ul>
+
+      <ul class="navbar-nav">
+        {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link text-warning" href="{% url 'logoutPage' %}">
+              <i class="bi bi-box-arrow-right"></i> Logout ({{ request.user.username }})
+            </a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'loginPage' %}">
+              <i class="bi bi-box-arrow-in-right"></i> Login
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>

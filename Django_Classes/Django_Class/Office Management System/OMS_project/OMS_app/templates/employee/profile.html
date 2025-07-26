@@ -1,0 +1,56 @@
+{% extends 'master/master.html' %}
+
+{% block title %}My Profile | Office Management System{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h4><i class="bi bi-person-circle"></i> My Profile</h4>
+      </div>
+      <div class="card-body">
+        <div class="text-center mb-4">
+          {% if employee.ProfilePicture %}
+            <img src="{{ employee.ProfilePicture.url }}" alt="Profile Picture" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+          {% else %}
+            <i class="bi bi-person-circle" style="font-size: 150px; color: #6c757d;"></i>
+          {% endif %}
+        </div>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th scope="row">Full Name</th>
+              <td>{{ employee.FullName }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Email</th>
+              <td>{{ employee.Email }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Phone</th>
+              <td>{{ employee.Phone }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Department</th>
+              <td>{{ employee.Department.Name }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Position</th>
+              <td>{{ employee.Position }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Date of Joining</th>
+              <td>{{ employee.Date_ofJoining|date:"F j, Y" }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="d-grid gap-2">
+          <a href="" class="btn btn-primary"><i class="bi bi-pencil-square"></i> Edit Profile</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
