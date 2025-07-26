@@ -1,53 +1,117 @@
 {% extends 'master/master.html' %}
 
 {% block body %}
+<style>
+  /* Gradient backgrounds for cards */
+  .card-gradient-1 {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(37, 117, 252, 0.3);
+    transition: transform 0.3s ease;
+  }
+  .card-gradient-1:hover {
+    transform: translateY(-5px);
+  }
+
+  .card-gradient-2 {
+    background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+    color: #333;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(255, 210, 0, 0.3);
+    transition: transform 0.3s ease;
+  }
+  .card-gradient-2:hover {
+    transform: translateY(-5px);
+  }
+
+  .card-gradient-3 {
+    background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(150, 201, 61, 0.3);
+    transition: transform 0.3s ease;
+  }
+  .card-gradient-3:hover {
+    transform: translateY(-5px);
+  }
+
+  /* Icon styling */
+  .card .bi {
+    font-size: 3rem;
+  }
+
+  /* Employee card styling */
+  .employee-card {
+    background: #f0f4f8;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .employee-card h4 {
+    font-weight: 600;
+    color: #1a73e8;
+  }
+
+  .employee-card h6 {
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+
+  .employee-card p strong {
+    color: #555;
+  }
+</style>
+
 <div class="container py-5">
-  <h2 class="mb-4 text-center">
+  <h2 class="mb-4 text-center display-5 fw-bold">
     <i class="bi bi-speedometer2 text-primary"></i> Dashboard
   </h2>
 
-  {% if request.user.user_type == 'Admin' %}
+  {% if request.user.user_types == 'Admin' %}
     <!-- Admin Dashboard -->
     <div class="row g-4 text-center">
       <div class="col-md-4">
-        <div class="card shadow-sm p-3">
-          <i class="bi bi-people-fill text-success fs-1"></i>
-          <h5 class="mt-2">Total Employees</h5>
-          <p class="fs-4">{{ total_employees }}</p>
+        <div class="card card-gradient-1 p-4">
+          <i class="bi bi-people-fill"></i>
+          <h5 class="mt-3 fw-semibold">Total Employees</h5>
+          <p class="fs-3 fw-bold">{{ total_employees }}</p>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card shadow-sm p-3">
-          <i class="bi bi-building text-info fs-1"></i>
-          <h5 class="mt-2">Departments</h5>
-          <p class="fs-4">{{ total_departments }}</p>
+        <div class="card card-gradient-2 p-4">
+          <i class="bi bi-building"></i>
+          <h5 class="mt-3 fw-semibold">Departments</h5>
+          <p class="fs-3 fw-bold">{{ total_departments }}</p>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card shadow-sm p-3">
-          <i class="bi bi-hourglass-split text-warning fs-1"></i>
-          <h5 class="mt-2">Pending Leave Requests</h5>
-          <p class="fs-4">{{ pending_leaves }}</p>
+        <div class="card card-gradient-3 p-4">
+          <i class="bi bi-hourglass-split"></i>
+          <h5 class="mt-3 fw-semibold">Pending Leave Requests</h5>
+          <p class="fs-3 fw-bold">{{ pending_leaves }}</p>
         </div>
       </div>
     </div>
 
-  {% elif request.user.user_type == 'Employee' %}
+  {% elif request.user.user_types == 'Employee' %}
     <!-- Employee Dashboard -->
-    <div class="card shadow p-4">
-      <h4 class="mb-3">👋 Welcome, {{ request.user.username }}</h4>
+    <div class="card employee-card p-4 shadow-sm">
+      <h4 class="mb-4">👋 Welcome, {{ employee_profile.FullName }}</h4>
 
       <div class="row">
-        <div class="col-md-6 mb-3">
-          <div class="card p-3 shadow-sm">
+        <div class="col-md-6 mb-4">
+          <div class="card p-3 shadow-sm border-0">
             <h6><i class="bi bi-person-circle text-primary"></i> Profile Summary</h6>
             <p><strong>Username:</strong> {{ request.user.username }}</p>
-            <p><strong>Email:</strong> {{ request.user.email }}</p>
-            <p><strong>Department:</strong> {{ employee_profile.department.name }}</p>
+            <p><strong>Email:</strong> {{ employee_profile.Email }}</p>
+            <p><strong>Department:</strong> {{ employee_profile.Department.Name }}</p>
+            <p><strong>Position:</strong> {{ employee_profile.Position }}</p>
           </div>
         </div>
-        <div class="col-md-6 mb-3">
-          <div class="card p-3 shadow-sm">
+        <div class="col-md-6 mb-4">
+          <div class="card p-3 shadow-sm border-0">
             <h6><i class="bi bi-calendar-check text-success"></i> Leave Summary</h6>
             <p><strong>Total Leaves:</strong> {{ leave_summary.total }}</p>
             <p><strong>Approved:</strong> {{ leave_summary.approved }}</p>

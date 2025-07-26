@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'dashboardPage' %}">
-      <i class="bi bi-building-check"></i> OfficeSys
+    <a class="navbar-brand fw-bold text-warning" href="{% url 'dashboardPage' %}">
+      <i class="bi bi-building-check-fill me-2"></i> OfficeSys
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -10,38 +10,37 @@
 
     <div class="collapse navbar-collapse" id="navMenu">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
         {% if request.user.is_authenticated %}
           {% if request.user.user_types == 'Admin' %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'employeePage' %}">
-                <i class="bi bi-people-fill"></i> Employees
+              <a class="nav-link d-flex align-items-center" href="{% url 'employeePage' %}">
+                <i class="bi bi-people-fill me-2"></i> Employees
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'departmentPage' %}">
-                <i class="bi bi-diagram-3-fill"></i> Departments
+              <a class="nav-link d-flex align-items-center" href="{% url 'departmentPage' %}">
+                <i class="bi bi-diagram-3-fill me-2"></i> Departments
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'leaveRequestPage' %}">
-                <i class="bi bi-hourglass-split"></i> Leave Requests
+              <a class="nav-link d-flex align-items-center" href="{% url 'leaveRequestPage' %}">
+                <i class="bi bi-hourglass-split me-2"></i> Leave Requests
               </a>
             </li>
           {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'profilePage' %}">
-                <i class="bi bi-person-circle"></i> My Profile
+              <a class="nav-link d-flex align-items-center" href="{% url 'profilePage' %}">
+                <i class="bi bi-person-circle me-2"></i> My Profile
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'addLeavePage' %}">
-                <i class="bi bi-calendar-plus"></i> Apply Leave
+              <a class="nav-link d-flex align-items-center" href="{% url 'addLeavePage' %}">
+                <i class="bi bi-calendar-plus me-2"></i> Apply Leave
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'leaveListPage' %}">
-                <i class="bi bi-check2-circle"></i> Leave Status
+              <a class="nav-link d-flex align-items-center" href="{% url 'leaveListPage' %}">
+                <i class="bi bi-check2-circle me-2"></i> Leave Status
               </a>
             </li>
           {% endif %}
@@ -51,14 +50,14 @@
       <ul class="navbar-nav">
         {% if request.user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link text-warning" href="{% url 'logoutPage' %}">
-              <i class="bi bi-box-arrow-right"></i> Logout ({{ request.user.username }})
+            <a class="nav-link text-warning d-flex align-items-center" href="{% url 'logoutPage' %}">
+              <i class="bi bi-box-arrow-right me-2"></i> Logout ({{ request.user.username }})
             </a>
           </li>
         {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'loginPage' %}">
-              <i class="bi bi-box-arrow-in-right"></i> Login
+            <a class="nav-link d-flex align-items-center" href="{% url 'loginPage' %}">
+              <i class="bi bi-box-arrow-in-right me-2"></i> Login
             </a>
           </li>
         {% endif %}
@@ -66,3 +65,20 @@
     </div>
   </div>
 </nav>
+
+<style>
+  .navbar-nav .nav-link {
+    transition: 0.3s ease-in-out;
+    font-weight: 500;
+  }
+
+  .navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.375rem;
+    color: #ffc107 !important;
+  }
+
+  .navbar-brand i {
+    font-size: 1.2rem;
+  }
+</style>

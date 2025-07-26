@@ -1,24 +1,51 @@
 {% extends 'master/master.html' %}
 
+{% block style %}
+<style>
+  .table thead th {
+    vertical-align: middle;
+  }
+
+  .table td, .table th {
+    padding: 1rem;
+  }
+
+  .table tbody tr:hover {
+    background-color: #f0f8ff; /* Light blue hover */
+  }
+
+  .btn-sm i {
+    font-size: 0.9rem;
+  }
+
+  .alert-info {
+    text-align: center;
+    font-weight: 500;
+  }
+</style>
+{% endblock %}
+
 {% block body %}
 <div class="container mt-5">
 
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h4><i class="bi bi-diagram-3-fill text-primary"></i> Department List</h4>
-    <a href="{% url 'addDepartmentPage' %}" class="btn btn-success">
+    <h4 class="fw-bold text-primary">
+      <i class="bi bi-diagram-3-fill"></i> Department List
+    </h4>
+    <a href="{% url 'addDepartmentPage' %}" class="btn btn-success shadow-sm">
       <i class="bi bi-plus-circle"></i> Add Department
     </a>
   </div>
 
   {% if departs %}
-    <div class="table-responsive">
+    <div class="table-responsive rounded shadow-sm">
       <table class="table table-bordered table-hover align-middle">
         <thead class="table-dark">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Department Name</th>
-            <th scope="col">Description</th>
-            <th scope="col" class="text-center">Actions</th>
+            <th scope="col"><i class="bi bi-diagram-3"></i> Department Name</th>
+            <th scope="col"><i class="bi bi-card-text"></i> Description</th>
+            <th scope="col" class="text-center"><i class="bi bi-gear"></i> Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -28,14 +55,14 @@
             <td>{{ dept.Name }}</td>
             <td>{{ dept.Description }}</td>
             <td class="text-center">
-              <a href="" class="btn btn-sm btn-info text-white me-1">
+              <a href="#" class="btn btn-sm btn-info text-white me-1" title="View">
                 <i class="bi bi-eye"></i>
               </a>
-              <a href="" class="btn btn-sm btn-warning me-1">
+              <a href="#" class="btn btn-sm btn-warning me-1" title="Edit">
                 <i class="bi bi-pencil-square"></i>
               </a>
-              <a href="" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
-                <i class="bi bi-trash"></i>
+              <a href="#" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are you sure?')">
+                <i class="bi bi-trash-fill"></i>
               </a>
             </td>
           </tr>
@@ -44,7 +71,9 @@
       </table>
     </div>
   {% else %}
-    <div class="alert alert-info">No departments found.</div>
+    <div class="alert alert-info shadow-sm">
+      <i class="bi bi-info-circle-fill me-2"></i> No departments found.
+    </div>
   {% endif %}
 
 </div>

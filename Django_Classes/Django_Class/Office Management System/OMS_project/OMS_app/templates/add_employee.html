@@ -1,24 +1,53 @@
 {% extends 'master/master.html' %}
 
+{% block style %}
+<style>
+  /* Make form labels stand out */
+  label.form-label {
+    font-weight: 600;
+    color: #0d6efd; /* Bootstrap primary color */
+  }
+
+  /* Input focus styling */
+  input.form-control:focus, select.form-select:focus {
+    border-color: #6610f2; /* Bootstrap purple */
+    box-shadow: 0 0 5px rgba(102, 16, 242, 0.5);
+  }
+
+  /* Button hover effect */
+  button.btn-success:hover {
+    background-color: #198754cc;
+  }
+
+  /* Rounded file input */
+  input[type="file"] {
+    border-radius: 0.375rem;
+  }
+</style>
+{% endblock %}
+
 {% block body %}
 <div class="container mt-5" style="max-width: 700px;">
-  <h4 class="mb-4 text-primary">
+  <h4 class="mb-4 text-primary fw-bold">
     <i class="bi bi-person-plus-fill"></i> Add New Employee
   </h4>
 
   {% if messages %}
     {% for message in messages %}
-      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
     {% endfor %}
   {% endif %}
 
-  <form method="POST" enctype="multipart/form-data">
+  <form method="POST" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
 
     <div class="mb-3">
       <label class="form-label"><i class="bi bi-diagram-3"></i> Department</label>
       <select name="department" class="form-select" required>
-        <option value="">Select Department</option>
+        <option value="" disabled selected>Select Department</option>
         {% for dept in departments %}
           <option value="{{ dept.id }}">{{ dept.Name }}</option>
         {% endfor %}
@@ -26,9 +55,9 @@
     </div>
 
     <div class="mb-3">
-  <label class="form-label"><i class="bi bi-image-fill"></i> Profile Picture</label>
-  <input type="file" name="profile_pic" class="form-control" accept="image/*">
-</div>
+      <label class="form-label"><i class="bi bi-image-fill"></i> Profile Picture</label>
+      <input type="file" name="profile_pic" class="form-control" accept="image/*">
+    </div>
 
     <div class="mb-3">
       <label class="form-label"><i class="bi bi-person-badge-fill"></i> Full Name</label>
@@ -42,13 +71,14 @@
 
     <div class="mb-3">
       <label class="form-label"><i class="bi bi-telephone-fill"></i> Phone</label>
-      <input type="text" name="phone" class="form-control" placeholder="Enter phone number" required>
+      <input type="tel" name="phone" class="form-control" placeholder="Enter phone number" required pattern="[0-9+()\- ]{7,}">
+      <div class="form-text">Format: numbers, +, -, spaces allowed</div>
     </div>
 
     <div class="mb-3">
       <label class="form-label"><i class="bi bi-person-workspace"></i> Position</label>
       <select name="position" class="form-select" required>
-        <option value="">Select Position</option>
+        <option value="" disabled selected>Select Position</option>
         <option value="Administrative">Administrative</option>
         <option value="StaffSupervision">Staff Supervision</option>
         <option value="ResourceManagement">Resource Management</option>
@@ -57,19 +87,19 @@
       </select>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-4">
       <label class="form-label"><i class="bi bi-calendar-event-fill"></i> Date of Joining</label>
       <input type="date" name="joining_date" class="form-control" required>
     </div>
 
-    <button type="submit" class="btn btn-success w-100">
-      <i class="bi bi-save2-fill"></i> Save Employee
+    <button type="submit" class="btn btn-success w-100 fw-semibold">
+      <i class="bi bi-save2-fill me-2"></i> Save Employee
     </button>
   </form>
 
   <div class="mt-3 text-end">
     <a href="{% url 'employeePage' %}" class="btn btn-secondary">
-      <i class="bi bi-arrow-left-circle-fill"></i> Back to Employee List
+      <i class="bi bi-arrow-left-circle-fill me-1"></i> Back to Employee List
     </a>
   </div>
 </div>

@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import login,logout, authenticate, update_session_auth_hash
 from OMS_app.models import *
 from django.contrib import messages
+from datetime import timedelta
 
 # Create your views here.
 def signupPage(request):
@@ -39,7 +40,38 @@ def logoutPage(request):
 
 
 def dashboardPage(request):
-    return render(request, 'dashboard.html')
+    user = request.user
+
+    if user.user_types == 'Admin':
+        total_employees = EmployeeManagementModel.objects.count()
+        total_departments = DepartmentModel.objects.count()
+        pending_leaves = LeaveModel.objects.filter(Status='Pending').count()
+
+        return render(request, 'dashboard.html', {
+            'total_employees': total_employees,
+            'total_departments': total_departments,
+            'pending_leaves': pending_leaves
+        })
+
+    elif user.user_types == 'Employee':
+        employee_profile = EmployeeManagementModel.objects.get(user=user)
+        leaves = LeaveModel.objects.filter(Employee=employee_profile)
+
+        leave_summary = {
+            'total': leaves.count(),
+            'approved': leaves.filter(Status='Approved').count(),
+            'pending': leaves.filter(Status='Pending').count(),
+            'rejected': leaves.filter(Status='Rejected').count(),
+        }
+
+        return render(request, 'dashboard.html', {
+            'employee_profile': employee_profile,
+            'leave_summary': leave_summary
+        })
+
+    return redirect('loginPage')
+
+    
 
 def addDepartmentPage(request):
     if request.method == 'POST':
@@ -96,6 +128,9 @@ def employeePage(request):
 
 def leaveRequestPage(request):
     leaveRequests = LeaveModel.objects.all()
+    for leave in leaveRequests:
+        duration = (leave.ToDate - leave.FromDate).days + 1
+        leave.total_days = duration
     return render(request, 'leaveRequest.html',{'leaveRequests':leaveRequests})
 
 def ApprovePage(request, id):

@@ -26,6 +26,7 @@
           <th>Leave Type</th>
           <th>From</th>
           <th>To</th>
+          <th>Total</th>
           <th>Reason</th>
           <th>Status</th>
           <th>Actions</th>
@@ -39,6 +40,7 @@
           <td>{{ leave.LeaveType|capfirst }}</td>
           <td>{{ leave.FromDate }}</td>
           <td>{{ leave.ToDate }}</td>
+          <td>{{ leave.total_days }} <small>Days</small></td>
           <td>{{ leave.Reason }}</td>
           <td>
             {% if leave.Status == 'Pending' %}

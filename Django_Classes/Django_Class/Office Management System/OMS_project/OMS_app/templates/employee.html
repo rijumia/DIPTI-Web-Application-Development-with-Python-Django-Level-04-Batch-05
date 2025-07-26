@@ -1,21 +1,71 @@
 {% extends 'master/master.html' %}
 
+{% block style %}
+<style>
+  /* Round profile images with subtle shadow */
+  img.img-thumbnail {
+    border-radius: 50%;
+    border: 3px solid #0d6efd; /* Bootstrap primary */
+    box-shadow: 0 2px 6px rgba(13, 110, 253, 0.3);
+    transition: transform 0.3s ease;
+  }
+  img.img-thumbnail:hover {
+    transform: scale(1.1);
+  }
+
+  /* Table header gradient */
+  thead.table-dark th {
+    background: linear-gradient(45deg, #0d6efd, #6610f2);
+    color: #fff;
+    letter-spacing: 0.05em;
+  }
+
+  /* Hover row highlight */
+  tbody tr:hover {
+    background-color: #f0f4ff;
+  }
+
+  /* Action buttons with shadow and smooth hover */
+  .btn-sm {
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .btn-warning {
+    background-color: #ffc107;
+    color: #212529;
+  }
+  .btn-warning:hover {
+    background-color: #e0a800;
+    color: #fff;
+  }
+  .btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  .btn-danger:hover {
+    background-color: #b02a37;
+  }
+</style>
+{% endblock %}
+
 {% block body %}
 <div class="container py-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h3><i class="bi bi-people-fill text-primary"></i> Employee List</h3>
-    <a href="{% url 'addEmployeePage' %}" class="btn btn-success">
-      <i class="bi bi-person-plus-fill"></i> Add Employee
+    <h3 class="fw-bold text-primary">
+      <i class="bi bi-people-fill"></i> Employee List
+    </h3>
+    <a href="{% url 'addEmployeePage' %}" class="btn btn-success shadow-sm fw-semibold">
+      <i class="bi bi-person-plus-fill me-1"></i> Add Employee
     </a>
   </div>
 
   {% if employees %}
-    <div class="table-responsive">
-      <table class="table table-striped table-hover align-middle">
+    <div class="table-responsive shadow-sm rounded">
+      <table class="table table-striped table-hover align-middle mb-0">
         <thead class="table-dark">
           <tr>
             <th>#</th>
-            <th><i class="bi bi-person"></i>Profile Picture</th>
+            <th><i class="bi bi-person"></i> Profile Picture</th>
             <th><i class="bi bi-person"></i> Name</th>
             <th><i class="bi bi-envelope"></i> Email</th>
             <th><i class="bi bi-briefcase"></i> Department</th>
@@ -26,24 +76,23 @@
         <tbody>
           {% for emp in employees %}
           <tr>
-            <td>{{ forloop.counter }}</td>
+            <td class="fw-semibold">{{ forloop.counter }}</td>
             <td>
-              
-                {% if emp.ProfilePicture %}
-                  <img src="/{{ emp.ProfilePicture }}" alt="Profile" class="img-thumbnail" style="width: 60px; height: 60px;">
-                {% else %}
-                  <span class="text-muted">No Image</span>
-                {% endif %}
+              {% if emp.ProfilePicture %}
+                <img src="/{{ emp.ProfilePicture }}" alt="Profile" class="img-thumbnail" style="width: 60px; height: 60px;">
+              {% else %}
+                <span class="text-muted fst-italic">No Image</span>
+              {% endif %}
             </td>
-            <td>{{ emp.FullName }}</td>
-            <td>{{ emp.Email }}</td>
+            <td class="fw-semibold">{{ emp.FullName }}</td>
+            <td><a href="mailto:{{ emp.Email }}" class="text-decoration-none text-primary">{{ emp.Email }}</a></td>
             <td>{{ emp.Department.Name }}</td>
-            <td>{{ emp.Date_ofJoining }}</td>
+            <td>{{ emp.Date_ofJoining|date:"d M, Y" }}</td>
             <td>
-              <a href="" class="btn btn-sm btn-warning">
+              <a href="" class="btn btn-sm btn-warning me-1" title="Edit">
                 <i class="bi bi-pencil-square"></i>
               </a>
-              <a href="" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
+              <a href="" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are you sure?')">
                 <i class="bi bi-trash-fill"></i>
               </a>
             </td>
@@ -53,7 +102,7 @@
       </table>
     </div>
   {% else %}
-    <div class="alert alert-info text-center">
+    <div class="alert alert-info text-center shadow-sm fst-italic">
       <i class="bi bi-info-circle-fill"></i> No employees found.
     </div>
   {% endif %}
