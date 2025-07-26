@@ -94,4 +94,4 @@ A web-based Office Management System built using Django that manages Employees, 
 ### 1. Clone the project
 ```bash
 git clone [https://github.com/rijumia/DIPTI-Web-Application-Development-with-Python-Django-Level-04-Batch-05/tree/main/Django_Classes/Django_Class/Office%20Management%20System]
-cd office-management-system
+cd OMS_project
