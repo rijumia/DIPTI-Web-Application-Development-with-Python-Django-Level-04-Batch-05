@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box}
+
+/* Full-width input fields */
+input[type=text], input[type=password],input[type=number],input[type=tel],select {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  padding: 14px 20px;
+  background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}
+</style>
+<body>
+
+        <form id="registrationForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="id" class="form-label">Profile Picture</label><br><br>
+                <input type="file" class="form-control" id="id" name="Profile">
+            </div>
+
+            <div class="mb-3">
+                <label for="id" class="form-label">ID</label>
+                <input type="number" class="form-control" id="id" name="id" required placeholder="Enter your ID">
+                <div class="error-message" id="fullNameError"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required placeholder="Enter your ID">
+                <div class="error-message" id="fullNameError"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="Designation" class="form-label">Designation</label>
+                <input type="text" class="form-control" id="Designation" name="Designation" placeholder="Enter your Designation">
+
+            </div>
+
+            <div class="mb-3">
+                <label for="Department" class="form-label">Department (If Student)</label>
+                <input type="text" class="form-control" id="Department" name="Department" placeholder="Enter your Department">
+
+            </div>
+
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" name="phone" required placeholder="Enter your phone number">
+                <div class="error-message" id="phoneError"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="Address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="Address" name="Address" required placeholder="Enter your Address">
+
+            </div>
+
+            <div class="mb-3">
+                <label for="userType" class="form-label">I am a</label>
+                <select class="form-select" id="userType" name="user_type" required>
+                    <option value="">Select user type</option>
+                    <option value="Student">Student</option>
+                    <option value="Librarian">Librarian</option>
+                </select>
+                <div class="error-message" id="userTypeError"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required placeholder="Create a strong password">
+                <div class="progress mt-2">
+                    <div class="progress-bar" id="passwordStrength" role="progressbar" style="width:0%"></div>
+                </div>
+               
+                <div class="error-message" id="passwordError"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+                <div class="error-message" id="confirmPasswordError"></div>
+            </div>
+
+            <div class="mb-4 form-check">
+                <input type="checkbox" class="form-check-input" id="terms" name="terms">
+                <label class="form-check-label" for="terms">
+                    Already have an account <a href="{% url 'loginPage' %}" >logIn</a>
+                </label>
+                <div class="error-message" id="termsError"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" id="submitBtn">
+                Create Account
+                <span class="spinner-border spinner-border-sm d-none ms-2" role="status" aria-hidden="true"></span>
+            </button>
+
+
+        </form>
+
+</body>
+</html>

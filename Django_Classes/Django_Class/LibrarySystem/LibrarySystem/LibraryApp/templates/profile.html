@@ -1,0 +1,79 @@
+{% extends 'master/base.html' %}
+
+{% block body %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 350px;
+  margin: 20px auto;
+  text-align: center;
+  font-family: arial;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.card img {
+  border-radius: 10px;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 10px;
+  margin-top: 15px;
+  color: white;
+  background-color: #007BFF;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.8;
+}
+</style>
+
+<h2 style="text-align:center">User Profile</h2>
+
+<div class="card">
+    <img src="/{{ profile_info.profile_picture }}" alt="Profile Picture" style="width:100%">
+
+    <h1>{{ request.user.username }}</h1>
+
+    {% if request.user.user_types == 'Librarian' %}
+        <p class="title">Librarian - {{ profile_info.designation }}</p>
+        <p>ID: {{ profile_info.employee_id }}</p>
+        <p>Phone: {{ profile_info.contact_number }}</p>
+        <p>Address: {{ profile_info.address }}</p>
+    
+    {% elif request.user.user_types == 'Student' %}
+        <p class="title">Student - {{ profile_info.department }}</p>
+        <p>ID: {{ profile_info.student_id }}</p>
+        <p>Phone: {{ profile_info.phone }}</p>
+        <p>Address: {{ profile_info.address }}</p>
+    {% endif %}
+
+    <a href="{% url 'updateProfilePage' %}">
+        <button>Update Profile</button>
+    </a>
+</div>
+
+{% endblock body %}
