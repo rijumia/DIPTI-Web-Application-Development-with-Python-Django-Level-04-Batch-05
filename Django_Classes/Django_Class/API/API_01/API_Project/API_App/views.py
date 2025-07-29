@@ -36,6 +36,15 @@ def  addStudent(request):
             'message': 'Invalid Operation.',
         },status=status.HTTP_400_BAD_REQUEST)
     
+@api_view(['PUT'])
+def updateStudent(request, pk):
+    student = StudentInfoModel.objects.get(id=pk)
+    student_serializer = StudentSerializer(student, data = request.data, partial=True)
+    if student_serializer.is_valid():
+        student_serializer.save()
+        return Response(student_serializer.data)
+    else:
+        return Response(student_serializer.errors)
 
 @api_view(['DELETE'])
 def deleteStudent(request, pk):
