@@ -29,11 +29,11 @@ def addStudent(request):
             'success': True,
             'message': 'Sudent Add Successfully.',
             'student_data': student_serializar.data,
-        })
+        },status=status.HTTP_201_CREATED)
     else:
         return Response({
             'success': False,
             'message': 'Invalid Operation'
-        },status=status.HTTP_201_CREATED)
+        })
         
         
