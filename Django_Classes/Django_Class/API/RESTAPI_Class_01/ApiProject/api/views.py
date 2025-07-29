@@ -34,6 +34,6 @@ def addStudent(request):
         return Response({
             'success': False,
             'message': 'Invalid Operation'
-        })
+        },status=status.HTTP_201_CREATED)
         
         
