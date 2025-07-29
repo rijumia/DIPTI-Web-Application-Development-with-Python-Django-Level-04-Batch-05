@@ -4,4 +4,5 @@ from api.views import *
 
 urlpatterns = [
     path('student-list/',studentList, name='studentList'),
+    path('add-student/',addStudent, name='addStudent'),
 ]

@@ -20,4 +20,20 @@ def studentList(request):
                 'student_data': serializer.data,
             },status = status.HTTP_200_OK)
         
+@api_view(['POST'])
+def addStudent(request):
+    student_serializar = StudentSerializer(data = request.data)
+    if student_serializar.is_valid():
+        student_serializar.save()
+        return Response({
+            'success': True,
+            'message': 'Sudent Add Successfully.',
+            'student_data': student_serializar.data,
+        })
+    else:
+        return Response({
+            'success': False,
+            'message': 'Invalid Operation'
+        })
+        
         
