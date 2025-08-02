@@ -9,7 +9,6 @@ class StudentInfoModel(models.Model):
     RegisterOfDate = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-<<<<<<< HEAD
         return self.StudentName
     
 class TeacherModel(models.Model):
@@ -17,11 +16,8 @@ class TeacherModel(models.Model):
     TeacherId = models.PositiveIntegerField(null=True)
     TeacherAddress = models.TextField(null=True)
     TeacherAge = models.PositiveIntegerField(null=True)
-    TeacherPic = models.ImageField(upload_to='Profile')
+    TeacherPic = models.ImageField(upload_to='Profile', null=True)
     
     def __str__(self):
         return self.TeacherName
-=======
-        return self.StudentAge
->>>>>>> 6834ddc4ec6494038c3a460856ee7b5853e7ae00
     
