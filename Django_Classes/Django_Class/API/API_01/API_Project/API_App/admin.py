@@ -3,3 +3,4 @@ from API_App.models import *
 
 # Register your models here.
 admin.site.register(StudentInfoModel)
+admin.site.register(TeacherModel)

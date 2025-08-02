@@ -4,6 +4,7 @@ from API_App.serializers import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.views import APIView
 
 # Create your views here.
 @api_view(['GET'])
@@ -54,3 +55,10 @@ def deleteStudent(request, pk):
         'success': True,
         'message': 'Student deleted successfully.'
     }, status=status.HTTP_200_OK)
+    
+class TeacherAPIView(APIView):
+    def get(self, request):
+        teacher_data = TeacherModel.objects.all()
+        
+        serializer = TeacherSerializer(teacher_data, many=True)
+        return Response(serializer.data, status = status.HTTP_200_OK)

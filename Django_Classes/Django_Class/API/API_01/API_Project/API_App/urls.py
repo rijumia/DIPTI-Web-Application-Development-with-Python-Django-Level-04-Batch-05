@@ -7,4 +7,5 @@ urlpatterns = [
     path('add-student/', addStudent, name='addStudent'),
     path('update-student/<int:pk>/', updateStudent, name='updateStudent'),
     path('delete-student/<int:pk>/', deleteStudent, name='deleteStudent'),
+    path('teacher/', TeacherAPIView.as_view(), name='teacherView'),
 ]
