@@ -8,7 +8,7 @@ class  bookModel(models.Model):
     book_image = models.ImageField(upload_to='books/images/')
 
     def __str__(self):
-        return self.book_name
+        return self.author_name
 
     class Meta:
         db_table = 'book'
