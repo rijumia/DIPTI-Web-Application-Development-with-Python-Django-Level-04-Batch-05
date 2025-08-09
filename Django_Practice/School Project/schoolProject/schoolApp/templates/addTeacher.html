@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Add Teacher | EduPortal{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="max-width: 600px;">
+  <h2 class="mb-4">Add Teacher</h2>
+
+  <form method="POST" novalidate>
+    {% csrf_token %}
+
+
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" name="name" id="name" class="form-control" placeholder="Enter full name" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="designation" class="form-label">Designation</label>
+      <input type="text" name="designation" id="designation" class="form-control" placeholder="Enter designation" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="address" class="form-label">Address</label>
+      <textarea name="address" id="address" class="form-control" rows="3" placeholder="Enter address" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone</label>
+      <input type="tel" name="phone" id="phone" class="form-control" placeholder="Enter phone number" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" name="email" id="email" class="form-control" placeholder="Enter email address" required>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+      <i class="bi bi-check-lg"></i> Save
+    </button>
+    <a href="{% url 'teacherList' %}" class="btn btn-secondary ms-2">Cancel</a>
+  </form>
+</div>
+{% endblock %}

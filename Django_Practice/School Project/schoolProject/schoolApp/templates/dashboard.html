@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | EduPortal{% endblock %}
+
+{% block content %}
+<div class="py-4">
+    <h2 class="mb-4">Welcome to Your Dashboard</h2>
+
+    <div class="row g-4">
+        <!-- Teacher Card -->
+        <div class="col-md-4">
+            <div class="card border-primary shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-person-workspace me-2"></i>Teacher Section</h5>
+                    <p class="card-text">Manage your classes, materials, and student reports.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Go to Teacher Panel</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Card -->
+        <div class="col-md-4">
+            <div class="card border-success shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-mortarboard me-2"></i>Student Section</h5>
+                    <p class="card-text">View courses, submit assignments, and track progress.</p>
+                    <a href="#" class="btn btn-outline-success btn-sm">Go to Student Panel</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Settings -->
+        <div class="col-md-4">
+            <div class="card border-secondary shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-gear me-2"></i>Settings</h5>
+                    <p class="card-text">Update your profile or change your password.</p>
+                    <a href="#" class="btn btn-outline-secondary btn-sm">Edit Settings</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
