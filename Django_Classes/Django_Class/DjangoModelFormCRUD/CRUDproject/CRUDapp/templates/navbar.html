@@ -1,0 +1,6 @@
+<ul>
+  <li><a class="{% if request.resolver_match.url_name == 'companyList' %}active{% endif %}" href="{% url 'companyList' %}">Company</a></li>
+  <li><a class="{% if request.resolver_match.url_name == 'employeeList' %}active{% endif %}" href="{% url 'employeeList' %}">Employee</a></li>
+  <li><a class="{% if request.resolver_match.url_name == 'productList' %}active{% endif %}" href="{% url 'productList' %}">Product</a></li>
+  <li><a class="{% if request.resolver_match.url_name == 'jobList' %}active{% endif %}" href="{% url 'jobList' %}">Job</a></li>
+</ul>

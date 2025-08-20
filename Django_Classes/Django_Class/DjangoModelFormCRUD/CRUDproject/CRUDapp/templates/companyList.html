@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="padding: 10px; margin: 20px;">
+    <a href="{% url 'addCompany' %}">Add Company</a>
+</div>
+
+<h2>Company List</h2>
+
+<table>
+  <tr>
+    <th>Company</th>
+    <th>Location</th>
+    <th>Contact</th>
+    <th>Action</th>
+  </tr>
+  
+  {% for company in companies %}
+    <tr>
+    <td>{{company.companyName}}</td>
+    <td>{{company.location}}</td>
+    <td>{{company.contact}}</td>
+    <td>
+        <a href="{% url 'updateCompany' company.id %}">Update</a>
+        <a href="{% url 'deleteCompany' company.id %}">Delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+    
+  
+</table>
+
+
+{% endblock content %}

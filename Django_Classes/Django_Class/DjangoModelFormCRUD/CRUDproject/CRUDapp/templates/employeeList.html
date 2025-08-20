@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="padding: 10px; margin: 20px;">
+    <a href="{% url 'addEmployee' %}">Add Employee</a>
+</div>
+
+<h2>Employee List</h2>
+
+<table>
+  <tr>
+    <th>Employee Name</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Action</th>
+  </tr>
+  
+  {% for employee in employees %}
+    <tr>
+    <td>{{employee.employeeName}}</td>
+    <td>{{employee.price}}</td>
+    <td>{{employee.quantity}}</td>
+    <td>
+        <a href="{% url 'updateEmployee' employee.id %}">Update</a>
+        <a href="{% url 'deleteEmployee' employee.id %}">Delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+    
+  
+</table>
+
+
+{% endblock content %}

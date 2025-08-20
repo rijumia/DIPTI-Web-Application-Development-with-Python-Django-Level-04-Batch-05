@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="padding: 10px; margin: 20px;">
+    <a href="{% url 'addJob' %}">Add Job</a>
+</div>
+
+<h2>Job List</h2>
+
+<table>
+  <tr>
+    <th>Job title</th>
+    <th>designation</th>
+    <th>salary</th>
+    <th>deadline</th>
+    <th>Action</th>
+  </tr>
+  
+  {% for product in employees %}
+    <tr>
+    <td>{{product.title}}</td>
+    <td>{{product.designation}}</td>
+    <td>{{product.salary}}</td>
+    <td>{{product.deadline}}</td>
+    <td>
+        <a href="{% url 'updateJob' product.id %}">Update</a>
+        <a href="{% url 'deleteJob' product.id %}">Delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+    
+  
+</table>
+
+
+{% endblock content %}
