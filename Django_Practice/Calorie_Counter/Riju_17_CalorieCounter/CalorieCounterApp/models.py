@@ -19,7 +19,7 @@ class UserProfileModel(models.Model):
     weight = models.FloatField(null=True)
 
     def __str__(self):
-        return self.name
+        return self.user.username
     
 
 
