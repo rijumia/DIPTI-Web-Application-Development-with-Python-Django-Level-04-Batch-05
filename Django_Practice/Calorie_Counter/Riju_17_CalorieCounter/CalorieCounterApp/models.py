@@ -8,7 +8,7 @@ class CustomUserAuthModel(AbstractUser):
         return self.username
     
 class UserProfileModel(models.Model):
-    user = models.OneToOneField(CustomUserAuthModel, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(CustomUserAuthModel, on_delete=models.CASCADE, null=True, related_name='user_profile')
     name = models.CharField(max_length=200, null=True)
     age = models.PositiveIntegerField(null=True)
     gender = models.CharField(choices=[
@@ -24,7 +24,7 @@ class UserProfileModel(models.Model):
 
 
 class DailyConsumedModel(models.Model):
-    user = models.ForeignKey(CustomUserAuthModel, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(CustomUserAuthModel, on_delete=models.CASCADE, null=True, related_name='user_daily_calorie')
     itemName = models.CharField(max_length=250, null=True)
     calories = models.FloatField(null=True)
     date = models.DateField(null=True)
@@ -34,7 +34,7 @@ class DailyConsumedModel(models.Model):
     
 
 class TotalConsumedModel(models.Model):
-    user = models.ForeignKey(CustomUserAuthModel, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(CustomUserAuthModel, on_delete=models.CASCADE, null=True, related_name='user_total_calorie')
     totalCalorie = models.FloatField(null=True)
     date = models.DateField(null=True)
 
