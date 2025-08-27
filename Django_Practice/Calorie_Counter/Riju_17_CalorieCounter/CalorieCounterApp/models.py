@@ -21,3 +21,22 @@ class UserProfileModel(models.Model):
     def __str__(self):
         return self.name
     
+
+
+class DailyConsumedModel(models.Model):
+    user = models.ForeignKey(CustomUserAuthModel, on_delete=models.CASCADE, null=True)
+    itemName = models.CharField(max_length=250, null=True)
+    calories = models.FloatField(null=True)
+    date = models.DateField(null=True)
+
+    def __str__(self):
+        return f'{self.user.username}-{self.itemName}-{self.calories}'
+    
+
+class TotalConsumedModel(models.Model):
+    user = models.ForeignKey(CustomUserAuthModel, on_delete=models.CASCADE, null=True)
+    totalCalorie = models.FloatField(null=True)
+    date = models.DateField(null=True)
+
+    def __str__(self):
+        return f'{self.user.username}-{self.totalCalorie}'
