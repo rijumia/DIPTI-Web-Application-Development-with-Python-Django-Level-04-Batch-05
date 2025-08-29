@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from .models import *
+from .forms import *
 from django.contrib import messages
 
 # Create your views here.
@@ -63,10 +64,29 @@ def loginPage(request):
     return render(request, 'login.html')
 
 
+
 def logoutPage(request):
     logout(request)
     return redirect('loginPage')
 
+def profile(request):
+    
+    return render(request, 'profile.html')
+
+def profileUpdate(request):
+    current_user = request.user
+    user_data = UserProfileModel.objects.get(user = current_user)
+    if request.method == 'POST':
+        profile_form = UserProfileForm(request.POST, instance=user_data)
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('profile')
+    else:
+        profile_form = UserProfileForm(instance=user_data)
+    return render(request, 'updateProfile.html',{'profile_form':profile_form})
 
 def dashboard(request):
     return render(request, 'dashboard.html')
+
+def addCalorie(request):
+    return render(request, 'addCalorie.html')

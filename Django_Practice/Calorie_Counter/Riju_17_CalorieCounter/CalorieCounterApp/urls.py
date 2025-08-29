@@ -7,4 +7,8 @@ urlpatterns = [
     path('register/', registerPage, name='registerPage'),
 
     path('dashboard/', dashboard, name='dashboard'),
+    path('profile/', profile, name='profile'),
+    path('profile-update/', profileUpdate, name='profileUpdate'),
+
+    path('addCalorie/', addCalorie, name='addCalorie'),
 ]
