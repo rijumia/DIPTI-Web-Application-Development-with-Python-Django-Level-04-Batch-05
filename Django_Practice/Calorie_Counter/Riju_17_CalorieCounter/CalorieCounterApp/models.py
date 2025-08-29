@@ -24,7 +24,7 @@ class UserProfileModel(models.Model):
 
 
 class DailyConsumedModel(models.Model):
-    user = models.ForeignKey(CustomUserAuthModel, on_delete=models.CASCADE, null=True, related_name='user_daily_calorie')
+    user = models.ForeignKey(CustomUserAuthModel, on_delete=models.CASCADE, related_name='user_daily_calorie')
     itemName = models.CharField(max_length=250, null=True)
     calories = models.FloatField(null=True)
     date = models.DateField(null=True)
@@ -39,4 +39,4 @@ class TotalConsumedModel(models.Model):
     date = models.DateField(null=True)
 
     def __str__(self):
-        return f'{self.user.username}-{self.totalCalorie}'
+        return f'{self.user.username}-{self.totalCalorie}-{self.date}'

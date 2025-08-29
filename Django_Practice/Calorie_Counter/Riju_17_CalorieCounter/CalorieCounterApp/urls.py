@@ -11,4 +11,6 @@ urlpatterns = [
     path('profile-update/', profileUpdate, name='profileUpdate'),
 
     path('addCalorie/', addCalorie, name='addCalorie'),
+    path('update-calorie/<str:pk>/', update_calorie, name='update_calorie'),
+    path('delete-calorie/<str:pk>/', delete_calorie, name='delete_calorie'),
 ]

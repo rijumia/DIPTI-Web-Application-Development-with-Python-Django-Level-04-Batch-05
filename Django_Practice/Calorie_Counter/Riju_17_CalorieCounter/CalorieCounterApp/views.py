@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from .models import *
 from .forms import *
 from django.contrib import messages
+from datetime import date
 
 # Create your views here.
 def registerPage(request):
@@ -86,7 +87,104 @@ def profileUpdate(request):
     return render(request, 'updateProfile.html',{'profile_form':profile_form})
 
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    daily_consumed = DailyConsumedModel.objects.all()
+    total_consumed = TotalConsumedModel.objects.all()
+
+    current_user = request.user
+    gender = current_user.user_profile.gender
+    height = current_user.user_profile.height
+    weight = current_user.user_profile.weight
+    age = current_user.user_profile.age
+    today = date.today()
+    today_consumed_calorie = TotalConsumedModel.objects.filter(user=request.user, date=today).first()
+    
+    if gender == 'Male':
+        BMR = 66.47 + (13.75 * weight) + (5.003 * height) - (6.755 * age)
+    else:
+        BMR = 655.1 + (9.563 * weight) + (1.850 * height) - (4.676 * age)
+    BMR = round(BMR,2)
+
+    today_consumed_calorie = today_consumed_calorie.totalCalorie if today_consumed_calorie else 0
+    remaining_calorie = round(BMR - today_consumed_calorie, 2)
+    context={
+        'daily_consumed':daily_consumed,
+        'total_consumed':total_consumed,
+        'BMR':BMR,
+        'today_consumed_calorie':today_consumed_calorie,
+        'remaining_calorie':remaining_calorie
+    }
+    return render(request, 'dashboard.html',context)
 
 def addCalorie(request):
-    return render(request, 'addCalorie.html')
+    if request.method == 'POST':
+        calorie_form = DailyConsumedForm(request.POST)
+        if calorie_form.is_valid():
+            entry = calorie_form.save(commit=False)
+            entry.user = request.user
+            entry.save()
+            date = entry.date
+
+            total_entry, created = TotalConsumedModel.objects.get_or_create(
+                user=request.user,
+                date=date,
+                defaults={'totalCalorie': entry.calories}
+            )
+            if not created:
+                total_entry.totalCalorie += entry.calories
+                total_entry.save()
+
+            return redirect('dashboard')
+    else:
+        calorie_form = DailyConsumedForm() 
+    return render(request, 'addCalorie.html', {'calorie_form': calorie_form})
+
+def update_calorie(request, pk):
+    calorie_data = DailyConsumedModel.objects.get(id=pk, user=request.user)
+
+    old_calories = calorie_data.calories
+    old_date = calorie_data.date
+
+    if request.method == 'POST':
+        calorie_form = DailyConsumedForm(request.POST, instance=calorie_data)
+        if calorie_form.is_valid():
+            entry = calorie_form.save(commit=False)
+            entry.user = request.user
+            entry.save()
+
+            old_total = TotalConsumedModel.objects.filter(user=request.user, date=old_date).first()
+            if old_total:
+                old_total.totalCalorie -= old_calories
+                if old_total.totalCalorie <= 0:
+                    old_total.delete()
+                else:
+                    old_total.save()
+
+            new_total, created = TotalConsumedModel.objects.get_or_create(
+                user=request.user,
+                date=entry.date,
+                defaults={'totalCalorie': entry.calories}
+            )
+            if not created:
+                new_total.totalCalorie += entry.calories
+                new_total.save()
+
+            return redirect('dashboard')
+    else:
+        calorie_form = DailyConsumedForm(instance=calorie_data)
+
+    return render(request, 'update_calorie.html', {'calorie_form': calorie_form})
+
+def delete_calorie(request, pk):
+    calorie_entry = DailyConsumedModel.objects.get(id=pk, user=request.user)
+
+    total_entry = TotalConsumedModel.objects.filter(user=request.user, date=calorie_entry.date).first()
+    if total_entry:
+        total_entry.totalCalorie -= calorie_entry.calories
+        if total_entry.totalCalorie <= 0:
+            total_entry.delete()
+        else:
+            total_entry.save()
+
+    calorie_entry.delete()
+
+    return redirect('dashboard')
