@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Welcome Back</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 450px;
+            width: 100%;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .login-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .login-header h2 {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .login-header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        .login-body {
+            padding: 2rem;
+        }
+        
+        .form-floating {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-floating > .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            padding-left: 3rem;
+        }
+        
+        .form-floating > .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.15);
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            z-index: 5;
+            pointer-events: none;
+            transition: color 0.3s ease;
+        }
+        
+        .form-floating:focus-within .input-icon {
+            color: #667eea;
+        }
+        
+        .form-floating > label {
+            padding-left: 3rem;
+            color: #6c757d;
+        }
+        
+        .btn-login {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-login:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-login:hover:before {
+            left: 100%;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            z-index: 5;
+            transition: color 0.3s ease;
+        }
+        
+        .password-toggle:hover {
+            color: #667eea;
+        }
+        
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 1.5rem;
+        }
+        
+        .forgot-password a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        
+        .forgot-password a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+        
+        .register-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .register-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .register-link a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .form-check-input {
+            border-radius: 6px;
+            margin-right: 0.5rem;
+        }
+        
+        .form-check-input:checked {
+            background-color: #667eea;
+            border-color: #667eea;
+        }
+        
+        .social-login {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        
+        .social-divider {
+            position: relative;
+            margin: 1.5rem 0;
+            text-align: center;
+            color: #6c757d;
+        }
+        
+        .social-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e9ecef;
+        }
+        
+        .social-divider span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 1rem;
+        }
+        
+        .btn-social {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 10px 20px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .btn-social:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-google {
+            color: #db4437;
+        }
+        
+        .btn-facebook {
+            color: #4267B2;
+        }
+        
+        .btn-google:hover {
+            border-color: #db4437;
+            color: #db4437;
+        }
+        
+        .btn-facebook:hover {
+            border-color: #4267B2;
+            color: #4267B2;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <i class="bi bi-shield-lock-fill fs-1 mb-3"></i>
+                <h2>Welcome Back</h2>
+                <p>Sign in to your account</p>
+            </div>
+            
+            <div class="login-body">
+                <form id="loginForm" method="POST">
+                    {% csrf_token %}
+                    <div class="form-floating position-relative">
+                        <i class="bi bi-person-fill input-icon"></i>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username or Email" required>
+                        <label for="username">Username or Email</label>
+                    </div>
+                    
+                    <div class="form-floating position-relative">
+                        <i class="bi bi-lock-fill input-icon"></i>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                        <label for="password">Password</label>
+                        <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                            <i class="bi bi-eye-fill" id="password-toggle-icon"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="remember-me">
+                            <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        
+                        <div class="forgot-password">
+                            <a href="#" onclick="showForgotPasswordMessage()">Forgot Password?</a>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-login w-100">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                    </button>
+                </form>
+                
+                
+                <div class="register-link">
+                    <p class="mb-0">Don't have an account? <a href="#" onclick="showRegisterMessage()">Create one here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Password toggle functionality
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = document.getElementById(fieldId + '-toggle-icon');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.className = 'bi bi-eye-slash-fill';
+            } else {
+                field.type = 'password';
+                icon.className = 'bi bi-eye-fill';
+            }
+        }
+        
+        // Form validation and submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            
+            // Basic validation
+            if (!username || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Success message
+            let message = 'Login successful!\nUsername/Email: ' + username;
+            if (rememberMe) {
+                message += '\nRemember me: Yes';
+            }
+            alert(message);
+        });
+        
+        function showForgotPasswordMessage() {
+            alert('Password reset functionality would be implemented here!');
+        }
+        
+        function showRegisterMessage() {
+            alert('Registration page would be loaded here!');
+        }
+        
+        function showSocialLogin(provider) {
+            alert(provider + ' login would be implemented here!');
+        }
+        
+        // Add smooth focus animations
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentElement.classList.remove('focused');
+                }
+            });
+        });
+        
+        // Add enter key support for form submission
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+</body>
+</html>
