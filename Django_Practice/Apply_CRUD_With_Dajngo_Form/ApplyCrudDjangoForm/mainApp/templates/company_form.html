@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Company Form{% endblock %}
+{% block content %}
+<h1>Company Form</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'company_list' %}">Back to list</a>
+{% endblock %}
