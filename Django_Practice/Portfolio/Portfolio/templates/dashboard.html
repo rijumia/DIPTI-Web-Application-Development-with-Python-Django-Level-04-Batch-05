@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Dashboard</h3>
+<form method="post" enctype="multipart/form-data" class="mb-4">
+  {% csrf_token %}
+  <h5>Profile</h5>
+  {{ pform.as_p }}
+  <button class="btn btn-primary">Save Profile</button>
+</form>
+
+<div class="row">
+  <div class="col-md-6">
+    <h5>Skills</h5>
+    <ul class="list-group">
+      {% for s in skills %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ s.name }}
+          <span class="badge bg-secondary">{{ s.level }}%</span>
+        </li>
+      {% empty %}
+        <li class="list-group-item">No skills yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <h5>Projects</h5>
+    <ul class="list-group">
+      {% for p in projects %}
+        <li class="list-group-item">
+          <strong>{{ p.title }}</strong><br>
+          <small>{{ p.tech_stack }}</small>
+        </li>
+      {% empty %}
+        <li class="list-group-item">No projects yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-6">
+    <h5>Experience</h5>
+    <ul class="list-group">
+      {% for e in experiences %}
+        <li class="list-group-item">
+          <strong>{{ e.role }}</strong> @ {{ e.company }}
+        </li>
+      {% empty %}
+        <li class="list-group-item">No experience yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <h5>Education</h5>
+    <ul class="list-group">
+      {% for ed in education %}
+        <li class="list-group-item">
+          <strong>{{ ed.institution }}</strong> - {{ ed.degree }}
+        </li>
+      {% empty %}
+        <li class="list-group-item">No education items yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-5 bg-light rounded-3">
+  <h1 class="display-6">Welcome to your Portfolio</h1>
+  <p class="lead">Build your online resume, projects, and more.</p>
+  {% if user.is_authenticated %}
+    <a class="btn btn-primary" href="{% url 'dashboard' %}">Go to Dashboard</a>
+  {% else %}
+    <a class="btn btn-primary" href="{% url 'register' %}">Get Started</a>
+  {% endif %}
+</div>
+{% endblock %}
