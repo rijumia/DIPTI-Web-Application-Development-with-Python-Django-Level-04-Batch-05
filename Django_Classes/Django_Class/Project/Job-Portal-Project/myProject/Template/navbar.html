@@ -1,0 +1,45 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'homePage' %}">
+      <i class="bi bi-briefcase-fill"></i> JobPortal
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'homePage' %}">
+            <i class="bi bi-house-fill"></i> Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/jobFeed/' %}active{% endif %}" href="{% url 'jobFeed' %}">
+            <i class="bi bi-list-task"></i> Job Feed
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/skillMatchingPage/' %}active{% endif %}" href="{% url 'skillMatchingPage' %}">
+            <i class="bi bi-person-lines-fill"></i> Skill Matching
+          </a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/profile/' %}active{% endif %}" href="{% url 'profilePage' %}">
+            <i class="bi bi-person-circle"></i> Profile
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-danger" href="{% url 'logoutPage' %}">
+            <i class="bi bi-box-arrow-right"></i> Log Out
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

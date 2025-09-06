@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}{{ portfolio_user.username }}'s Resume{% endblock %}
+{% block content %}
+<h2>{{ portfolio_user.get_full_name|default:portfolio_user.username }} - Resume/CV</h2>
+<p>Email: {{ portfolio_user.email }}</p>
+
+<hr>
+<h3>Skills</h3>
+<ul>
+    {% for skill in skills %}
+    <li>{{ skill.name }} - {{ skill.proficiency }}%</li>
+    {% empty %}
+    <li>No skills listed.</li>
+    {% endfor %}
+</ul>
+
+<hr>
+<h3>Projects</h3>
+<ul>
+    {% for project in projects %}
+    <li><strong>{{ project.title }}</strong>: {{ project.description }}{% if project.url %} (<a href="{{ project.url }}" target="_blank">Link</a>){% endif %}</li>
+    {% empty %}
+    <li>No projects listed.</li>
+    {% endfor %}
+</ul>
+
+<hr>
+<h3>Work Experience</h3>
+<ul>
+    {% for work in work_experiences %}
+    <li><strong>{{ work.position }}</strong> at {{ work.company }} ({{ work.start_date }} - {% if work.currently_working %}Present{% else %}{{ work.end_date }}{% endif %})<br>{{ work.description }}</li>
+    {% empty %}
+    <li>No work experiences listed.</li>
+    {% endfor %}
+</ul>
+
+<hr>
+<h3>Education</h3>
+<ul>
+    {% for educ in educations %}
+    <li><strong>{{ educ.degree }}</strong> at {{ educ.school }} ({{ educ.start_date }} - {% if not educ.end_date %}Present{% else %}{{ educ.end_date }}{% endif %})<br>{{ educ.description }}</li>
+    {% empty %}
+    <li>No education listed.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

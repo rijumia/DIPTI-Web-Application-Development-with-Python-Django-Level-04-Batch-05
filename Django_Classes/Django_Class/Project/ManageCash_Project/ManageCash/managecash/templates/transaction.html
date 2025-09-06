@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="mt-5">
+  <h4 class="mb-3 fw-bold">💰 Recent Transactions</h4>
+  <div class="table-responsive shadow-sm rounded">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Type</th>
+          <th class="text-end">Amount</th>
+          <th class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if cash_list or expense_list %}
+          {% for cash in cash_list %}
+          <tr>
+            <td>{{ cash.datetime|date:"M d, Y H:i" }}</td>
+            <td>{{ cash.source }}</td>
+            <td><span class="badge bg-success">Cash In</span></td>
+            <td class="text-end">${{ cash.amount }}</td>
+            <td class="text-center">
+              <a href="{% url 'editcash' cash.id %}" class="btn btn-sm btn-primary">Edit</a>
+              <a href="{% url 'deletecash' cash.id %}" class="btn btn-sm btn-danger"
+                 onclick="return confirm('Are you sure you want to delete this?');">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% for expense in expense_list %}
+          <tr>
+            <td>{{ expense.datetime|date:"M d, Y H:i" }}</td>
+            <td>{{ expense.description }}</td>
+            <td><span class="badge bg-danger">Expense</span></td>
+            <td class="text-end">-${{ expense.amount }}</td>
+            <td class="text-center">
+              <a href="{% url 'editexpence' expense.id %}" class="btn btn-sm btn-primary">Edit</a>
+              <a href="{% url 'deleteexpence' expense.id %}" class="btn btn-sm btn-danger"
+                 onclick="return confirm('Are you sure you want to delete this?');">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="5" class="text-center text-muted py-4">
+              No transactions found.
+            </td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock content %}

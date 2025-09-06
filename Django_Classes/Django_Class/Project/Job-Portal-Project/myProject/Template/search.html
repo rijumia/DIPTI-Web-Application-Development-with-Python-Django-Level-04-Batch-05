@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container my-5">
+    <h2 class="mb-4">Search Results for: "{{ query }}"</h2>
+
+    {% if jobs %}
+        <div class="row">
+            {% for job in jobs %}
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm h-100">
+                        {% if job.Job_Image %}
+                            <img src="/{{ job.Job_Image }}" class="card-img-top" alt="{{ job.title }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ job.title }}</h5>
+                            <p class="card-text"><strong>Vacancy:</strong> {{ job.openings }}</p>
+                            <p class="card-text"><strong>Skills:</strong> {{ job.skills }}</p>
+                            <p class="card-text"><strong>Description:</strong> {{ job.description }}</p>
+                            <p class="card-text">
+                                <span class="badge bg-primary">
+                                    {% if job.category == 'full_time' %}Full Time{% else %}Part Time{% endif %}
+                                </span>
+                            </p>
+                            {% if request.user.user_type == 'seeker' %}
+                                <a href="{% url 'applyJob' job.id %}" class="btn btn-success">Apply Now</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No jobs found for "{{ query }}".</p>
+    {% endif %}
+</div>
+{% endblock body %}

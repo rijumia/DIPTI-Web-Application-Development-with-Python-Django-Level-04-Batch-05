@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 50px;
+        margin: 0;
+        min-height: 100vh;
+        color: #fff;
+    }
+    
+    .container {
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 40px 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        width: 420px;
+        color: #333;
+    }
+    
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 26px;
+        font-weight: 600;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: #555;
+    }
+    
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: border-color 0.3s;
+    }
+    
+    input:focus {
+        border-color: #6a11cb;
+        outline: none;
+        box-shadow: 0 0 5px rgba(106, 17, 203, 0.3);
+    }
+    
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #6a11cb;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    
+    button:hover {
+        background-color: #2575fc;
+        transform: scale(1.03);
+    }
+    
+    a {
+        display: block;
+        text-align: center;
+        margin-top: 18px;
+        font-size: 14px;
+        color: #6a11cb;
+        text-decoration: none;
+    }
+    
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h2>Sign In</h2>
+        <form action="" method="POST" id="loginForm">
+            {% csrf_token %}
+            
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            
+            <button type="submit">Sign In</button>
+            
+            <a href="{% url 'signupPage' %}">Create an Account</a>
+        </form>
+    </div>
+</body>
+</html>

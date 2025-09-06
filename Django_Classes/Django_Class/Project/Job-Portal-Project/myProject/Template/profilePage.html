@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card shadow-sm mx-auto" style="max-width: 400px; text-align: center;">
+        <div class="card-body">
+            <!-- Profile Picture -->
+            <img src="/{{ request.user.Profile_Pic }}" alt="Profile Picture" class="rounded-circle mb-3" style="width: 120px; height: 120px; border: 3px solid #6a11cb; object-fit: cover;">
+
+            <!-- Username -->
+            <h3 class="card-title">{{ request.user.username }}</h3>
+
+            <!-- User Type -->
+            {% if request.user.user_type == 'recruiter' %}
+                <span class="badge bg-primary mb-2">Recruiter</span>
+            {% elif request.user.user_type == 'seeker' %}
+                <span class="badge bg-success mb-2">Seeker</span>
+            {% endif %}
+
+            <!-- Full Name -->
+            <h5>{{ request.user.first_name }} {{ request.user.last_name }}</h5>
+
+            <!-- Contact Info -->
+            <p class="mb-1"><strong>Email:</strong> {{ request.user.email }}</p>
+            <p class="mb-3"><strong>Contact:</strong> {{ request.user.contact_no }}</p>
+
+            <!-- Buttons / Links -->
+            <div class="d-grid gap-2">
+                <a href="{% url 'editProfile' %}" class="btn btn-warning">Edit Profile</a>
+
+                {% if request.user.user_type == 'recruiter' %}
+                    <a href="{% url 'createdJob' %}" class="btn btn-primary">Created Jobs</a>
+                    <a href="{% url 'addJob' %}" class="btn btn-success">Add Job</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

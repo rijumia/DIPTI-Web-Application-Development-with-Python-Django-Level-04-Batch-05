@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card mx-auto shadow-sm" style="max-width: 600px;">
+        <div class="card-body">
+            <h3 class="card-title mb-4 text-center">Apply for: {{ jobs.title }}</h3>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="skill" class="form-label">Skills</label>
+                    <input type="text" class="form-control" id="skill" name="skill" placeholder="Your skills relevant to this job" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="cover" class="form-label">Cover Letter</label>
+                    <textarea class="form-control" id="cover" name="Cover" rows="4" placeholder="Write your cover letter here" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="apply_Image" class="form-label">Profile Image</label>
+                    <input type="file" class="form-control" id="apply_Image" name="apply_Image" accept="image/*">
+                </div>
+
+                <div class="mb-3">
+                    <label for="resume" class="form-label">Resume</label>
+                    <input type="file" class="form-control" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Submit Application</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock body %}

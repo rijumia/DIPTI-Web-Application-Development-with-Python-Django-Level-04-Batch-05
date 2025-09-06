@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container my-5">
+    <h2 class="mb-4">Job Listings</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Job Title</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Vacancy</th>
+                    <th>Skills</th>
+                    <th>Job Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in jobs %}
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td>
+                        {% if job.category == 'full_time' %}
+                            <span class="badge bg-primary">Full Time</span>
+                        {% elif job.category == 'part_time' %}
+                            <span class="badge bg-warning text-dark">Part Time</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ job.category }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-truncate" style="max-width: 200px;">{{ job.description }}</td>
+                    <td>{{ job.openings }}</td>
+                    <td>
+                        {% for skill in job.skills %}
+                            <span class="badge bg-info text-dark me-1">{{ skill }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% if job.Job_Image %}
+                        <img src="/{{ job.Job_Image }}" alt="Job Image" height="80" style="object-fit: cover;">
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'viewJob' job.id %}" class="btn btn-sm btn-primary mb-1">View</a>
+                        <a href="{% url 'editJob' job.id %}" class="btn btn-sm btn-warning mb-1">Edit</a>
+                        <a href="{% url 'deleteJob' job.id %}" class="btn btn-sm btn-danger mb-1">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+.text-truncate {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+</style>
+
+{% endblock body %}

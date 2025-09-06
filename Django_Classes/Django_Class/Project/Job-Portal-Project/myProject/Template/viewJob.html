@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card shadow-sm">
+        {% if job.Job_Image %}
+            <img src="/{{ job.Job_Image }}" class="card-img-top" alt="{{ job.title }}">
+        {% endif %}
+        <div class="card-body">
+            <h3 class="card-title">{{ job.title }}</h3>
+            <p class="card-text"><strong>Vacancy:</strong> {{ job.openings }}</p>
+            <p class="card-text"><strong>Skills:</strong> {{ job.skills }}</p>
+            <p class="card-text"><strong>Description:</strong> {{ job.description }}</p>
+            <p>
+                <span class="badge bg-primary">
+                    {% if job.category == 'full_time' %}Full Time{% else %}Part Time{% endif %}
+                </span>
+            </p>
+            {% if request.user.user_type == 'seeker' %}
+                <a href="{% url 'applyJob' job.id %}" class="btn btn-success">Apply Now</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock body %}
+
+    

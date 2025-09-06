@@ -1,0 +1,103 @@
+{% extends 'base.html'%}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2>Dashboard</h2>
+<p>Welcome, {{ user.username }}!</p>
+
+<h3>Skills</h3>
+<a href="{% url 'skill_add' %}" class="btn btn-success btn-sm mb-2">Add New Skill</a>
+<table class="table table-bordered">
+    <thead><tr><th>Name</th><th>Proficiency (%)</th><th>Actions</th></tr></thead>
+    <tbody>
+        {% for skill in skills %}
+        <tr>
+            <td>{{ skill.name }}</td>
+            <td>{{ skill.proficiency }}</td>
+            <td>
+                <a href="{% url 'skill_edit' skill.pk %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'skill_delete' skill.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3">No skills added.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Projects</h3>
+<a href="{% url 'project_add' %}" class="btn btn-success btn-sm mb-2">Add New Project</a>
+<table class="table table-bordered">
+    <thead><tr><th>Title</th><th>URL</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for project in projects %}
+        <tr>
+            <td>{{ project.title }}</td>
+            <td>
+                {% if project.url %}
+                    <a href="{{ project.url }}" target="_blank">{{ project.url }}</a>
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'project_edit' project.pk %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'project_delete' project.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="3">No projects added.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<h3>Work Experience</h3>
+<a href="{% url 'work_add' %}" class="btn btn-success btn-sm mb-2">Add New Work Experience</a>
+<table class="table table-bordered">
+    <thead><tr><th>Position</th><th>Company</th><th>Start</th><th>End</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for work in work_experiences %}
+        <tr>
+            <td>{{ work.position }}</td>
+            <td>{{ work.company }}</td>
+            <td>{{ work.start_date }}</td>
+            <td>{% if work.currently_working %}Present{% else %}{{ work.end_date }}{% endif %}</td>
+            <td>
+                <a href="{% url 'work_edit' work.pk %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'work_delete' work.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="5">No work experiences added.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<h3>Education</h3>
+<a href="{% url 'education_add' %}" class="btn btn-success btn-sm mb-2">Add New Education</a>
+<table class="table table-bordered">
+    <thead><tr><th>Degree</th><th>School</th><th>Start</th><th>End</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for educ in educations %}
+        <tr>
+            <td>{{ educ.degree }}</td>
+            <td>{{ educ.school }}</td>
+            <td>{{ educ.start_date }}</td>
+            <td>{% if not educ.end_date %}Present{% else %}{{ educ.end_date }}{% endif %}</td>
+            <td>
+                <a href="{% url 'education_edit' educ.pk %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'education_delete' educ.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="5">No education added.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<!-- Link to view public portfolio and resume -->
+<p>
+    <a href="{% url 'portfolio' user.username %}" class="btn btn-info">View Public Portfolio</a>
+    <a href="{% url 'resume' user.username %}" class="btn btn-secondary">View Resume/CV</a>
+</p>
+
+{% endblock %}

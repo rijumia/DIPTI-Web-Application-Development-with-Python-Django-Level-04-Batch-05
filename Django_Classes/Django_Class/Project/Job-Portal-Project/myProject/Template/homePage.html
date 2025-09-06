@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container my-5">
+    <!-- Hero Section -->
+    <div class="jumbotron text-center bg-light p-5 rounded shadow-sm">
+        <h1 class="display-4">Welcome to Job Portal</h1>
+        <p class="lead">Find your dream job or hire top talent with ease.</p>
+        <hr class="my-4">
+        {% if request.user.is_authenticated %}
+            <a class="btn btn-primary btn-lg me-2" href="{% url 'jobFeed' %}" role="button">Browse Jobs</a>
+            {% if request.user.user_type == 'recruiter' %}
+                <a class="btn btn-success btn-lg" href="{% url 'addJob' %}" role="button">Post a Job</a>
+            {% endif %}
+        {% else %}
+            <a class="btn btn-primary btn-lg me-2" href="{% url 'signInPage' %}" role="button">Login</a>
+            <a class="btn btn-success btn-lg" href="{% url 'signupPage' %}" role="button">Sign Up</a>
+        {% endif %}
+    </div>
+
+    <!-- Features Section -->
+    <div class="row text-center mt-5">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <i class="bi bi-search display-4 text-primary mb-3"></i>
+                    <h5 class="card-title">Search Jobs</h5>
+                    <p class="card-text">Easily find jobs that match your skills and interests.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <i class="bi bi-person-plus display-4 text-success mb-3"></i>
+                    <h5 class="card-title">Hire Talent</h5>
+                    <p class="card-text">Recruiters can post jobs and connect with qualified candidates.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <i class="bi bi-file-earmark-text display-4 text-warning mb-3"></i>
+                    <h5 class="card-title">Manage Applications</h5>
+                    <p class="card-text">Track job applications, resumes, and cover letters in one place.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center mt-5">
+        <a class="btn btn-lg btn-primary" href="{% url 'jobFeed' %}">Explore Jobs Now</a>
+    </div>
+</div>
+{% endblock body %}
+
+    

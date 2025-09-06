@@ -1,0 +1,66 @@
+{% extends 'master/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-lg rounded-3">
+        <div class="card-header bg-primary text-white text-center">
+          <h4><i class="fa fa-user-circle me-2"></i> My Profile</h4>
+        </div>
+        <div class="card-body p-4">
+          
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+
+          <div class="mb-3">
+            <label class="form-label fw-bold"><i class="fa fa-user me-2"></i> Username</label>
+            <p class="form-control-plaintext">{{ request.user.username }}</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold"><i class="fa fa-envelope me-2"></i> Email</label>
+            <p class="form-control-plaintext">{{ request.user.email }}</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold"><i class="fa fa-id-badge me-2"></i> Full Name</label>
+            <p class="form-control-plaintext">{{ request.user.first_name }} {{ request.user.user_profile.name }}</p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold"><i class="fa fa-id-badge me-2"></i> Age</label>
+            <p class="form-control-plaintext">{{ request.user.first_name }} {{ request.user.user_profile.age }}</p>
+          </div>
+
+          {% if request.user.user_profile.height %}
+          <div class="mb-3">
+            <label class="form-label fw-bold"><i class="fa fa-phone me-2"></i> Height</label>
+            <p class="form-control-plaintext">{{ request.user.user_profile.height }} cm</p>
+          </div>
+          {% endif %}
+
+          {% if request.user.user_profile.weight %}
+          <div class="mb-3">
+            <label class="form-label fw-bold"><i class="fa fa-info-circle me-2"></i> Weight</label>
+            <p class="form-control-plaintext">{{ request.user.user_profile.weight }} kg</p>
+          </div>
+          {% endif %}
+
+          <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'profileUpdate' %}" class="btn btn-outline-primary">
+              <i class="fa fa-edit me-1"></i> Update Profile
+            </a>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+              <i class="fa fa-arrow-left me-1"></i> Back to Dashboard
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

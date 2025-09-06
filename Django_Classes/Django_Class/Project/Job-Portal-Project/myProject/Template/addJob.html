@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card mx-auto shadow-sm" style="max-width: 600px;">
+        <div class="card-body">
+            <h3 class="card-title mb-4 text-center">Add Job</h3>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="job_title" class="form-label">Job Title</label>
+                    <input type="text" class="form-control" id="job_title" name="job_title" placeholder="Enter job title" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="vacancy" class="form-label">Vacancy</label>
+                    <input type="number" class="form-control" id="vacancy" name="vacancy" placeholder="Number of openings" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="skill" class="form-label">Skills</label>
+                    <input type="text" class="form-control" id="skill" name="skill" placeholder="Required skills, comma separated" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Job_Image" class="form-label">Job Image</label>
+                    <input type="file" class="form-control" id="Job_Image" name="Job_Image" accept="image/*">
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Job Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter job description" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option value="">Select category</option>
+                        <option value="full_time">Full Time</option>
+                        <option value="part_time">Part Time</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock body %}

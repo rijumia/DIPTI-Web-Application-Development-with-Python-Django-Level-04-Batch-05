@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card mx-auto shadow-sm" style="max-width: 600px;">
+        <div class="card-body">
+            <h3 class="card-title mb-4 text-center">Edit Job: {{ jobs.title }}</h3>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Job ID (readonly) -->
+                <div class="mb-3">
+                    <label for="j_id" class="form-label">Job ID</label>
+                    <input type="text" class="form-control" id="j_id" name="j_id" value="{{ jobs.id }}" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label for="job_title" class="form-label">Job Title</label>
+                    <input type="text" class="form-control" id="job_title" name="job_title" value="{{ jobs.title }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="vacancy" class="form-label">Vacancy</label>
+                    <input type="number" class="form-control" id="vacancy" name="vacancy" value="{{ jobs.openings }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="skill" class="form-label">Skills</label>
+                    <input type="text" class="form-control" id="skill" name="skill" value="{{ jobs.skills }}" placeholder="Comma separated skills" required>
+                </div>
+
+                <!-- Current Job Image -->
+                <div class="mb-3">
+                    <label class="form-label">Current Job Image</label><br>
+                    {% if jobs.Job_Image %}
+                        <img src="/{{ jobs.Job_Image }}" alt="Job Image" class="img-thumbnail" style="height: 100px;">
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="Job_Image" class="form-label">Upload New Job Image</label>
+                    <input type="file" class="form-control" id="Job_Image" name="Job_Image" accept="image/*">
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Job Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="4" required>{{ jobs.description }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option value="">Select category</option>
+                        <option value="full_time" {% if jobs.category == 'full_time' %}selected{% endif %}>Full Time</option>
+                        <option value="part_time" {% if jobs.category == 'part_time' %}selected{% endif %}>Part Time</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Update Job</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock body %}

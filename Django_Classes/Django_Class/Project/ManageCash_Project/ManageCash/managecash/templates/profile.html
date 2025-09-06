@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center fw-bold">👤 My Profile</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <!-- Profile Picture -->
+                    {% if request.user.profile_picture %}
+                        <img src="{{ request.user.profile_picture.url }}" alt="Profile Picture" class="rounded-circle mb-3" width="150" height="150">
+                    {% else %}
+                        <img src="https://static.vecteezy.com/system/resources/thumbnails/029/271/062/small_2x/avatar-profile-icon-in-flat-style-male-user-profile-illustration-on-isolated-background-man-profile-sign-business-concept-vector.jpg" alt="Profile Picture" class="rounded-circle mb-3" width="150" height="150">
+                    {% endif %}
+
+                    <h4 class="fw-bold">{{ request.user.full_name }}</h4>
+                    <p class="text-muted">{{ request.user.username }}</p>
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Email:</strong> {{ request.user.email }}</li>
+                    <li class="list-group-item"><strong>Phone:</strong> {{ request.user.phone|default:"-" }}</li>
+                    <li class="list-group-item"><strong>Address:</strong> {{ request.user.address|title|default:"-" }}</li>
+                    
+                   
+                </ul>
+
+                <div class="card-body text-center">
+                    <a href="{% url 'editprofile' %}" class="btn btn-primary me-2">Update Profile</a>
+                    <a href="{% url 'changepassword' %}" class="btn btn-warning">Change Password</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock content %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container my-5">
+
+    <!-- Search Bar -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <form action="{% url 'searchJob' %}" method="GET" class="input-group">
+                <input type="text" name="query" class="form-control" placeholder="Search for jobs..." value="{{ request.GET.query }}">
+                <button class="btn btn-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Jobs List -->
+    {% if jobs %}
+        <div class="row">
+            {% for job in jobs %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        {% if job.Job_Image %}
+                            <img src="/{{ job.Job_Image }}" class="card-img-top" alt="{{ job.title }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ job.title }}</h5>
+                            <p class="card-text"><strong>Vacancy:</strong> {{ job.openings }}</p>
+                            <p class="card-text"><strong>Skills:</strong> {{ job.skills }}</p>
+                            <p class="card-text"><strong>Description:</strong> {{ job.description }}</p>
+                            <p>
+                                <span class="badge bg-primary">
+                                    {% if job.category == 'full_time' %}Full Time{% else %}Part Time{% endif %}
+                                </span>
+                            </p>
+                            {% if request.user.user_type == 'seeker' %}
+                                <a href="{% url 'applyJob' job.id %}" class="btn btn-success">Apply Now</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">No jobs found.</p>
+    {% endif %}
+</div>
+{% endblock body %}
