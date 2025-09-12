@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Job Portal{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .navbar-brand {
+            font-weight: 600;
+            color: #2563eb !important;
+        }
+        .btn-primary {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+            border-color: #1d4ed8;
+        }
+        .card {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+        .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+        }
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        }
+        .text-primary-custom {
+            color: #2563eb !important;
+        }
+        /* Added custom styles for better visual hierarchy */
+        .skill-badge {
+            font-size: 0.85rem;
+            padding: 0.4rem 0.8rem;
+        }
+        .match-percentage {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .job-card:hover {
+            transform: translateY(-2px);
+            transition: transform 0.2s ease-in-out;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-nav .nav-link:hover {
+            color: #2563eb !important;
+        }
+        .footer-link {
+            color: #94a3b8;
+            text-decoration: none;
+        }
+        .footer-link:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-light">
+   
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <i class="fas fa-briefcase me-2"></i>JobPortal
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'job_list' %}">Browse Jobs</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'skill_match' %}">Skill Match</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-user me-1"></i>{{ user.userprofile.display_name|default:user.username }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'profile' %}">
+                                    <i class="fas fa-user-edit me-2"></i>Profile
+                                </a></li>
+                                {% if user.userprofile.user_type == 'recruiter' %}
+                                    <li><a class="dropdown-item" href="{% url 'post_job' %}">
+                                        <i class="fas fa-plus me-2"></i>Post Job
+                                    </a></li>
+                                     
+                                    <li><a class="dropdown-item" href="{% url 'all_applications' %}">
+                                        <i class="fas fa-inbox me-2"></i>View Applications
+                                    </a></li>
+                                {% else %}
+                                     
+                                    <li><a class="dropdown-item" href="{% url 'my_applications' %}">
+                                        <i class="fas fa-paper-plane me-2"></i>My Applications
+                                    </a></li>
+                                {% endif %}
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary ms-2" href="{% url 'register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+   
+    {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    
+    <main class="container my-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="text-white">
+                        <i class="fas fa-briefcase me-2"></i>JobPortal
+                    </h5>
+                    <p class="mb-3">Connecting talent with opportunities across all industries.</p>
+                    
+                    <div class="d-flex gap-3">
+                        <a href="{% url 'home' %}" class="footer-link">Home</a>
+                        <a href="{% url 'job_list' %}" class="footer-link">Jobs</a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'skill_match' %}" class="footer-link">Skill Match</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="text-white">For Job Seekers</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'job_list' %}" class="footer-link">Browse Jobs</a></li>
+                        {% if user.is_authenticated and user.userprofile.user_type == 'jobseeker' %}
+                            <li><a href="{% url 'my_applications' %}" class="footer-link">My Applications</a></li>
+                            <li><a href="{% url 'skill_match' %}" class="footer-link">Skill Matching</a></li>
+                        {% else %}
+                            <li><a href="{% url 'register' %}" class="footer-link">Create Account</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="text-white">For Recruiters</h6>
+                    <ul class="list-unstyled">
+                        {% if user.is_authenticated and user.userprofile.user_type == 'recruiter' %}
+                            <li><a href="{% url 'post_job' %}" class="footer-link">Post Jobs</a></li>
+                            <li><a href="{% url 'all_applications' %}" class="footer-link">View Applications</a></li>
+                            <li><a href="{% url 'skill_match' %}" class="footer-link">Find Candidates</a></li>
+                        {% else %}
+                            <li><a href="{% url 'register' %}" class="footer-link">Join as Recruiter</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 JobPortal. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <small class="text-muted">
+                        Built with Django & Bootstrap | 
+                        <span class="text-primary">Name_ID_JobPortal</span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

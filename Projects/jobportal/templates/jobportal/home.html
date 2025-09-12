@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Job Portal{% endblock %}
+
+{% block content %}
+
+<div class="row align-items-center min-vh-75">
+    <div class="col-lg-6">
+        <h1 class="display-4 fw-bold text-primary-custom mb-4">
+            Find Your Dream Job Today
+        </h1>
+        <p class="lead text-muted mb-4">
+            Connect with top employers and discover opportunities that match your skills. 
+            Whether you're a recruiter looking for talent or a job seeker exploring new opportunities, 
+            we've got you covered.
+        </p>
+        <div class="d-flex gap-3 flex-wrap">
+            {% if not user.is_authenticated %}
+                <a href="{% url 'register' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-user-plus me-2"></i>Get Started
+                </a>
+                <a href="{% url 'job_list' %}" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-search me-2"></i>Browse Jobs
+                </a>
+            {% else %}
+                <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-tachometer-alt me-2"></i>Go to Dashboard
+                </a>
+                <a href="{% url 'skill_match' %}" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-magic me-2"></i>Skill Match
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-lg-6 text-center">
+        <div class="bg-gradient-primary rounded-3 p-5 text-white">
+            <i class="fas fa-briefcase fa-5x mb-3"></i>
+            <h3>Your Career Journey Starts Here</h3>
+            <p class="mb-0">Join thousands of professionals finding their perfect match</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mt-5">
+    <div class="col-12">
+        <h2 class="text-center mb-5">Why Choose JobPortal?</h2>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center p-4">
+            <div class="card-body">
+                <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">For Job Seekers</h5>
+                <p class="card-text">
+                    Create your profile, upload your resume, and get matched with jobs 
+                    that fit your skills perfectly.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center p-4">
+            <div class="card-body">
+                <i class="fas fa-building fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">For Recruiters</h5>
+                <p class="card-text">
+                    Post job openings, manage applications, and find the right candidates 
+                    with our smart matching system.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center p-4">
+            <div class="card-body">
+                <i class="fas fa-magic fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Smart Matching</h5>
+                <p class="card-text">
+                    Our intelligent algorithm matches candidates with jobs based on 
+                    skills, experience, and preferences.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Job Portal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>
+                <i class="fas fa-tachometer-alt me-2"></i>
+                Welcome, {{ profile.display_name }}!
+            </h2>
+            <span class="badge bg-primary fs-6">{{ profile.get_user_type_display }}</span>
+        </div>
+    </div>
+</div>
+
+{% if profile.user_type == 'recruiter' %}
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="fas fa-briefcase me-2"></i>Your Job Postings
+                    </h5>
+                    <a href="{% url 'post_job' %}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus me-1"></i>Post New Job
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if jobs %}
+                        {% for job in jobs %}
+                            <div class="border-bottom pb-3 mb-3">
+                                <h6 class="mb-1">{{ job.title }}</h6>
+                                <p class="text-muted mb-1">
+                                    <i class="fas fa-tag me-1"></i>{{ job.get_category_display }} | 
+                                    <i class="fas fa-users me-1"></i>{{ job.number_of_openings }} openings
+                                </p>
+                                <p class="mb-1">{{ job.description|truncatewords:20 }}</p>
+                                <small class="text-muted">Posted on {{ job.created_at|date:"M d, Y" }}</small>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted text-center py-4">
+                            <i class="fas fa-info-circle me-2"></i>
+                            You haven't posted any jobs yet. 
+                            <a href="{% url 'post_job' %}">Post your first job</a>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-chart-bar me-2"></i>Quick Stats
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <h3 class="text-primary">{{ jobs.count }}</h3>
+                        <p class="mb-0">Active Job Postings</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% else %}
+     
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-magic me-2"></i>Recommended Jobs for You
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if matched_jobs %}
+                        {% for match in matched_jobs %}
+                            <div class="border-bottom pb-3 mb-3">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-1">{{ match.job.title }}</h6>
+                                        <p class="text-muted mb-1">
+                                            <i class="fas fa-building me-1"></i>{{ match.job.recruiter.company_name|default:"Company" }} | 
+                                            <i class="fas fa-tag me-1"></i>{{ match.job.get_category_display }}
+                                        </p>
+                                        <p class="mb-2">{{ match.job.description|truncatewords:15 }}</p>
+                                        <div class="mb-2">
+                                            <strong>Matched Skills:</strong>
+                                            {% for skill in match.matched_skills %}
+                                                <span class="badge bg-success me-1">{{ skill }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="badge bg-primary mb-2">
+                                            {{ match.match_percentage|floatformat:0 }}% Match
+                                        </div>
+                                        <br>
+                                        <a href="{% url 'apply_job' match.job.id %}" class="btn btn-outline-primary btn-sm">
+                                            Apply Now
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="text-center">
+                            <a href="{% url 'skill_match' %}" class="btn btn-primary">
+                                View All Matches
+                            </a>
+                        </div>
+                    {% else %}
+                        <p class="text-muted text-center py-4">
+                            <i class="fas fa-info-circle me-2"></i>
+                            No job matches found. 
+                            <a href="{% url 'profile' %}">Update your skills</a> to get better recommendations.
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-user me-2"></i>Profile Status
+                    </h6>
+                </div>
+                <div class="card-body text-center">
+                    {% if profile.skills and profile.resume %}
+                        <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                        <p class="mb-0">Profile Complete</p>
+                    {% else %}
+                        <i class="fas fa-exclamation-triangle fa-2x text-warning mb-2"></i>
+                        <p class="mb-2">Profile Incomplete</p>
+                        <a href="{% url 'profile' %}" class="btn btn-warning btn-sm">
+                            Complete Profile
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-search me-2"></i>Quick Actions
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'job_list' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-list me-1"></i>Browse All Jobs
+                        </a>
+                        <a href="{% url 'skill_match' %}" class="btn btn-outline-success">
+                            <i class="fas fa-magic me-1"></i>Skill Matching
+                        </a>
+                        <a href="{% url 'profile' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-edit me-1"></i>Edit Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

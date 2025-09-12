@@ -1,0 +1,378 @@
+{% extends 'base.html' %}
+
+{% block title %}Skill Matching - Job Portal{% endblock %}
+
+{% block content %}
+{% if profile.user_type == 'jobseeker' %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3>
+                    <i class="fas fa-magic me-2"></i>Jobs Matched to Your Skills
+                </h3>
+                <a href="{% url 'profile' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-edit me-1"></i>Update Skills
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% if profile.skills %}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h6 class="mb-3">
+                            <i class="fas fa-user-cog me-2"></i>Your Skills
+                        </h6>
+                        <div>
+                            {% for skill in profile.get_skills_list %}
+                                <span class="badge bg-primary me-1 mb-1">{{ skill|title }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-12">
+            {% if matched_jobs %}
+                <div class="mb-3">
+                    <h5>
+                        <i class="fas fa-chart-line me-2"></i>
+                        {{ matched_jobs|length }} Job{{ matched_jobs|length|pluralize }} Found
+                    </h5>
+                    <p class="text-muted">Jobs are ranked by skill match percentage</p>
+                </div>
+
+                {% for match in matched_jobs %}
+                    <div class="card mb-3 {% if match.match_percentage >= 70 %}border-success{% elif match.match_percentage >= 50 %}border-warning{% else %}border-info{% endif %}">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h5 class="card-title text-primary mb-0">
+                                            {{ match.job.title }}
+                                        </h5>
+                                        <div class="text-end">
+                                            {% if match.match_percentage >= 70 %}
+                                                <span class="badge bg-success fs-6">{{ match.match_percentage|floatformat:0 }}% Match</span>
+                                            {% elif match.match_percentage >= 50 %}
+                                                <span class="badge bg-warning fs-6">{{ match.match_percentage|floatformat:0 }}% Match</span>
+                                            {% else %}
+                                                <span class="badge bg-info fs-6">{{ match.match_percentage|floatformat:0 }}% Match</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-muted mb-2">
+                                        <i class="fas fa-building me-1"></i>
+                                        {{ match.job.recruiter.company_name|default:"Company" }} | 
+                                        <i class="fas fa-tag me-1"></i>{{ match.job.get_category_display }} | 
+                                        <i class="fas fa-users me-1"></i>{{ match.job.number_of_openings }} opening{{ match.job.number_of_openings|pluralize }}
+                                    </p>
+                                    
+                                    <p class="card-text mb-3">{{ match.job.description|truncatewords:25 }}</p>
+
+                                    <div class="mb-3">
+                                        <h6 class="text-info">
+                                            <i class="fas fa-exclamation-circle me-1"></i>
+                                            Skills You May Need ({{ match.job.get_required_skills_list|length }})
+                                        </h6>
+                                        <div class="mb-2">
+                                            {% for skill in match.job.get_required_skills_list %}
+                                                <span class="badge bg-info me-1 mb-1">{{ skill|title }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6 class="text-success">
+                                                <i class="fas fa-check-circle me-1"></i>
+                                                Your Matching Skills ({{ match.matched_skills|length }})
+                                            </h6>
+                                            <div class="mb-2">
+                                                {% for skill in match.matched_skills %}
+                                                    <span class="badge bg-success me-1 mb-1">{{ skill|title }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6 class="text-secondary">
+                                                <i class="fas fa-list me-1"></i>
+                                                All Required Skills ({{ match.job.get_required_skills_list|length }})
+                                            </h6>
+                                            <div class="mb-2">
+                                                {% for skill in match.job.get_required_skills_list %}
+                                                    {% if skill in match.matched_skills %}
+                                                        <span class="badge bg-success me-1 mb-1">{{ skill|title }}</span>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary me-1 mb-1">{{ skill|title }}</span>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <small class="text-muted">
+                                        <i class="fas fa-calendar me-1"></i>Posted {{ match.job.created_at|timesince }} ago
+                                    </small>
+                                </div>
+                                <div class="col-md-4 text-md-end">
+                                    <div class="d-grid gap-2">
+                                        <a href="{% url 'apply_job' match.job.id %}" class="btn btn-primary">
+                                            <i class="fas fa-paper-plane me-1"></i>Apply Now
+                                        </a>
+                                        {% if match.match_percentage < 70 %}
+                                            <small class="text-muted">
+                                                <i class="fas fa-lightbulb me-1"></i>
+                                                Consider learning: 
+                                                {% for skill in match.job.get_required_skills_list %}
+                                                    {% if skill not in match.matched_skills %}
+                                                        {{ skill|title }}{% if not forloop.last %}, {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="card">
+                    <div class="card-body text-center py-5">
+                        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                        <h5>No Skill Matches Found</h5>
+                        {% if not profile.skills %}
+                            <p class="text-muted mb-4">Add skills to your profile to get personalized job recommendations.</p>
+                            <a href="{% url 'profile' %}" class="btn btn-primary">
+                                <i class="fas fa-plus me-1"></i>Add Skills to Profile
+                            </a>
+                        {% else %}
+                            <p class="text-muted mb-4">No jobs currently match your skills. Try browsing all available positions.</p>
+                            <a href="{% url 'job_list' %}" class="btn btn-primary">
+                                <i class="fas fa-list me-1"></i>Browse All Jobs
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% else %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3>
+                    <i class="fas fa-users-cog me-2"></i>Candidates Matched to Your Jobs
+                </h3>
+                <a href="{% url 'post_job' %}" class="btn btn-success">
+                    <i class="fas fa-plus me-1"></i>Post New Job
+                </a>
+            </div>
+        </div>
+    </div>
+
+     
+    <div class="row">
+        <div class="col-12">
+            {% if matched_jobs %}
+                <div class="mb-3">
+                    <h5>
+                        <i class="fas fa-chart-line me-2"></i>
+                        {{ matched_jobs|length }} Candidate Match{{ matched_jobs|length|pluralize }} Found
+                    </h5>
+                    <p class="text-muted">Candidates are ranked by skill match percentage for your job postings</p>
+                </div>
+
+                {% for match in matched_jobs %}
+                    <div class="card mb-3 {% if match.match_percentage >= 70 %}border-success{% elif match.match_percentage >= 50 %}border-warning{% else %}border-info{% endif %}">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h5 class="text-primary mb-1">
+                                                <i class="fas fa-user me-2"></i>{{ match.seeker.display_name }}
+                                            </h5>
+                                            <p class="text-muted mb-0">
+                                                <i class="fas fa-envelope me-1"></i>{{ match.seeker.user.email }}
+                                            </p>
+                                        </div>
+                                        <div class="text-end">
+                                            {% if match.match_percentage >= 70 %}
+                                                <span class="badge bg-success fs-6">{{ match.match_percentage|floatformat:0 }}% Match</span>
+                                            {% elif match.match_percentage >= 50 %}
+                                                <span class="badge bg-warning fs-6">{{ match.match_percentage|floatformat:0 }}% Match</span>
+                                            {% else %}
+                                                <span class="badge bg-info fs-6">{{ match.match_percentage|floatformat:0 }}% Match</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <h6 class="text-info">
+                                            <i class="fas fa-briefcase me-1"></i>For Position: {{ match.job.title }}
+                                        </h6>
+                                        <small class="text-muted">{{ match.job.get_category_display }}</small>
+                                    </div>
+                                    
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6 class="text-success">
+                                                <i class="fas fa-check-circle me-1"></i>
+                                                Matching Skills ({{ match.matched_skills|length }})
+                                            </h6>
+                                            <div class="mb-2">
+                                                {% for skill in match.matched_skills %}
+                                                    <span class="badge bg-success me-1 mb-1">{{ skill|title }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6 class="text-secondary">
+                                                <i class="fas fa-cogs me-1"></i>
+                                                All Candidate Skills
+                                            </h6>
+                                            <div class="mb-2">
+                                                {% for skill in match.seeker.get_skills_list %}
+                                                    {% if skill in match.matched_skills %}
+                                                        <span class="badge bg-success me-1 mb-1">{{ skill|title }}</span>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary me-1 mb-1">{{ skill|title }}</span>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <small class="text-muted">
+                                        <i class="fas fa-calendar me-1"></i>Profile updated {{ match.seeker.updated_at|timesince }} ago
+                                    </small>
+                                </div>
+                                <div class="col-md-4 text-md-end">
+                                    <div class="d-grid gap-2">
+                                        {% if match.seeker.resume %}
+                                            <a href="{{ match.seeker.resume.url }}" target="_blank" class="btn btn-primary">
+                                                <i class="fas fa-file-pdf me-1"></i>View Resume
+                                            </a>
+                                        {% else %}
+                                            <button class="btn btn-outline-secondary" disabled>
+                                                <i class="fas fa-file-pdf me-1"></i>No Resume
+                                            </button>
+                                        {% endif %}
+                                        
+                                        <a href="mailto:{{ match.seeker.user.email }}?subject=Job Opportunity: {{ match.job.title }}" class="btn btn-outline-primary">
+                                            <i class="fas fa-envelope me-1"></i>Contact
+                                        </a>
+                                        
+                                        {% if match.match_percentage >= 70 %}
+                                            <small class="text-success">
+                                                <i class="fas fa-star me-1"></i>Excellent match!
+                                            </small>
+                                        {% elif match.match_percentage >= 50 %}
+                                            <small class="text-warning">
+                                                <i class="fas fa-thumbs-up me-1"></i>Good potential
+                                            </small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="card">
+                    <div class="card-body text-center py-5">
+                        <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                        <h5>No Candidate Matches Found</h5>
+                        <p class="text-muted mb-4">
+                            No job seekers currently match your job requirements. 
+                            Try posting more jobs or check back later as new candidates join.
+                        </p>
+                        <div class="d-flex gap-2 justify-content-center">
+                            <a href="{% url 'post_job' %}" class="btn btn-primary">
+                                <i class="fas fa-plus me-1"></i>Post New Job
+                            </a>
+                            <a href="{% url 'all_applications' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-inbox me-1"></i>View Applications
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h6 class="mb-3">
+                    <i class="fas fa-lightbulb me-2"></i>
+                    {% if profile.user_type == 'jobseeker' %}
+                        Tips for Better Job Matches
+                    {% else %}
+                        Tips for Finding Better Candidates
+                    {% endif %}
+                </h6>
+                <div class="row">
+                    {% if profile.user_type == 'jobseeker' %}
+                        <div class="col-md-6">
+                            <ul class="mb-0 small">
+                                <li><strong>Update Skills Regularly:</strong> Keep your skills current and comprehensive</li>
+                                <li><strong>Use Specific Terms:</strong> Include both technical and soft skills</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="mb-0 small">
+                                <li><strong>Upload Resume:</strong> A complete profile increases match accuracy</li>
+                                <li><strong>Learn New Skills:</strong> Consider learning skills from job requirements</li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <div class="col-md-6">
+                            <ul class="mb-0 small">
+                                <li><strong>Detailed Job Posts:</strong> Include specific skill requirements</li>
+                                <li><strong>Regular Updates:</strong> Keep job postings current and relevant</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="mb-0 small">
+                                <li><strong>Skill Flexibility:</strong> Consider candidates with transferable skills</li>
+                                <li><strong>Direct Contact:</strong> Reach out to promising candidates directly</li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="text-center mt-4">
+    <a href="{% url 'dashboard' %}" class="btn btn-outline-primary me-2">
+        <i class="fas fa-tachometer-alt me-1"></i>Back to Dashboard
+    </a>
+    {% if profile.user_type == 'jobseeker' %}
+        <a href="{% url 'job_list' %}" class="btn btn-outline-secondary">
+            <i class="fas fa-list me-1"></i>Browse All Jobs
+        </a>
+    {% else %}
+        <a href="{% url 'all_applications' %}" class="btn btn-outline-secondary">
+            <i class="fas fa-inbox me-1"></i>View Applications
+        </a>
+    {% endif %}
+</div>
+{% endblock %}

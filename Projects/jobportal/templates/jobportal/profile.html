@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile - Job Portal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-user-edit me-2"></i>
+                    {% if profile.user_type == 'recruiter' %}
+                        Recruiter Profile
+                    {% else %}
+                        Job Seeker Profile
+                    {% endif %}
+                </h4>
+            </div>
+            <div class="card-body p-4">
+                {% if profile.user_type == 'recruiter' %}
+                    
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-id-card me-1"></i>Display Name
+                            </label>
+                            {{ form.display_name }}
+                            {% if form.display_name.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.display_name.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-building me-1"></i>Company Name
+                            </label>
+                            {{ form.company_name }}
+                            {% if form.company_name.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.company_name.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-info-circle me-1"></i>Company Description
+                            </label>
+                            {{ form.company_description }}
+                            {% if form.company_description.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.company_description.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Describe your company, its mission, and what makes it unique.</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">
+                                <i class="fas fa-globe me-1"></i>Company Website
+                            </label>
+                            {{ form.company_website }}
+                            {% if form.company_website.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.company_website.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Enter your company's website URL (optional).</div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-save me-2"></i>Update Profile
+                            </button>
+                        </div>
+                    </form>
+
+                {% else %}
+                 
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-id-card me-1"></i>Display Name
+                            </label>
+                            {{ form.display_name }}
+                            {% if form.display_name.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.display_name.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-cogs me-1"></i>Skills
+                            </label>
+                            {{ form.skills }}
+                            {% if form.skills.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.skills.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">
+                                Enter your skills separated by commas (e.g., Python, Django, JavaScript, React).
+                                This helps match you with relevant job opportunities.
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">
+                                <i class="fas fa-file-pdf me-1"></i>Resume
+                            </label>
+                            {{ form.resume }}
+                            {% if form.resume.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.resume.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">
+                                Upload your resume in PDF, DOC, or DOCX format. Maximum file size: 5MB.
+                            </div>
+                            {% if profile.resume %}
+                                <div class="mt-2">
+                                    <small class="text-success">
+                                        <i class="fas fa-check-circle me-1"></i>
+                                        Current resume: 
+                                        <a href="{{ profile.resume.url }}" target="_blank" class="text-decoration-none">
+                                            {{ profile.resume.name|cut:"resumes/" }}
+                                        </a>
+                                    </small>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-save me-2"></i>Update Profile
+                            </button>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+            
+
+            <div class="card-footer bg-light">
+                <h6 class="mb-3">
+                    <i class="fas fa-info-circle me-2"></i>Profile Summary
+                </h6>
+                
+                {% if profile.user_type == 'recruiter' %}
+                    <div class="row">
+                        <div class="col-sm-4"><strong>User Type:</strong></div>
+                        <div class="col-sm-8">{{ profile.get_user_type_display }}</div>
+                    </div>
+                    {% if profile.company_name %}
+                        <div class="row">
+                            <div class="col-sm-4"><strong>Company:</strong></div>
+                            <div class="col-sm-8">{{ profile.company_name }}</div>
+                        </div>
+                    {% endif %}
+                    {% if profile.company_website %}
+                        <div class="row">
+                            <div class="col-sm-4"><strong>Website:</strong></div>
+                            <div class="col-sm-8">
+                                <a href="{{ profile.company_website }}" target="_blank" class="text-decoration-none">
+                                    {{ profile.company_website }}
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    
+                {% else %}
+                    <div class="row">
+                        <div class="col-sm-4"><strong>User Type:</strong></div>
+                        <div class="col-sm-8">{{ profile.get_user_type_display }}</div>
+                    </div>
+                    {% if profile.skills %}
+                        <div class="row">
+                            <div class="col-sm-4"><strong>Skills:</strong></div>
+                            <div class="col-sm-8">
+                                {% for skill in profile.get_skills_list %}
+                                    <span class="badge bg-secondary me-1">{{ skill|title }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="col-sm-4"><strong>Resume:</strong></div>
+                        <div class="col-sm-8">
+                            {% if profile.resume %}
+                                <span class="text-success">
+                                    <i class="fas fa-check-circle me-1"></i>Uploaded
+                                </span>
+                            {% else %}
+                                <span class="text-warning">
+                                    <i class="fas fa-exclamation-triangle me-1"></i>Not uploaded
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <div class="row">
+                    <div class="col-sm-4"><strong>Member Since:</strong></div>
+                    <div class="col-sm-8">{{ profile.created_at|date:"M d, Y" }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-primary me-2">
+                <i class="fas fa-tachometer-alt me-1"></i>Back to Dashboard
+            </a>
+            {% if profile.user_type == 'recruiter' %}
+                <a href="{% url 'post_job' %}" class="btn btn-success">
+                    <i class="fas fa-plus me-1"></i>Post a Job
+                </a>
+            {% else %}
+                <a href="{% url 'job_list' %}" class="btn btn-success">
+                    <i class="fas fa-search me-1"></i>Browse Jobs
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8 col-lg-6">
+        {% if profile.user_type == 'recruiter' %}
+            {% if not profile.company_name or not profile.company_description %}
+                <div class="alert alert-info">
+                    <h6 class="alert-heading">
+                        <i class="fas fa-lightbulb me-2"></i>Complete Your Profile
+                    </h6>
+                    <p class="mb-0">
+                        Add your company information to attract the best candidates. 
+                        A complete profile helps job seekers understand your company culture and opportunities.
+                    </p>
+                </div>
+            {% endif %}
+        {% else %}
+            {% if not profile.skills or not profile.resume %}
+                <div class="alert alert-info">
+                    <h6 class="alert-heading">
+                        <i class="fas fa-lightbulb me-2"></i>Complete Your Profile
+                    </h6>
+                    <p class="mb-0">
+                        {% if not profile.skills %}
+                            Add your skills to get matched with relevant job opportunities.
+                        {% endif %}
+                        {% if not profile.resume %}
+                            Upload your resume to increase your chances of getting hired.
+                        {% endif %}
+                    </p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

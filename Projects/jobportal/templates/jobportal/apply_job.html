@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %}Apply for {{ job.title }} - Job Portal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+       
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-briefcase me-2"></i>{{ job.title }}
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <p class="mb-1">
+                            <i class="fas fa-building me-2"></i>
+                            <strong>Company:</strong> {{ job.recruiter.company_name|default:"Company" }}
+                        </p>
+                        <p class="mb-1">
+                            <i class="fas fa-tag me-2"></i>
+                            <strong>Category:</strong> {{ job.get_category_display }}
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1">
+                            <i class="fas fa-users me-2"></i>
+                            <strong>Openings:</strong> {{ job.number_of_openings }}
+                        </p>
+                        <p class="mb-1">
+                            <i class="fas fa-calendar me-2"></i>
+                            <strong>Posted:</strong> {{ job.created_at|date:"M d, Y" }}
+                        </p>
+                    </div>
+                </div>
+                
+                <h6><i class="fas fa-file-text me-2"></i>Job Description</h6>
+                <p class="mb-4">{{ job.description|linebreaks }}</p>
+                
+                <h6><i class="fas fa-cogs me-2"></i>Required Skills</h6>
+                <div class="mb-3">
+                    {% for skill in job.get_required_skills_list %}
+                        <span class="badge bg-secondary me-1 mb-1">{{ skill|title }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        
+        {% if matched_skills %}
+            <div class="card mb-4 border-success">
+                <div class="card-header bg-success text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-magic me-2"></i>Skill Match Analysis
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="text-success">{{ match_percentage|floatformat:0 }}% Match</h5>
+                            <p class="mb-0">You match {{ matched_skills|length }} out of {{ job.get_required_skills_list|length }} required skills</p>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Your Matching Skills:</strong>
+                            <div class="mt-1">
+                                {% for skill in matched_skills %}
+                                    <span class="badge bg-success me-1">{{ skill|title }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-paper-plane me-2"></i>Application
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if already_applied %}
+                    <div class="alert alert-info text-center">
+                        <i class="fas fa-check-circle fa-2x mb-2"></i>
+                        <h6>Application Already Submitted</h6>
+                        <p class="mb-0">You have already applied for this position. Check your applications status in your dashboard.</p>
+                    </div>
+                {% else %}
+                    {% if not profile.resume %}
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Resume Required:</strong> Please upload your resume in your profile before applying.
+                            <a href="{% url 'profile' %}" class="btn btn-warning btn-sm ms-2">Upload Resume</a>
+                        </div>
+                    {% endif %}
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <h6>Application Summary</h6>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-user me-2"></i><strong>Applicant:</strong> {{ profile.display_name }}</li>
+                                <li><i class="fas fa-envelope me-2"></i><strong>Email:</strong> {{ user.email }}</li>
+                                {% if profile.resume %}
+                                    <li><i class="fas fa-file-pdf me-2"></i><strong>Resume:</strong> 
+                                        <a href="{{ profile.resume.url }}" target="_blank">View Resume</a>
+                                    </li>
+                                {% endif %}
+                                {% if profile.skills %}
+                                    <li><i class="fas fa-cogs me-2"></i><strong>Skills:</strong> {{ profile.skills }}</li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            {% if profile.resume %}
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    <i class="fas fa-paper-plane me-2"></i>Submit Application
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn btn-secondary btn-lg" disabled>
+                                    <i class="fas fa-exclamation-triangle me-2"></i>Resume Required to Apply
+                                </button>
+                            {% endif %}
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'job_list' %}" class="btn btn-outline-primary me-2">
+                <i class="fas fa-arrow-left me-1"></i>Back to Jobs
+            </a>
+            <a href="{% url 'my_applications' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-list me-1"></i>My Applications
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

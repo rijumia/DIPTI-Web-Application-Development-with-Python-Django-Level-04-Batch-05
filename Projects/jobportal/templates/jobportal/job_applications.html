@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}Applications for {{ job.title }} - Job Portal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+       
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-briefcase me-2"></i>{{ job.title }}
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p class="mb-1">
+                            <i class="fas fa-tag me-2"></i>{{ job.get_category_display }} | 
+                            <i class="fas fa-users me-2"></i>{{ job.number_of_openings }} openings
+                        </p>
+                        <p class="mb-0">
+                            <i class="fas fa-calendar me-2"></i>Posted on {{ job.created_at|date:"M d, Y" }}
+                        </p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <h5 class="text-success mb-0">
+                            {{ applications.count }} Application{{ applications.count|pluralize }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5>
+                <i class="fas fa-users me-2"></i>Applicants
+            </h5>
+            <a href="{% url 'all_applications' %}" class="btn btn-outline-primary">
+                <i class="fas fa-list me-1"></i>All Applications
+            </a>
+        </div>
+
+        {% if applications %}
+            {% for application in applications %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h6 class="mb-2">
+                                    <i class="fas fa-user me-2"></i>{{ application.applicant.display_name }}
+                                </h6>
+                                <p class="text-muted mb-2">
+                                    <i class="fas fa-envelope me-1"></i>{{ application.applicant.user.email }}
+                                </p>
+                                
+                                {% if application.applicant.skills %}
+                                    <div class="mb-2">
+                                        <strong>Skills:</strong>
+                                        {% for skill in application.applicant.get_skills_list %}
+                                            {% if skill in job.get_required_skills_list %}
+                                                <span class="badge bg-success me-1">{{ skill|title }}</span>
+                                            {% else %}
+                                                <span class="badge bg-secondary me-1">{{ skill|title }}</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                
+                                 
+                                {% with job_skills=job.get_required_skills_list applicant_skills=application.applicant.get_skills_list %}
+                                    {% if job_skills and applicant_skills %}
+                                        <div class="mb-2">
+                                            <strong>Skill Match:</strong>
+                                            <span class="badge bg-info">
+                                                {% widthratio job_skills|length|add:applicant_skills|length 2 100 %}% Match
+                                            </span>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div class="col-md-4 text-md-end">
+                                <div class="mb-2">
+                                    {% if application.applicant.resume %}
+                                        <a href="{{ application.applicant.resume.url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-file-pdf me-1"></i>View Resume
+                                        </a>
+                                    {% else %}
+                                        <span class="text-muted">No resume uploaded</span>
+                                    {% endif %}
+                                </div>
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar me-1"></i>
+                                    Applied {{ application.applied_at|timesince }} ago
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                    <h5>No Applications Yet</h5>
+                    <p class="text-muted">No one has applied for this position yet. Share your job posting to attract candidates!</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+
+<div class="text-center mt-4">
+    <a href="{% url 'dashboard' %}" class="btn btn-outline-primary me-2">
+        <i class="fas fa-tachometer-alt me-1"></i>Back to Dashboard
+    </a>
+    <a href="{% url 'post_job' %}" class="btn btn-success">
+        <i class="fas fa-plus me-1"></i>Post Another Job
+    </a>
+</div>
+{% endblock %}

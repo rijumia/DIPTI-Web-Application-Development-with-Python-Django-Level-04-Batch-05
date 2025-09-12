@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block title %}Browse Jobs - Job Portal{% endblock %}
+
+{% block content %}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="get" class="row g-3">
+                    <div class="col-md-6">
+                        <label for="search" class="form-label">
+                            <i class="fas fa-search me-1"></i>Search Jobs
+                        </label>
+                        <input type="text" 
+                               class="form-control" 
+                               id="search" 
+                               name="search" 
+                               value="{{ search_query|default:'' }}"
+                               placeholder="Search by title, description, or skills...">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="category" class="form-label">
+                            <i class="fas fa-filter me-1"></i>Category
+                        </label>
+                        <select class="form-select" id="category" name="category">
+                            <option value="">All Categories</option>
+                            {% for value, label in categories %}
+                                <option value="{{ value }}" {% if selected_category == value %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-search me-1"></i>Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3>
+                <i class="fas fa-briefcase me-2"></i>
+                {% if search_query or selected_category %}
+                    Search Results
+                {% else %}
+                    All Jobs
+                {% endif %}
+                <span class="badge bg-primary">{{ jobs.count }}</span>
+            </h3>
+            {% if user.is_authenticated and user.userprofile.user_type == 'recruiter' %}
+                <a href="{% url 'post_job' %}" class="btn btn-success">
+                    <i class="fas fa-plus me-1"></i>Post New Job
+                </a>
+            {% endif %}
+        </div>
+
+        {% if jobs %}
+            {% for job in jobs %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="card-title text-primary mb-2">
+                                    <i class="fas fa-briefcase me-2"></i>{{ job.title }}
+                                </h5>
+                                <p class="text-muted mb-2">
+                                    <i class="fas fa-building me-1"></i>
+                                    {{ job.recruiter.company_name|default:"Company" }} | 
+                                    <i class="fas fa-tag me-1"></i>{{ job.get_category_display }} | 
+                                    <i class="fas fa-users me-1"></i>{{ job.number_of_openings }} opening{{ job.number_of_openings|pluralize }}
+                                </p>
+                                <p class="card-text">{{ job.description|truncatewords:30 }}</p>
+                                
+                                 Required Skills 
+                                <div class="mb-3">
+                                    <strong>Required Skills:</strong>
+                                    {% for skill in job.get_required_skills_list %}
+                                        <span class="badge bg-secondary me-1">{{ skill|title }}</span>
+                                    {% endfor %}
+                                </div>
+                                
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar me-1"></i>Posted on {{ job.created_at|date:"M d, Y" }}
+                                </small>
+                            </div>
+                            <div class="col-md-4 text-md-end">
+                                {% if user.is_authenticated %}
+                                    {% if user.userprofile.user_type == 'jobseeker' %}
+                                        <a href="{% url 'apply_job' job.id %}" class="btn btn-primary">
+                                            <i class="fas fa-paper-plane me-1"></i>Apply Now
+                                        </a>
+                                    {% else %}
+                                        <span class="badge bg-info">Your Job Posting</span>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{% url 'login' %}" class="btn btn-outline-primary">
+                                        <i class="fas fa-sign-in-alt me-1"></i>Login to Apply
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                    <h5>No Jobs Found</h5>
+                    <p class="text-muted">
+                        {% if search_query or selected_category %}
+                            No jobs match your search criteria. Try adjusting your filters.
+                        {% else %}
+                            No jobs have been posted yet. Check back later!
+                        {% endif %}
+                    </p>
+                    {% if search_query or selected_category %}
+                        <a href="{% url 'job_list' %}" class="btn btn-primary">
+                            <i class="fas fa-list me-1"></i>View All Jobs
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+
+{% if user.is_authenticated and user.userprofile.user_type == 'jobseeker' %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body text-center">
+                    <h6 class="mb-3">
+                        <i class="fas fa-magic me-2"></i>Find Better Matches
+                    </h6>
+                    <p class="mb-3">Get personalized job recommendations based on your skills</p>
+                    <a href="{% url 'skill_match' %}" class="btn btn-success me-2">
+                        <i class="fas fa-magic me-1"></i>Skill Matching
+                    </a>
+                    <a href="{% url 'profile' %}" class="btn btn-outline-primary">
+                        <i class="fas fa-user-edit me-1"></i>Update Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
